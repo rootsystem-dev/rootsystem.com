@@ -1,0 +1,19 @@
+{
+  "name": "rootsystem.com",
+  "version": "1.0.0",
+  "main": "\"\"",
+  "repository": "git@github.com:dustinlarimer/rootsystem.com.git",
+  "author": "Dustin Larimer <180438+dustinlarimer@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

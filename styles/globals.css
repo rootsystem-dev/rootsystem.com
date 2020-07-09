@@ -1,0 +1,37 @@
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #969c9c;
+}
+
+html {
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: #45474a;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+a {
+  /* border-bottom: 1px solid ; */
+  color: #178282;
+  font-weight: 700;
+  text-decoration-color: #969c9c;
+}
+
+a:active,
+a:focus,
+a:hover {
+  color: #45474a;
+  text-decoration-color: #178282;
+}
+
+p {
+  margin: 0 0 20px;
+}

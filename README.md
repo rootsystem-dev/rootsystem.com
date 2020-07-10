@@ -1,4 +1,4 @@
-# Root System is a new kind of consulting firm.
+# Root System
 
 ### Root System is a new kind of consulting firm.
 

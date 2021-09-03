@@ -66,20 +66,16 @@ export const Header = memo(() => {
           About
         </NavLink>
 
-        <NavLink href="/blog">
-          Blog
+        <NavLink href="/team">
+          Team
         </NavLink>
 
-        <NavLink href="/coaching">
-          Coaching
+        <NavLink href="/apply">
+          Apply
         </NavLink>
 
-        <NavLink href="/projects">
-          Projects
-        </NavLink>
-
-        <NavLink href="/connect">
-          Connect
+        <NavLink href="/contact">
+          Contact
         </NavLink>
 
         {/* <Stack align="center" isInline={true} spacing={1}>

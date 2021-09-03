@@ -1,15 +1,33 @@
-import { memo } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Global } from '@emotion/react'
 import Head  from 'next/head'
 
 /* Components */
-import { Box, Flex, useColorMode } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import { Container, Footer, Header } from 'components/elements'
 import { global, theme } from 'components/theme'
 
 const AppContainer = memo(({ children }) => {
-  const { colorMode } = useColorMode()
+  const [colorMode, setColorMode] = useState('light')
+
+  const onColorModeChange = useCallback(({ matches }) => {
+    setColorMode(matches ? 'dark' : 'light')
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', onColorModeChange)
+    }
+    return () => {
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .removeEventListener('change', onColorModeChange)
+    }
+  }, [])
+
   return (
     <>
       <Head>

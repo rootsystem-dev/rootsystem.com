@@ -1,1 +1,12 @@
-Pretty sure this README isn't used anywhere functionally.   Testing to see if that's true ;
+# rootsystem.com
+
+## Development
+
+This project requires [yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable).
+
+```bash
+yarn install
+yarn run dev
+
+open http://localhost:3000
+```

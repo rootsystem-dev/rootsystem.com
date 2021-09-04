@@ -7,6 +7,14 @@ export const styles = {
       color: mode("gray.800", "white")(props),
     },
 
+    "::-moz-selection": {
+      bg: mode("primary.100", "gray.800")(props)
+    },
+
+    "::selection": {
+      bg: mode("primary.100", "gray.800")(props)
+    },
+
     "article a": {
       color: "primary.500",
     },

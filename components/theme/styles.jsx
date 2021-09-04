@@ -8,16 +8,18 @@ export const styles = {
     },
 
     "article a": {
-      // color: "pink.500",
+      color: "primary.500",
     },
+
     "article a:focus, article a:hover, article a:active": {
-      // color: mode("pink.600", "pink.300")(props),
-      // textDecoration: "underline"
+      color: mode("primary.600", "primary.300")(props),
+      textDecoration: "underline"
     },
 
     "article img": {
       mb: 8
     },
+
     "article figure": {
       color: "gray.500",
       display: "block",
@@ -34,9 +36,11 @@ export const styles = {
       lineHeight: "sm",
       mb: 2
     },
+
     "article ol, article ul": {
       pl: 6
     },
+
     "article ol > li, article ul > li": {
       pl: 0
     },
@@ -48,23 +52,27 @@ export const styles = {
       letterSpacing: "tight",
       mt: 0
     },
+
     "h1": {
       fontSize: [ "4xl", "6xl" ],
       lineHeight: [ "3xl", "4xl" ],
       mb: 6
     },
+
     "h2": {
       fontSize: [ "2xl", "4xl" ],
       lineHeight: [ "xl", "3xl" ],
       mb: 6,
       mt: 8
     },
+
     "h3": {
       fontSize: [ "xl", "2xl" ],
       lineHeight: [ "lg", "xl" ],
       mb: 5,
       mt: 6
     },
+
     "h4": {
       fontSize: [ "lg", "xl" ],
       lineHeight: [ "md", "lg"],
@@ -85,11 +93,13 @@ export const styles = {
       py: 1,
       transition: "none"
     },
+
     "blockquote p": {
       fontFamily: "heading",
       fontSize: "xl",
       lineHeight: "xl"
     },
+
     "blockquote cite": {
       display: "block",
       color: "gray.500",

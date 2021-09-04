@@ -17,9 +17,9 @@ const AppContainer = memo(({ children }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', onColorModeChange)
+      const mq = window.matchMedia('(prefers-color-scheme: dark)')
+      mq.addEventListener('change', onColorModeChange)
+      onColorModeChange(mq)
     }
     return () => {
       window

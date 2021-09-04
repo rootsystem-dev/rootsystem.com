@@ -24,11 +24,11 @@ const Heading = {
 
 const Link = {
   baseStyle: (props) => ({
-    color: mode("pink.500", "pink.500")(props),
+    color: mode("primary.500", "primary.500")(props),
     cursor: "pointer",
     fontWeight: "semibold",
     _hover: {
-      color: mode("pink.600", "pink.400")(props),
+      color: mode("primary.600", "primary.400")(props),
       textDecoration: "none"
     }
   }),

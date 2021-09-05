@@ -8,25 +8,6 @@ import { Flex, Heading, IconButton, Link, Stack, useColorMode } from '@chakra-ui
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { Logomark } from 'components/elements'
 
-// import { InstagramIcon, TwitterIcon } from "../icons"
-
-// const NavIcon = ({ children, href, ...rest }) => {
-//   const { colorMode } = useColorMode()
-//   return (
-//     <Link 
-//       color={colorMode === "dark" ? "gray.400" : "gray.500"}
-//       display="flex"
-//       href={href}
-//       isExternal={true}
-//       px={1}
-//       py={2}
-//       {...rest}
-//     >
-//       {children}
-//     </Link>
-//   )
-// }
-
 const NavLink = ({ children, href, ...rest }) => {
   const { colorMode } = useColorMode()
   const router = useRouter()
@@ -73,10 +54,6 @@ export const Header = memo(() => {
 
         <NavLink href="/about">
           About
-        </NavLink>
-
-        <NavLink href="/team">
-          Team
         </NavLink>
 
         <NavLink href="/apply">

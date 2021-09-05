@@ -1,19 +1,36 @@
 import { default as RouterLink } from 'next/link'
-import { Box, Center, Heading, Link, useColorMode } from '@chakra-ui/react'
+import { Box, Center, Flex, Heading, Link, useColorMode } from '@chakra-ui/react'
 
 export default function HomePage ({ }) {
   const { colorMode } = useColorMode()
   return (
     <Box>
-      <Center
-        // bgColor={colorMode === "dark" ? "gray.800" : "gray.50"}
-        flexDirection="column"
+      <Flex
+        align="center"
+        direction="column"
         minHeight="md"
+        pt={{ base: 12, md: 40 }}
       >
-        <Heading as="h1" fontWeight="medium" mb={1} size="3xl" textAlign="center">
+        <Heading
+          as="h1"
+          fontWeight="medium"
+          mb={1}
+          size="3xl"
+          textAlign="center"
+        >
           A new kind of venture firm
         </Heading>
-        <Heading as="h2" color="gray.700" fontSize="lg" fontWeight="medium" lineHeight={7} maxWidth="lg" my={5} textAlign="center">
+        <Heading
+          as="h2"
+          color={colorMode === "dark" ? "gray.300" : "gray.700"}
+          fontSize="lg"
+          fontWeight="medium"
+          lineHeight={7}
+          maxWidth="lg"
+          my={5}
+          mx="auto"
+          textAlign="center"
+        >
           We're a team of founders and startup veterans who love supporting early-stage founders and their teams.
         </Heading>
         <Center>
@@ -38,7 +55,7 @@ export default function HomePage ({ }) {
             </Link>
           </RouterLink>
         </Center>
-      </Center>
+      </Flex>
     </Box>
   )
 }

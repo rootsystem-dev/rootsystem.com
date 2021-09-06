@@ -1,6 +1,3 @@
-import { default as RouterLink } from 'next/link'
-import { ReactTypeformEmbed } from "react-typeform-embed";
-
 import {
   Box,
   Button,
@@ -24,7 +21,6 @@ export default function ApplyPage ({ }) {
     <>
       <TypeformModal
         isOpen={isOpen}
-        maxWidth="md"
         onClose={onClose}
         url="https://7qnnajeyz16.typeform.com/to/Jnvm4QF7"
       />

@@ -57,7 +57,7 @@ export const Header = memo(() => {
         </NavLink>
 
         <NavLink href="/apply">
-          Apply
+          Fellowship
         </NavLink>
 
         <NavLink href="/contact">

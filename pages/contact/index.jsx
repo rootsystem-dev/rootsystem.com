@@ -24,7 +24,7 @@ export default function ContactPage ({ }) {
           <Widget
             hideFooter={true}
             hideHeaders={true}
-            id="Jnvm4QF7"
+            id="l35rkhJK"
             style={{ height: 400, width: '100%' }}
           />
         </Box>

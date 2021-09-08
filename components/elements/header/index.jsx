@@ -64,24 +64,6 @@ export const Header = memo(() => {
           Contact
         </NavLink>
 
-        {/* <Stack align="center" isInline={true} spacing={1}>
-
-          <NavIcon
-            href="https://twitter.com/foxinthewaves"
-            title="Follow @foxinthewaves on Twitter"
-          >
-            <TwitterIcon />
-          </NavIcon>
-
-          <NavIcon
-            href="https://instagram.com/foxinthewaves"
-            title="Follow @foxinthewaves on Instagram"
-          >
-            <InstagramIcon />
-          </NavIcon>
-
-        </Stack> */}
-
         <IconButton 
           aria-label={`Switch to ${colorMode === "dark" ? "light" : "dark"} mode`}
           icon={

@@ -1,4 +1,3 @@
-import { default as RouterLink } from 'next/link'
 import { Widget } from '@typeform/embed-react'
 
 import {
@@ -21,11 +20,12 @@ export default function ContactPage ({ }) {
           Contact
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
-          <Widget
+          <Widget 
             hideFooter={true}
             hideHeaders={true}
             id="l35rkhJK"
-            style={{ height: 400, width: '100%' }}
+            style={{ height: 600, width: '100%' }}
+            source="rootsystem.com"
           />
         </Box>
       </Box>

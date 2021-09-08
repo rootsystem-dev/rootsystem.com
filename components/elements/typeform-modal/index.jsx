@@ -15,7 +15,7 @@ export const TypeformModal = memo(({ title, url, ...rest }) => {
   return (
     <Modal {...rest}>
       <ModalOverlay />
-      <ModalContent borderRadius={2} maxWidth="2xl">
+      <ModalContent borderRadius={2} maxWidth="3xl">
         {title && <ModalHeader>{title}</ModalHeader>}
         <ModalCloseButton color="gray.700" zIndex={999} />
         <ModalBody p={0}>

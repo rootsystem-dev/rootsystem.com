@@ -32,8 +32,9 @@ export default function ContactPage ({ }) {
           as="h1"
           fontSize="5xl"
           fontWeight="medium"
-          lineHeight={10}
+          lineHeight="3xl"
           mb={10}
+          px={{ base: 10, sm: 0 }}
           size="3xl"
           textAlign="center"
         >

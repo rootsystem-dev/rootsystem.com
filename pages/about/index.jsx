@@ -22,8 +22,9 @@ export default function AboutPage ({ }) {
           as="h1"
           fontSize="5xl"
           fontWeight="medium"
-          lineHeight={10}
+          lineHeight="3xl"
           mb={10}
+          px={{ base: 10, sm: 0 }}
           textAlign="center"
         >
           A new kind of venture firm

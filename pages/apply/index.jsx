@@ -1,3 +1,4 @@
+import Head  from 'next/head'
 import {
   Box,
   Button,
@@ -14,8 +15,17 @@ import { TypeformModal } from 'components'
 export default function ApplyPage ({ }) {
   const { colorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const pageName = 'Fellowship | Root System'
+  const pageDesc = 'Apply to join the first cohort!'
+
   return (
     <>
+      <Head>
+        <title>{pageName}</title>
+        <meta name="description" content={pageDesc} key="site-desc" />
+        <meta property="og:title" content={pageName} key="og-title" />
+        <meta property="og:description" content={pageDesc} key="og-desc" />
+      </Head>
       <TypeformModal
         isOpen={isOpen}
         onClose={onClose}

@@ -2,11 +2,15 @@ import { memo, useCallback, useEffect, useState } from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Global } from '@emotion/react'
 import Head  from 'next/head'
+import { useRouter } from 'next/router'
 
 /* Components */
 import { Box, Flex } from '@chakra-ui/react'
 import { Container, Footer, Header } from 'components/elements'
 import { global, theme } from 'components/theme'
+
+/* Images */
+import SocialCard from '../public/images/rootsystem-card.png'
 
 const AppContainer = memo(({ children }) => {
   const [colorMode, setColorMode] = useState('light')
@@ -45,13 +49,26 @@ const AppContainer = memo(({ children }) => {
 })
 
 export default function App ({ Component, pageProps }) {
+  const router = useRouter()
+  const siteName = 'Root System'
+  const siteDesc = 'We help startup founders de-risk their product/technology by designing & building high-quality software and high-functioning engineering organizations.'
+  const ogImage = `${process.env.NEXT_PUBLIC_BASE_URL}${SocialCard.src}`
+  const ogUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${router.asPath}`
+
   return (
     <>
       <Head>
-        <title>Root System</title>
-        <meta name="Description" content="We help startup founders de-risk their product/technology by designing & building high-quality software and high-functioning engineering organizations." />
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+        <title>{siteName}</title>
+        <meta name="description" content={siteDesc} key="site-desc" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content={siteName} key="og-title" />
+        <meta property="og:description" content={siteDesc} key="og-desc" />
+        <meta property="og:url" content={ogUrl} key="og-url" />
+        <meta property="og:image" content={ogImage} key="og-image" />
+        <meta property="og:site_name" content={siteName} key="og-sitename" />
+        <meta property="og:locale" content="en_US" />
       </Head>
       <ChakraProvider resetCSS theme={theme}>
         <AppContainer>

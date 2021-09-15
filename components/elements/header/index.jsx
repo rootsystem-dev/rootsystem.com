@@ -1,79 +1,172 @@
 
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { default as RouterLink } from 'next/link'
 import { useRouter } from 'next/router'
 
 // Components
-import { Flex, Heading, IconButton, Link, Stack, useColorMode } from '@chakra-ui/react'
-import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import {
+  Flex,
+  Heading,
+  IconButton,
+  Link,
+  Stack,
+  useBreakpointValue,
+  useColorMode,
+  useDisclosure
+} from '@chakra-ui/react'
+import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { Logomark } from 'components/elements'
 
-const NavLink = ({ children, href, ...rest }) => {
-  const { colorMode } = useColorMode()
+const routes = [
+  { label: 'About', path: '/about' },
+  { label: 'Fellowship', path: '/apply' },
+  { label: 'Contact', path: '/contact' },
+]
+
+const DesktopNav = memo(({ colorMode }) => {
   const router = useRouter()
-  const isActive = router.pathname.indexOf(href) > -1
   return (
-    <RouterLink href={href}>
-      <Link
-        color={colorMode === "dark" ? "gray.200" : "gray.600"}
-        fontSize="sm"
-        fontWeight={isActive ? "bold" : "normal"}
-        lineHeight={6}
-        py={2}
-        textTransform="uppercase"
-        {...rest}
-      >
-        {children}
-      </Link>
-    </RouterLink>
+    <>
+      {routes.map((route, index) => (
+        <RouterLink href={route.path} key={index}>
+          <Link
+            color={colorMode === "dark" ? "gray.200" : "gray.600"}
+            fontSize="sm"
+            fontWeight={
+              router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
+            }
+            lineHeight={6}
+            py={2}
+            textTransform="uppercase"
+          >
+            {route.label}
+          </Link>
+        </RouterLink>
+      ))}
+    </>
   )
-}
+})
+
+const MobileNav = memo(({ colorMode }) => {
+  const router = useRouter()
+  return (
+    <Flex
+      align="center"
+      bgColor={colorMode === 'dark' ? 'gray.900' : 'white'}
+      bottom={0}
+      direction="column"
+      height="100vh"
+      justify="center"
+      left={0}
+      p={10}
+      position="absolute"
+      right={0}
+      top={0}
+      zIndex={1}
+    >
+      {routes.map((route, index) => (
+        <RouterLink href={route.path} key={index}>
+          <Link
+            color={
+              colorMode === "dark" ? "gray.200" : "gray.700"
+            }
+            display="block"
+            fontFamily="heading"
+            fontSize="2xl"
+            fontWeight={
+              router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
+            }
+            lineHeight={8}
+            py={4}
+            textTransform="uppercase"
+          >
+            {route.label}
+          </Link>
+        </RouterLink>
+      ))}      
+    </Flex>
+  )
+})
 
 export const Header = memo(() => {
   const { colorMode, toggleColorMode } = useColorMode()
+  const { isOpen, onClose, onToggle } = useDisclosure()
+  const router = useRouter()
+  const viewport = useBreakpointValue({ base: 'mobile', md: 'desktop' })
+
+  useEffect(() => {
+    if (isOpen) {
+      onClose()
+    }
+  }, [router.asPath])
+
   return (
-    <Flex align="center" as="header" justify="space-between" py={[ 3, 7 ]}>
-      <RouterLink href="/">
-        <Link
-          color={colorMode === "dark" ? "white" : "gray.800"}
-          display="flex"
-          alignItems="center"
-        >
-          <Logomark boxSize={16} />
-          <Heading
-            as="span"
-            letterSpacing="tighter"
-            size="lg"
+    <>
+      {viewport === 'mobile' && isOpen && (
+        <MobileNav colorMode={colorMode} />
+      )}
+
+      <Flex
+        align="center"
+        as="header"
+        justify="space-between"
+        py={[ 3, 7 ]}
+        zIndex={2}
+      >
+        <RouterLink href="/">
+          <Link
+            color={colorMode === "dark" ? "white" : "gray.800"}
+            display="flex"
+            alignItems="center"
           >
-            Root System
-          </Heading>
-        </Link>
-      </RouterLink>
+            <Logomark boxSize={16} />
+            <Heading
+              as="span"
+              letterSpacing="tighter"
+              size="lg"
+            >
+              Root System
+            </Heading>
+          </Link>
+        </RouterLink>
 
-      <Stack align="center" isInline={true} justify="flex-end" spacing={6}>
-
-        <NavLink href="/about">
-          About
-        </NavLink>
-
-        <NavLink href="/apply">
-          Fellowship
-        </NavLink>
-
-        <NavLink href="/contact">
-          Contact
-        </NavLink>
-
-        <IconButton 
-          aria-label={`Switch to ${colorMode === "dark" ? "light" : "dark"} mode`}
-          icon={
-            colorMode === "dark" ? <MoonIcon /> : <SunIcon />
+        <Stack
+          align="center"
+          isInline={true}
+          justify="flex-end"
+          spacing={
+            viewport === 'mobile' ? 2 : 6 
           }
-          onClick={toggleColorMode}
-          variant="ghost"
-          _focus={{ outline: 0 }}
-        />
-      </Stack>
-    </Flex>
+        >
+          {viewport === 'desktop' && (
+            <DesktopNav colorMode={colorMode} />
+          )}
+
+          <IconButton 
+            aria-label={
+              `Switch to ${colorMode === "dark" ? "light" : "dark"} mode`
+            }
+            icon={
+              colorMode === "dark" ? <MoonIcon /> : <SunIcon />
+            }
+            onClick={toggleColorMode}
+            variant="ghost"
+            _focus={{ outline: 0 }}
+          />
+
+          {viewport === 'mobile' && (
+            <IconButton
+              aria-label={``}
+              icon={
+                <HamburgerIcon />
+              }
+              onClick={onToggle}
+              variant="ghost"
+              _focus={{ outline: 0 }}
+            />
+          )}
+        </Stack>
+      </Flex>
+    </>
   )
 })

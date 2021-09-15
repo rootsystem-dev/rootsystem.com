@@ -13,9 +13,10 @@ export default function HomePage ({ }) {
       >
         <Heading
           as="h1"
+          fontSize="5xl"
           fontWeight="medium"
+          lineHeight={10}
           mb={1}
-          size="3xl"
           textAlign="center"
         >
           A new kind of venture firm

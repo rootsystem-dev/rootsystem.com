@@ -6,6 +6,7 @@ import {
   Button,
   Heading,
   Text,
+  useBreakpointValue,
   useColorMode
 } from '@chakra-ui/react'
 
@@ -13,6 +14,7 @@ export default function ContactPage ({ }) {
   const { colorMode } = useColorMode()
   const pageName = 'Contact Us | Root System'
   const pageDesc = 'Questions, feedback, or just saying hello? Let\'s chat.'
+  const viewport = useBreakpointValue({ base: 'mobile', md: 'desktop' })
 
   return (
     <>
@@ -26,7 +28,15 @@ export default function ContactPage ({ }) {
         mx="auto"
         pt={{ base: 12, md: 40 }}
       >
-        <Heading as="h1" fontWeight="medium" mb={10} size="3xl" textAlign="center">
+        <Heading
+          as="h1"
+          fontSize="5xl"
+          fontWeight="medium"
+          lineHeight={10}
+          mb={10}
+          size="3xl"
+          textAlign="center"
+        >
           Contact
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
@@ -35,7 +45,10 @@ export default function ContactPage ({ }) {
             hideHeaders={true}
             id="l35rkhJK"
             source="rootsystem.com"
-            style={{ height: 600, width: '100%' }}
+            style={{ 
+              height: viewport === 'mobile' ? 400 : 600,
+              width: '100%'
+            }}
           />
         </Box>
       </Box>

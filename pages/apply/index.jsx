@@ -35,7 +35,14 @@ export default function ApplyPage ({ }) {
         mx="auto"
         pt={{ base: 12, md: 40 }}
       >
-        <Heading as="h1" fontWeight="medium" mb={10} size="3xl" textAlign="center">
+        <Heading
+          as="h1"
+          fontSize="5xl"
+          fontWeight="medium"
+          lineHeight={10}
+          mb={10}
+          textAlign="center"
+        >
           A new kind of fellowship
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
@@ -77,7 +84,7 @@ export default function ApplyPage ({ }) {
           </Heading>
           <UnorderedList fontSize="md" mb={6} pl={2}>
             <ListItem>
-              We're a group of veteran engineering &amp; product leaders who's spent our careers in early stage startups (years 0-5).
+              We're a group of veteran engineering &amp; product leaders who have spent our careers in early stage startups (years 0-5).
             </ListItem>
             <ListItem>
               We're building a structured program for people like you.

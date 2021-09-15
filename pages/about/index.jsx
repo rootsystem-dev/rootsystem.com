@@ -18,7 +18,14 @@ export default function AboutPage ({ }) {
         mx="auto"
         pt={{ base: 12, md: 40 }}
       >
-        <Heading as="h1" fontWeight="medium" mb={10} size="3xl" textAlign="center">
+        <Heading
+          as="h1"
+          fontSize="5xl"
+          fontWeight="medium"
+          lineHeight={10}
+          mb={10}
+          textAlign="center"
+        >
           A new kind of venture firm
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">

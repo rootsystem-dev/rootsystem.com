@@ -20,7 +20,7 @@ export default function HomePage ({ }) {
           px={{ base: 10, sm: 0 }}
           textAlign="center"
         >
-          A new kind of venture firm
+          A sweat equity company
         </Heading>
         <Heading
           as="h2"

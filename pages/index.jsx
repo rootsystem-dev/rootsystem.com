@@ -33,7 +33,7 @@ export default function HomePage ({ }) {
           mx="auto"
           textAlign="center"
         >
-          We're a team of founders and startup veterans who love supporting early-stage founders and their teams.
+          We're a team of founders and startup veterans who love supporting early-stage entrepreneurs and their teams.
         </Heading>
         <Center>
           <RouterLink href="/about">

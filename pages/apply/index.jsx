@@ -88,7 +88,10 @@ export default function ApplyPage ({ }) {
               We're a group of veteran engineering &amp; product leaders who have spent our careers in early stage startups (years 0-5).
             </ListItem>
             <ListItem>
-              We're building a structured program for people like you.
+              We're also a venture firm with a portfolio of early stage startups (eight and counting!), some of whom are looking to hire someone like you.
+            </ListItem>
+            <ListItem>
+              We're building a structured program for people like you to learn how to level-up and become true engineering leaders.
             </ListItem>
             <ListItem>
               The program doesn't cost money. In fact, we'll pay you to be in it.

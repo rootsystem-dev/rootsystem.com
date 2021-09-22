@@ -38,3 +38,27 @@ module.exports = extend(baseConfig).withPlugins([
   // }],
   [withBundleAnalyzer]
 ])
+
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: '/fellowship',
+        destination: '/apply',
+        permanent: true,
+      },
+    ]
+  },
+}
+
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: '/residency',
+        destination: '/apply',
+        permanent: true,
+      },
+    ]
+  },
+}

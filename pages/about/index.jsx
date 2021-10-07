@@ -31,10 +31,10 @@ export default function AboutPage ({ }) {
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
           <Text mb={4}>
-            We are a group of veteran founders, CTOs, developers, and product designers, and we work at steeply discounted rates in exchange for stock in the companies we serve. This means we are incentivized to do a <em>very</em> good job.
+            We are a group of veteran founders, CTOs, developers, and product designers.  We do consulting for early-stage startups, and we work at steeply discounted rates in exchange for stock in the companies we serve. This "skin in the game" means we are incentivized to do a <em>very</em> good job.
           </Text>
           <Text mb={4}>
-            We help startup founders de-risk their products and technology by designing &amp; building high-quality software and high-functioning engineering organizations. We also help those founders raise capital and recruit full-time staff to replace us before we move on.
+            We help startup founders de-risk their products and technology by designing &amp; building high-quality software and high-functioning engineering organizations. We also help those founders develop markets, raise capital, and recruit + mentor full-time staff.
           </Text>
           <Text mb={4}>
             You can think of Root System as a seed stage venture firm, but one that invests sweat and brainpower and code (which are highly differentiated) instead of investing cash (which is not); or if you prefer, think of us as an accelerator for your product itself.

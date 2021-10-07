@@ -19,7 +19,7 @@ import { Logomark } from 'components/elements'
 
 const routes = [
   { label: 'About', path: '/about' },
-  { label: 'Fellowship', path: '/apply' },
+  { label: 'Residency', path: '/apply' },
   { label: 'Contact', path: '/contact' },
 ]
 

@@ -15,7 +15,7 @@ import { TypeformModal } from 'components'
 export default function ApplyPage ({ }) {
   const { colorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const pageName = 'Fellowship | Root System'
+  const pageName = 'Residency | Root System'
   const pageDesc = 'Apply to join the first cohort!'
 
   return (

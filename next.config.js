@@ -47,18 +47,11 @@ module.exports = {
         destination: '/apply',
         permanent: true,
       },
-    ]
-  },
-}
-
-module.exports = {
-  async redirects() {
-    return [
       {
         source: '/residency',
         destination: '/apply',
         permanent: true,
-      },
+      }
     ]
   },
 }

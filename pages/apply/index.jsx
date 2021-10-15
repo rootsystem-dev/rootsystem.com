@@ -10,7 +10,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 
-import { TypeformModal } from 'components'
+import { TypeformModal } from '@/components'
 
 export default function ApplyPage ({ }) {
   const { colorMode } = useColorMode()

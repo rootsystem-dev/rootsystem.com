@@ -7,6 +7,20 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const baseConfig = (phase, { defaultConfig }) => {
   return {
     poweredByHeader: false,
+    redirects() {
+      return [
+        {
+          source: '/fellowship',
+          destination: '/apply',
+          permanent: true,
+        },
+        {
+          source: '/residency',
+          destination: '/apply',
+          permanent: true,
+        }
+      ]
+    },
     webpack: (config, { isServer }) => {
       config.module.rules.push({
         test: /\.(ico|svg|eot|ttf|woff|woff2)$/,
@@ -26,20 +40,3 @@ const baseConfig = (phase, { defaultConfig }) => {
 module.exports = extend(baseConfig).withPlugins([
   [withBundleAnalyzer]
 ])
-
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: '/fellowship',
-        destination: '/apply',
-        permanent: true,
-      },
-      {
-        source: '/residency',
-        destination: '/apply',
-        permanent: true,
-      }
-    ]
-  },
-}

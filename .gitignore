@@ -1,5 +1,11 @@
-# System
-.DS_Store
+# Dots
+.env
+.ignore
+.mdx-data
+.next
+
+# Dependencies
+node_modules/
 
 # Logs
 logs
@@ -8,14 +14,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Dependency directories
-node_modules/
-
-# dotenv environment variables file
-.env
-
-# Next.js build output
-.next
-
-# MDX build step
-.mdx-data
+# System
+.DS_Store

@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 
 /* Components */
 import { Box, Flex } from '@chakra-ui/react'
-import { Container, Footer, Header } from 'components/elements'
-import { global, theme } from 'components/theme'
+import { Container, Footer, Header } from '@/components/elements'
+import { global, theme } from '@/components/theme'
 
 /* Images */
 import SocialCard from '../public/images/rootsystem-card.png'

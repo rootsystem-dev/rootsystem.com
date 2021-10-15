@@ -15,7 +15,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { Logomark } from 'components/elements'
+import { Logomark } from '@/components/elements'
 
 const routes = [
   { label: 'About', path: '/about' },

@@ -99,7 +99,7 @@ export default function ApplyPage ({ }) {
           </UnorderedList>
 
           <Text fontSize="md" mb={8}>
-            The program will run November 1st, 2021, through March 1st, 2022, and will include components of apprenticeship, mentorship, and job placement.
+            The program will run January through March of 2022, and will include components of apprenticeship, mentorship, and job placement.
           </Text>
           
           <Button mb={12} onClick={onOpen}>

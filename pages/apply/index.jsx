@@ -44,7 +44,7 @@ export default function ApplyPage ({ }) {
           px={{ base: 10, sm: 0 }}
           textAlign="center"
         >
-          A new kind of fellowship
+          A New Kind of Residency
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
           <Heading
@@ -99,7 +99,7 @@ export default function ApplyPage ({ }) {
           </UnorderedList>
 
           <Text fontSize="md" mb={8}>
-            The program will run January through March of 2022, and will include components of apprenticeship, mentorship, and job placement.
+            The Residency program will start January, 2022 and run for three months.  The program will include components of apprenticeship, mentorship, and job placement.
           </Text>
           
           <Button mb={12} onClick={onOpen}>

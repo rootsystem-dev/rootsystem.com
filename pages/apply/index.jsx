@@ -16,7 +16,7 @@ export default function ApplyPage ({ }) {
   const { colorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const pageName = 'Residency | Root System'
-  const pageDesc = 'Apply to join the first cohort!'
+  const pageDesc = 'Apply to join the second cohort!'
 
   return (
     <>
@@ -88,7 +88,7 @@ export default function ApplyPage ({ }) {
               We're a group of veteran engineering &amp; product leaders who have spent our careers in early stage startups (years 0-5).
             </ListItem>
             <ListItem>
-              We're also a venture firm with a portfolio of early stage startups (eight and counting!), some of whom are looking to hire someone like you.
+              We're also a venture firm with a portfolio of early stage startups (twelve and counting!), some of whom are looking to hire someone like you.
             </ListItem>
             <ListItem>
               We're building a structured program for people like you to learn how to level-up and become true engineering leaders.
@@ -99,11 +99,11 @@ export default function ApplyPage ({ }) {
           </UnorderedList>
 
           <Text fontSize="md" mb={8}>
-            The Residency program will start January, 2022 and run for three months.  The program will include components of apprenticeship, mentorship, and job placement.
+            The Residency program will start in September, 2022 and run for three months.  The program will include components of apprenticeship, mentorship, and job placement.
           </Text>
           
           <Button mb={12} onClick={onOpen}>
-            Apply to join the first cohort
+            Apply to join the second cohort
           </Button>
         </Box>
       </Box>

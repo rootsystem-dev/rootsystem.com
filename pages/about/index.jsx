@@ -27,7 +27,7 @@ export default function AboutPage ({ }) {
           px={{ base: 10, sm: 0 }}
           textAlign="center"
         >
-          A new kind of venture firm
+          A new kind of consulting firm
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
           <Text mb={4}>

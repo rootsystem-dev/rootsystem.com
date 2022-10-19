@@ -44,7 +44,7 @@ export default function ApplyPage ({ }) {
           px={{ base: 10, sm: 0 }}
           textAlign="center"
         >
-          A New Kind of Residency
+          Join our Engineer in Residence program
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
           <Heading

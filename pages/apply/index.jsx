@@ -16,7 +16,7 @@ export default function ApplyPage ({ }) {
   const { colorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const pageName = 'Residency | Root System'
-  const pageDesc = 'Apply to join the second cohort!'
+  const pageDesc = 'Apply to join the new cohort!'
 
   return (
     <>
@@ -64,7 +64,7 @@ export default function ApplyPage ({ }) {
               You're a software engineer, 5+ years into your career.
             </ListItem>
             <ListItem>
-              You like writing code, but have already figured out that you don't want to be a career individual contributor or middle manager.
+              You like writing code, but have already figured out that you don't want to be an individual contributor <em>or</em> middle manager forever.
             </ListItem>
             <ListItem>
               You see people at startups with roles like CTO, VP Engineering, or Chief Architect. You can see yourself in that sort of role one day, but you feel unclear on how to get there.
@@ -85,7 +85,7 @@ export default function ApplyPage ({ }) {
           </Heading>
           <UnorderedList fontSize="md" mb={6} pl={2}>
             <ListItem>
-              We're a group of veteran engineering &amp; product leaders who have spent our careers in early stage startups (years 0-5).
+              We're a group of veteran engineering &amp; product leaders who have spent our careers building early stage startups.
             </ListItem>
             <ListItem>
               We're also a venture firm with a portfolio of early stage startups (twelve and counting!), some of whom are looking to hire someone like you.
@@ -99,11 +99,11 @@ export default function ApplyPage ({ }) {
           </UnorderedList>
 
           <Text fontSize="md" mb={8}>
-            The Residency program will start in September, 2022 and run for three months.  The program will include components of apprenticeship, mentorship, and job placement.
+            The Residency program will start in January, 2023 and run for three months.  The program will include components of apprenticeship, mentorship, and job placement.
           </Text>
           
           <Button mb={12} onClick={onOpen}>
-            Apply to join the second cohort
+            Apply to join the cohort
           </Button>
         </Box>
       </Box>

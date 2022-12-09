@@ -44,7 +44,7 @@ export default function ApplyPage ({ }) {
           px={{ base: 10, sm: 0 }}
           textAlign="center"
         >
-          Join our Engineer-in-Residence program
+          Join our Team!
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
           <Heading
@@ -61,13 +61,13 @@ export default function ApplyPage ({ }) {
           </Heading>
           <UnorderedList fontSize="md" mb={6} pl={2}>
             <ListItem>
-              You're a software engineer, 5+ years into your career.
+              You're a software engineer, product manager, or growth hacker.
             </ListItem>
             <ListItem>
-              You like writing code, but have already figured out that you don't want to be an individual contributor <em>or</em> middle manager forever.
+              You're interested in working fractionally, for early-stage an early stage company or two, and earning diversified equity in companies across our portfolio.
             </ListItem>
             <ListItem>
-              You see people at startups with roles like CTO, VP Engineering, or Chief Architect. You can see yourself in that sort of role one day, but you feel unclear on how to get there.
+              Perhaps you're a freelancer, and you're willing to take a lower cash rate (or even forgo cash entirely) to get more equity.
             </ListItem>
           </UnorderedList>
 
@@ -88,23 +88,13 @@ export default function ApplyPage ({ }) {
               We're a group of veteran engineering &amp; product leaders who have spent our careers building early stage startups.
             </ListItem>
             <ListItem>
-              We're also a venture firm with a portfolio of early stage startups (twelve and counting!), some of whom are looking to hire someone like you.
+              We're also a venture firm with a portfolio of early stage startups, some of whom are looking to hire someone like you.
             </ListItem>
             <ListItem>
-              We're building a structured program for people like you to learn how to level-up and become true engineering leaders.
-            </ListItem>
-            <ListItem>
-              The program doesn't cost money. In fact, we'll pay you to be in it.
+              We're hiring!  Just send a cover letter and some combination of a résumé, a portfolio, and your Github & LinkedIn URLs to apply@rootsystem.com :)
             </ListItem>
           </UnorderedList>
 
-          <Text fontSize="md" mb={8}>
-            The Residency program will start in January, 2023 and run for three months.  The program will include components of apprenticeship, mentorship, and job placement.
-          </Text>
-          
-          <Button mb={12} onClick={onOpen}>
-            Apply to join the cohort
-          </Button>
         </Box>
       </Box>
     </>

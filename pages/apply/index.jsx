@@ -94,7 +94,10 @@ export default function ApplyPage ({ }) {
               We're also a venture firm with a portfolio of early stage startups, some of whom are looking to hire someone like you.
             </ListItem>
             <ListItem>
-              We're hiring!  Just send a cover letter and some combination of a résumé, a portfolio, and your Github & LinkedIn URLs to <strong>apply@rootsystem.com</strong>  &#128516; 
+              We're hiring!  &#128516;
+            </ListItem>
+            <ListItem>
+              Just send a cover letter and some combination of a résumé, a portfolio, and links to your GitHub/LinkedIn to:  <strong>apply@rootsystem.com</strong> 
             </ListItem>
           </UnorderedList>
 

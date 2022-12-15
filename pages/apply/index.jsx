@@ -64,7 +64,10 @@ export default function ApplyPage ({ }) {
               You're a software engineer, product manager, or growth hacker.
             </ListItem>
             <ListItem>
-              You're interested in working fractionally, for early-stage an early stage company or two, and earning diversified equity in companies across our portfolio.
+              You're interested in working fractionally, for an early-stage company two.
+            </ListItem>
+            <ListItem>
+              You want to and earning diversified equity in companies across our portfolio.
             </ListItem>
             <ListItem>
               Perhaps you're a freelancer, and you're willing to take a lower cash rate (or even forgo cash entirely) to get more equity.
@@ -91,7 +94,7 @@ export default function ApplyPage ({ }) {
               We're also a venture firm with a portfolio of early stage startups, some of whom are looking to hire someone like you.
             </ListItem>
             <ListItem>
-              We're hiring!  Just send a cover letter and some combination of a résumé, a portfolio, and your Github & LinkedIn URLs to apply@rootsystem.com :)
+              We're hiring!  Just send a cover letter and some combination of a résumé, a portfolio, and your Github & LinkedIn URLs to <strong>apply@rootsystem.com</strong>  &#128516; 
             </ListItem>
           </UnorderedList>
 

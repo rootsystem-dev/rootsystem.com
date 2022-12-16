@@ -67,7 +67,7 @@ export default function ApplyPage ({ }) {
               You're interested in working fractionally, for an early-stage company – or two!
             </ListItem>
             <ListItem>
-              You curious about earning diversified equity in companies across our portfolio – not just the one you're working on.
+              You are curious about earning diversified equity in companies across our portfolio – not just the one you're working on.
             </ListItem>
             <ListItem>
               Perhaps you're a freelancer, and you're willing to take a lower cash rate (or even forgo cash entirely) to get more equity.

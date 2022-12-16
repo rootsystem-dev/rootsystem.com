@@ -64,10 +64,10 @@ export default function ApplyPage ({ }) {
               You're a software engineer, product manager, or growth hacker.
             </ListItem>
             <ListItem>
-              You're interested in working fractionally, for an early-stage company two.
+              You're interested in working fractionally, for an early-stage company – or two!
             </ListItem>
             <ListItem>
-              You want to and earning diversified equity in companies across our portfolio.
+              You curious about earning diversified equity in companies across our portfolio – not just the one you're working on.
             </ListItem>
             <ListItem>
               Perhaps you're a freelancer, and you're willing to take a lower cash rate (or even forgo cash entirely) to get more equity.

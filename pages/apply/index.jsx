@@ -44,7 +44,7 @@ export default function ApplyPage ({ }) {
           px={{ base: 10, sm: 0 }}
           textAlign="center"
         >
-          Join our Team!
+          Join our team!
         </Heading>
         <Box lineHeight={7} maxWidth="lg" mx="auto">
           <Heading

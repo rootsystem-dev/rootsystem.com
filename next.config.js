@@ -6,7 +6,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const baseConfig = (phase, { defaultConfig }) => {
   return {
-    output: 'export',
     poweredByHeader: false,
     webpack: (config, { isServer }) => {
       config.module.rules.push({

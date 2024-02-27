@@ -1,4 +1,3 @@
-import { default as RouterLink } from 'next/link'
 import Head  from 'next/head'
 
 import { Box, Heading, Link, Text } from '@chakra-ui/react'
@@ -40,15 +39,14 @@ export default function AboutPage ({ }) {
             You can think of Root System as a seed stage venture firm, but one that invests sweat and brainpower and code (which are highly differentiated) instead of investing cash (although we do that too);  or if you prefer, think of us as an accelerator for your product itself.
           </Text>
           <Text mb={12}>
-            <RouterLink href="/contact">
-              <Link
-                fontSize="md"
-                fontWeight="bold"
-                lineHeight={5}
-              >
-                Get in touch
-              </Link>
-            </RouterLink> or just email us, partners@rootsystem.com
+            <Link
+              href="/contact"
+              fontSize="md"
+              fontWeight="bold"
+              lineHeight={5}
+            >
+              Get in touch
+            </Link> or just email us, partners@rootsystem.com
           </Text>
         </Box>
       </Box>

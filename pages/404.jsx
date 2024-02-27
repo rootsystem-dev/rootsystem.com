@@ -1,5 +1,4 @@
 import Head from "next/head"
-import { default as RouterLink } from "next/link"
 
 /* Components */
 import { Container, Link, Text } from "@chakra-ui/react"
@@ -15,9 +14,7 @@ export default function NotFound () {
           Page not found
         </Text>
         <Text textAlign="center">
-          <RouterLink href="/">
-            <Link color="pink.500">Let's go home</Link>
-          </RouterLink>
+          <Link href="/" color="pink.500">Let's go home</Link>
         </Text>
       </Container>
     </>

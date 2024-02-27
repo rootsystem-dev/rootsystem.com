@@ -1,6 +1,5 @@
 
 import { memo, useEffect } from 'react'
-import { default as RouterLink } from 'next/link'
 import { useRouter } from 'next/router'
 
 // Components
@@ -28,20 +27,20 @@ const DesktopNav = memo(({ colorMode }) => {
   return (
     <>
       {routes.map((route, index) => (
-        <RouterLink href={route.path} key={index}>
-          <Link
-            color={colorMode === "dark" ? "gray.200" : "gray.600"}
-            fontSize="sm"
-            fontWeight={
-              router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
-            }
-            lineHeight={6}
-            py={2}
-            textTransform="uppercase"
-          >
-            {route.label}
-          </Link>
-        </RouterLink>
+        <Link
+          href={route.path}
+          key={index}
+          color={colorMode === "dark" ? "gray.200" : "gray.600"}
+          fontSize="sm"
+          fontWeight={
+            router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
+          }
+          lineHeight={6}
+          py={2}
+          textTransform="uppercase"
+        >
+          {route.label}
+        </Link>
       ))}
     </>
   )
@@ -65,24 +64,24 @@ const MobileNav = memo(({ colorMode }) => {
       zIndex={1}
     >
       {routes.map((route, index) => (
-        <RouterLink href={route.path} key={index}>
-          <Link
-            color={
-              colorMode === "dark" ? "gray.200" : "gray.700"
-            }
-            display="block"
-            fontFamily="heading"
-            fontSize="2xl"
-            fontWeight={
-              router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
-            }
-            lineHeight={8}
-            py={4}
-            textTransform="uppercase"
-          >
-            {route.label}
-          </Link>
-        </RouterLink>
+        <Link
+          href={route.path}
+          key={index}
+          color={
+            colorMode === "dark" ? "gray.200" : "gray.700"
+          }
+          display="block"
+          fontFamily="heading"
+          fontSize="2xl"
+          fontWeight={
+            router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
+          }
+          lineHeight={8}
+          py={4}
+          textTransform="uppercase"
+        >
+          {route.label}
+        </Link>
       ))}      
     </Flex>
   )
@@ -113,22 +112,21 @@ export const Header = memo(() => {
         py={[ 3, 7 ]}
         zIndex={2}
       >
-        <RouterLink href="/">
-          <Link
-            color={colorMode === "dark" ? "white" : "gray.800"}
-            display="flex"
-            alignItems="center"
+        <Link
+          href="/"
+          color={colorMode === "dark" ? "white" : "gray.800"}
+          display="flex"
+          alignItems="center"
+        >
+          <Logomark boxSize={16} />
+          <Heading
+            as="span"
+            letterSpacing="tighter"
+            size="lg"
           >
-            <Logomark boxSize={16} />
-            <Heading
-              as="span"
-              letterSpacing="tighter"
-              size="lg"
-            >
-              Root System
-            </Heading>
-          </Link>
-        </RouterLink>
+            Root System
+          </Heading>
+        </Link>
 
         <Stack
           align="center"

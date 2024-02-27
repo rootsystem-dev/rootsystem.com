@@ -10,7 +10,3 @@ yarn run dev
 
 open http://localhost:3000
 ```
-
-##### TODO 2/23/24
-
-There is a [security vulnerability](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported) that should be addressed at some point. But for now, node `v16.20.0` (lts/gallium) can be used as a workaround.

@@ -1,3 +1,6 @@
+# Build Output
+out/
+
 # Dots
 .env
 .ignore

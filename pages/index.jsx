@@ -1,4 +1,3 @@
-import { default as RouterLink } from 'next/link'
 import { Box, Center, Flex, Heading, Link, useColorMode } from '@chakra-ui/react'
 
 export default function HomePage ({ }) {
@@ -36,26 +35,24 @@ export default function HomePage ({ }) {
           We're a team of founders and startup veterans who love supporting early-stage entrepreneurs and their teams.
         </Heading>
         <Center>
-          <RouterLink href="/about">
-            <Link
-              fontSize="md"
-              fontWeight="bold"
-              lineHeight={5}
-              mr={2}
-            >
+          <Link 
+            href="/about"
+            fontSize="md"
+            fontWeight="bold"
+            lineHeight={5}
+            mr={2}
+          >
               Learn more
-            </Link>
-          </RouterLink>
-          <RouterLink href="/contact">
-            <Link
-              fontSize="md"
-              fontWeight="bold"
-              lineHeight={5}
-              ml={2}
-            >
+          </Link>
+          <Link 
+            href="/contact"
+            fontSize="md"
+            fontWeight="bold"
+            lineHeight={5}
+            ml={2}
+          >
               Get in touch
-            </Link>
-          </RouterLink>
+          </Link>
         </Center>
       </Flex>
     </Box>

@@ -42,6 +42,17 @@ const DesktopNav = memo(({ colorMode }) => {
           {route.label}
         </Link>
       ))}
+      <Link
+        href="https://insights.rootsystem.com"
+        color={colorMode === "dark" ? "gray.200" : "gray.600"}
+        fontSize="sm"
+        fontWeight="normal"
+        lineHeight={6}
+        py={2}
+        textTransform="uppercase"
+      >
+        Insights
+      </Link>
     </>
   )
 })

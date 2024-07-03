@@ -19,3 +19,9 @@ yarn-error.log*
 
 # System
 .DS_Store
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr

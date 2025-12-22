@@ -12,7 +12,6 @@ import {
     useColorModeValue,
 } from "@/components/ui/color-mode";
 import {
-    ClientOnly,
     Flex,
     Heading,
     IconButton,
@@ -138,32 +137,29 @@ export const Header = memo(() => {
           alignItems="center"
           suppressHydrationWarning
         >
-          <ClientOnly>
-            <Logomark boxSize={16} />
-          </ClientOnly>
+          <Logomark boxSize={16} />
           <Heading as="span" letterSpacing="tighter" size="lg">
             Root System
           </Heading>
         </Link>
 
-        <Stack
+        <Flex
           align="center"
-          isInline={true}
           justify="flex-end"
-          spacing={viewport === "mobile" ? 2 : 6}
+          gap={viewport === "mobile" ? 2 : 6}
         >
           {viewport === "desktop" && <DesktopNav colorMode={colorMode} />}
 
-          <ClientOnly>
-            <IconButton
-              aria-label={toggleLabel}
-              icon={<ColorModeIcon />}
-              onClick={toggleColorMode}
-              variant="ghost"
-              _focus={{ outline: 0 }}
-              suppressHydrationWarning
-            />
-          </ClientOnly>
+          <IconButton
+            aria-label={toggleLabel}
+            onClick={toggleColorMode}
+            variant="ghost"
+            size="md"
+            _focus={{ outline: 0 }}
+            suppressHydrationWarning
+          >
+            <ColorModeIcon />
+          </IconButton>
 
           {viewport === "mobile" && (
             <IconButton
@@ -174,7 +170,7 @@ export const Header = memo(() => {
               _focus={{ outline: 0 }}
             />
           )}
-        </Stack>
+        </Flex>
       </Flex>
     </>
   );

@@ -1,12 +1,23 @@
-import { memo } from 'react'
+'use client'
+
+import { memo, useState, useEffect } from 'react'
 import { chakra, useToken } from '@chakra-ui/react'
 import { useColorModeValue } from '@/components/ui/color-mode'
 
 const Logomark = memo(props => {
+  const [mounted, setMounted] = useState(false)
   const [gray, green, white] = useToken('colors', ['gray.700', 'primary.500', 'white'])
   const branches = useColorModeValue(green, white)
   const circles = useColorModeValue(gray, white)
   const roots = useColorModeValue(gray, white)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return <chakra.svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" {...props} />
+  }
 
   return (
     <chakra.svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" suppressHydrationWarning {...props}>

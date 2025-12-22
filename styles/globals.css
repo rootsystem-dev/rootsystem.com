@@ -18,6 +18,10 @@ body {
   line-height: 1.8;
 }
 
+.dark body {
+  color: #e2e8f0;
+}
+
 a {
   color: #178282;
   font-weight: 700;
@@ -31,6 +35,17 @@ a:hover {
   text-decoration-color: #178282;
 }
 
+.dark a {
+  color: #22c55e;
+}
+
+.dark a:active,
+.dark a:focus,
+.dark a:hover {
+  color: #e2e8f0;
+  text-decoration-color: #22c55e;
+}
+
 h1 {
   font-family: 'Montserrat', sans-serif;
   color: #22262a;
@@ -38,6 +53,10 @@ h1 {
   font-weight: 900;
   margin: 0 0 20px;
   padding: 25% 0 0;
+}
+
+.dark h1 {
+  color: #f7fafc;
 }
 
 p {

@@ -1,5 +1,6 @@
 import { default as RouterLink } from 'next/link'
-import { Box, Center, Flex, Heading, Link, useColorMode } from '@chakra-ui/react'
+import { Box, Center, Flex, Heading, Link } from '@chakra-ui/react'
+import { useColorMode } from '@/components/utils/ColorModeContext'
 
 export default function HomePage ({ }) {
   const { colorMode } = useColorMode()
@@ -63,5 +64,5 @@ export default function HomePage ({ }) {
 }
 
 export async function getStaticProps() {
-  return { props: {} }
+  return { props: { currentPath: '/' } }
 }

@@ -22,3 +22,10 @@ yarn-error.log*
 *.iml
 *.iws
 *.ipr
+
+# zed
+.zed/
+
+# Claude
+.claude/
+

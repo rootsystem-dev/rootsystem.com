@@ -3,14 +3,12 @@ import {
   Box,
   Button,
   Heading,
-  ListItem,
   Text,
-  UnorderedList,
-  useColorMode,
   useDisclosure
 } from '@chakra-ui/react'
 
 import { TypeformModal } from '@/components'
+import { useColorMode } from '@/components/utils/ColorModeContext'
 
 export default function ApplyPage ({ }) {
   const { colorMode } = useColorMode()
@@ -59,20 +57,20 @@ export default function ApplyPage ({ }) {
           >
             About you:
           </Heading>
-          <UnorderedList fontSize="md" mb={6} pl={2}>
-            <ListItem>
+          <ul fontSize="md" mb={6} pl={2}>
+            <li>
               You're a software engineer, product manager, or growth hacker.
-            </ListItem>
-            <ListItem>
+            </li>
+            <li>
               You're interested in working fractionally, for an early-stage company – or two!
-            </ListItem>
-            <ListItem>
+            </li>
+            <li>
               You are curious about earning diversified equity in companies across our portfolio – not just the one you're working on.
-            </ListItem>
-            <ListItem>
+            </li>
+            <li>
               Perhaps you're a freelancer, and you're willing to take a lower cash rate (or even forgo cash entirely) to get more equity.
-            </ListItem>
-          </UnorderedList>
+            </li>
+          </ul>
 
           <Heading
             as="h2"
@@ -86,20 +84,20 @@ export default function ApplyPage ({ }) {
           >
             About us:
           </Heading>
-          <UnorderedList fontSize="md" mb={6} pl={2}>
-            <ListItem>
+          <ul fontSize="md" mb={6} pl={2}>
+            <li>
               We're a group of veteran engineering &amp; product leaders who have spent our careers building early stage startups.
-            </ListItem>
-            <ListItem>
+            </li>
+            <li>
               We're also a venture firm with a portfolio of early stage startups, some of whom are looking to hire someone like you.
-            </ListItem>
-            <ListItem>
+            </li>
+            <li>
               We're hiring!  &#128516;
-            </ListItem>
-            <ListItem>
+            </li>
+            <li>
               Just send a cover letter and some combination of a résumé, a portfolio, and links to your GitHub/LinkedIn to:  <strong>apply@rootsystem.com</strong> 
-            </ListItem>
-          </UnorderedList>
+            </li>
+          </ul>
 
         </Box>
       </Box>
@@ -108,5 +106,5 @@ export default function ApplyPage ({ }) {
 }
 
 export async function getStaticProps() {
-  return { props: {} }
+  return { props: { currentPath: '/apply' } }
 }

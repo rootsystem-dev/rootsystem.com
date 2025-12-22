@@ -23,3 +23,7 @@ export default function NotFound () {
     </>
   )
 }
+
+export async function getStaticProps() {
+  return { props: { currentPath: '/404' } }
+}

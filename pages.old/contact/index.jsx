@@ -6,9 +6,10 @@ import {
   Button,
   Heading,
   Text,
-  useBreakpointValue,
-  useColorMode
+  useBreakpointValue
 } from '@chakra-ui/react'
+
+import { useColorMode } from '@/components/utils/ColorModeContext'
 
 export default function ContactPage ({ }) {
   const { colorMode } = useColorMode()
@@ -58,5 +59,5 @@ export default function ContactPage ({ }) {
 }
 
 export async function getStaticProps() {
-  return { props: {} }
+  return { props: { currentPath: '/contact' } }
 }

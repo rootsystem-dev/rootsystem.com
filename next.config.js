@@ -7,6 +7,20 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const baseConfig = (phase, { defaultConfig }) => {
   return {
     poweredByHeader: false,
+    async redirects() {
+      return [
+        {
+          source: '/fellowship',
+          destination: '/apply',
+          permanent: false,
+        },
+        {
+          source: '/residency',
+          destination: '/apply',
+          permanent: false,
+        },
+      ]
+    },
     webpack: (config, { isServer }) => {
       config.module.rules.push({
         test: /\.(ico|svg|eot|ttf|woff|woff2)$/,
@@ -19,7 +33,8 @@ const baseConfig = (phase, { defaultConfig }) => {
         }
       }
       return config
-    }
+    },
+    turbopack: {}
   }
 }
 

@@ -1,69 +1,83 @@
+"use client";
 
-import { memo, useEffect } from 'react'
-import { default as RouterLink } from 'next/link'
-import { useRouter } from 'next/router'
+import { default as RouterLink } from "next/link";
+import { usePathname } from "next/navigation";
+import { memo } from "react";
 
 // Components
+import { Logomark } from "@/components/elements";
 import {
-  Flex,
-  Heading,
-  IconButton,
-  Link,
-  Stack,
-  useBreakpointValue,
-  useColorMode,
-  useDisclosure
-} from '@chakra-ui/react'
-import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { Logomark } from '@/components/elements'
+    ColorModeIcon,
+    useColorMode,
+    useColorModeValue,
+} from "@/components/ui/color-mode";
+import {
+    ClientOnly,
+    Flex,
+    Heading,
+    IconButton,
+    Link,
+    Stack,
+    useBreakpointValue,
+    useDisclosure,
+} from "@chakra-ui/react";
+import { HiMenu } from "react-icons/hi";
 
 const routes = [
-  { label: 'About', path: '/about' },
-  { label: 'Careers', path: '/apply' },
-  { label: 'Contact', path: '/contact' },
-]
+  { label: "About", path: "/about" },
+  { label: "Careers", path: "/apply" },
+  { label: "Contact", path: "/contact" },
+];
 
 const DesktopNav = memo(({ colorMode }) => {
-  const router = useRouter()
+  const pathname = usePathname();
+  const linkColor = useColorModeValue("gray.800", "white");
   return (
-    <>
+    <Flex gap={6} align="center">
       {routes.map((route, index) => (
-        <RouterLink href={route.path} key={index}>
-          <Link
-            color={colorMode === "dark" ? "gray.200" : "gray.600"}
-            fontSize="sm"
-            fontWeight={
-              router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
-            }
-            lineHeight={6}
-            py={2}
-            textTransform="uppercase"
-          >
-            {route.label}
-          </Link>
-        </RouterLink>
+        <Link
+          as={RouterLink}
+          href={route.path}
+          key={index}
+          color={linkColor}
+          fontSize="sm"
+          fontWeight={pathname.indexOf(route.path) > -1 ? "bold" : "normal"}
+          lineHeight={6}
+          py={2}
+          textTransform="uppercase"
+          textDecoration="none"
+          _hover={{ color: "primary.500", textDecoration: "none" }}
+          suppressHydrationWarning
+        >
+          {route.label}
+        </Link>
       ))}
       <Link
         href="https://insights.rootsystem.com"
-        color={colorMode === "dark" ? "gray.200" : "gray.600"}
+        color={linkColor}
         fontSize="sm"
         fontWeight="normal"
         lineHeight={6}
         py={2}
         textTransform="uppercase"
+        textDecoration="none"
+        _hover={{ color: "primary.500", textDecoration: "none" }}
+        suppressHydrationWarning
       >
         Insights
       </Link>
-    </>
-  )
-})
+    </Flex>
+  );
+});
 
 const MobileNav = memo(({ colorMode }) => {
-  const router = useRouter()
+  const pathname = usePathname();
+  const flexBgColor = useColorModeValue("white", "gray.900");
+  const linkColor = useColorModeValue("gray.700", "gray.200");
   return (
     <Flex
       align="center"
-      bgColor={colorMode === 'dark' ? 'gray.900' : 'white'}
+      bgColor={flexBgColor}
       bottom={0}
       direction="column"
       height="100vh"
@@ -74,103 +88,87 @@ const MobileNav = memo(({ colorMode }) => {
       right={0}
       top={0}
       zIndex={1}
+      suppressHydrationWarning
     >
       {routes.map((route, index) => (
-        <RouterLink href={route.path} key={index}>
-          <Link
-            color={
-              colorMode === "dark" ? "gray.200" : "gray.700"
-            }
-            display="block"
-            fontFamily="heading"
-            fontSize="2xl"
-            fontWeight={
-              router.pathname.indexOf(route.path) > -1 ? "bold" : "normal"
-            }
-            lineHeight={8}
-            py={4}
-            textTransform="uppercase"
-          >
-            {route.label}
-          </Link>
-        </RouterLink>
-      ))}      
+        <Link
+          as={RouterLink}
+          href={route.path}
+          key={index}
+          color={linkColor}
+          display="block"
+          fontFamily="heading"
+          fontSize="2xl"
+          fontWeight={pathname.indexOf(route.path) > -1 ? "bold" : "normal"}
+          lineHeight={8}
+          py={4}
+          textTransform="uppercase"
+          suppressHydrationWarning
+        >
+          {route.label}
+        </Link>
+      ))}
     </Flex>
-  )
-})
+  );
+});
 
 export const Header = memo(() => {
-  const { colorMode, toggleColorMode } = useColorMode()
-  const { isOpen, onClose, onToggle } = useDisclosure()
-  const router = useRouter()
-  const viewport = useBreakpointValue({ base: 'mobile', md: 'desktop' })
-
-  useEffect(() => {
-    if (isOpen) {
-      onClose()
-    }
-  }, [router.asPath])
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onClose, onToggle } = useDisclosure();
+  const viewport = useBreakpointValue({ base: "mobile", md: "desktop" });
+  const logoColor = useColorModeValue("gray.800", "white");
+  const toggleLabel = useColorModeValue("Switch to dark mode", "Switch to light mode");
 
   return (
     <>
-      {viewport === 'mobile' && isOpen && (
-        <MobileNav colorMode={colorMode} />
-      )}
+      {viewport === "mobile" && isOpen && <MobileNav colorMode={colorMode} />}
 
       <Flex
         align="center"
         as="header"
         justify="space-between"
-        py={[ 3, 7 ]}
+        py={[3, 7]}
         zIndex={2}
       >
-        <RouterLink href="/">
-          <Link
-            color={colorMode === "dark" ? "white" : "gray.800"}
-            display="flex"
-            alignItems="center"
-          >
+        <Link
+          as={RouterLink}
+          href="/"
+          color={logoColor}
+          display="flex"
+          alignItems="center"
+          suppressHydrationWarning
+        >
+          <ClientOnly>
             <Logomark boxSize={16} />
-            <Heading
-              as="span"
-              letterSpacing="tighter"
-              size="lg"
-            >
-              Root System
-            </Heading>
-          </Link>
-        </RouterLink>
+          </ClientOnly>
+          <Heading as="span" letterSpacing="tighter" size="lg">
+            Root System
+          </Heading>
+        </Link>
 
         <Stack
           align="center"
           isInline={true}
           justify="flex-end"
-          spacing={
-            viewport === 'mobile' ? 2 : 6 
-          }
+          spacing={viewport === "mobile" ? 2 : 6}
         >
-          {viewport === 'desktop' && (
-            <DesktopNav colorMode={colorMode} />
-          )}
+          {viewport === "desktop" && <DesktopNav colorMode={colorMode} />}
 
-          <IconButton 
-            aria-label={
-              `Switch to ${colorMode === "dark" ? "light" : "dark"} mode`
-            }
-            icon={
-              colorMode === "dark" ? <MoonIcon /> : <SunIcon />
-            }
-            onClick={toggleColorMode}
-            variant="ghost"
-            _focus={{ outline: 0 }}
-          />
+          <ClientOnly>
+            <IconButton
+              aria-label={toggleLabel}
+              icon={<ColorModeIcon />}
+              onClick={toggleColorMode}
+              variant="ghost"
+              _focus={{ outline: 0 }}
+              suppressHydrationWarning
+            />
+          </ClientOnly>
 
-          {viewport === 'mobile' && (
+          {viewport === "mobile" && (
             <IconButton
               aria-label={``}
-              icon={
-                <HamburgerIcon />
-              }
+              icon={<HiMenu />}
               onClick={onToggle}
               variant="ghost"
               _focus={{ outline: 0 }}
@@ -179,5 +177,5 @@ export const Header = memo(() => {
         </Stack>
       </Flex>
     </>
-  )
-})
+  );
+});

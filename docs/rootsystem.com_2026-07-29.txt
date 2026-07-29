@@ -1,0 +1,37 @@
+$ORIGIN rootsystem.com.
+$TTL 1h
+rootsystem.com. 3600 IN SOA ns1.dnsimple-edge.com. admin.dnsimple.com. 1594057663 86400 7200 604800 300
+rootsystem.com. 3600 IN NS ns1.dnsimple-edge.com.
+rootsystem.com. 3600 IN NS ns2.dnsimple-edge.net.
+rootsystem.com. 3600 IN NS ns3.dnsimple-edge.io.
+rootsystem.com. 3600 IN NS ns4.dnsimple-edge.org.
+rootsystem.com. 3600 IN A 104.198.14.52
+rootsystem.com. 3600 IN MX 5 alt1.aspmx.l.google.com.
+rootsystem.com. 3600 IN MX 5 alt2.aspmx.l.google.com.
+rootsystem.com. 3600 IN MX 10 alt3.aspmx.l.google.com.
+rootsystem.com. 3600 IN MX 10 alt4.aspmx.l.google.com.
+rootsystem.com. 3600 IN MX 1 aspmx.l.google.com.
+rootsystem.com. 3600 IN TXT "1password-site-verification=6U6RZUM3AZC4NIVIZXWBUHMIOE"
+rootsystem.com. 3600 IN TXT "google-site-verification=SCbJ1tkdUFgYTVHaFf_sk6bAm5XtcTOPDXdpOulcaQM"
+rootsystem.com. 3600 IN TXT "google-site-verification=wE-JA_k8AAp1L2iKZJILdvvb_n1fRLIZBv9JLduGGCY"
+rootsystem.com. 3600 IN TXT "miro-verification=4b8a79d23b7e711af079f50ba7d332686352014c"
+rootsystem.com. 3600 IN TXT "openai-domain-verification=dv-krxvOargzCTSrL9mUePJ0zcS"
+rootsystem.com. 3600 IN TXT "slack-domain-verification=7lsZjfUoWOhfTA0Kd2WxFJQU2hqXnBCj5C7Gdwly"
+rootsystem.com. 3600 IN TXT "v=spf1 a include:_spf.google.com ~all"
+calendar.rootsystem.com. 3600 IN CNAME ghs.googlehosted.com.
+dev.rootsystem.com. 3600 IN A 52.9.204.100
+_gh-rootsystem-dev-o.rootsystem.com. 3600 IN TXT "a1581fadbd"
+_github-pages-challenge-rootsystem-dev.rootsystem.com. 3600 IN TXT "00c1fb145d6cedf16b8ac6721da6e9"
+insights.rootsystem.com. 3600 IN CNAME cname.vercel-dns.com.
+insights.dev.rootsystem.com. 3600 IN CNAME cname.vercel-dns.com.
+insights.staging.rootsystem.com. 3600 IN CNAME cname.vercel-dns.com.
+mail.rootsystem.com. 3600 IN CNAME ghs.googlehosted.com.
+; meet.kyle.rootsystem.com. 3600 IN URL https://calendly.com/dorkitude/60min
+; meet.madelin.kyle.rootsystem.com. 3600 IN URL https://calendly.com/madelin-kyle-rootsystem
+; meet.rob.rootsystem.com. 3600 IN URL https://app.reclaim.ai/m/rob-rootsystem
+; meet.rob.kyle.rootsystem.com. 3600 IN URL https://calendly.com/rob-kyle-rootsystem
+ngrok.rootsystem.com. 3600 IN CNAME 4qzuajwpishfvw9yf.5117dxqiafelwx2mc.ngrok-cname.com.
+; profile.rob.rootsystem.com. 3600 IN URL https://rootsystem.notion.site/Executive-Profile-Rob-Jacques-b3d66aa21af2470db5434f095e2fbe6d
+; typeform.rootsystem.com. 3600 IN URL https://admin.typeform.com/accounts/01FEMH24W69VVJY5EZTG68J6JM/workspaces/PF9ctR
+www.rootsystem.com. 3600 IN CNAME rootsystem.netlify.app.
+; zoom.kyle.rootsystem.com. 3600 IN URL https://us02web.zoom.us/j/3729266111

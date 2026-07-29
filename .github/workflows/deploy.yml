@@ -64,6 +64,13 @@ jobs:
 
       - name: Install
         if: matrix.changed == 'true'
+        env:
+          # Hardened mode validates lockfile content against the registry,
+          # catching lockfile poisoning. Yarn turns it on automatically for
+          # pull requests on public repositories; this repository is private,
+          # so it is set explicitly. Enabled only for pull requests, since it
+          # costs extra network round-trips on every install.
+          YARN_ENABLE_HARDENED_MODE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         run: yarn install --immutable
 
       - name: Build

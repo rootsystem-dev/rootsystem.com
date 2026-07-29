@@ -1,13 +1,34 @@
 ---
-// Ported from pages/contact/index.jsx (spec decision D6), same Typeform.
-//
-// The original used @typeform/embed-react, which pulled React into the page for
-// what is ultimately an iframe. Astro ships no client JS by default and there
-// is no other React on this site, so the form is embedded directly. Same form
-// (id l35rkhJK), no third-party script, no hydration.
+/**
+ * Contact page.
+ *
+ * Replaces the Typeform embed. The previous implementation pulled React in via
+ * @typeform/embed-react to render what was ultimately an iframe; this is a
+ * plain form posting to /api/contact, which writes to D1.
+ *
+ * Rendered on demand rather than prerendered, because it reflects submission
+ * state (?sent, ?error) back to the visitor. A static page cannot read query
+ * parameters without client-side JavaScript, and adding a script to this site
+ * to display one message would be a poor trade. The page is low-traffic and the
+ * render is trivial.
+ *
+ * The form itself needs no JavaScript: it posts, the endpoint redirects with
+ * 303, and a refresh afterwards does not resubmit.
+ */
+export const prerender = false
+
 import Base from '../layouts/Base.astro'
 
-const TYPEFORM_ID = 'l35rkhJK'
+const params = Astro.url.searchParams
+const sent = params.get('sent') === '1'
+const error = params.get('error')
+
+const errorMessage =
+  error === 'invalid'
+    ? 'Please provide your name, a valid email address, and a message.'
+    : error === 'server'
+      ? 'Something went wrong saving your message. Please email partners@rootsystem.com instead.'
+      : null
 ---
 
 <Base
@@ -16,42 +37,121 @@ const TYPEFORM_ID = 'l35rkhJK'
 >
   <h1 class="page-title">Contact</h1>
 
-  <div class="form-wrap">
-    <iframe
-      src={`https://form.typeform.com/to/${TYPEFORM_ID}?typeform-embed=embed-widget&embed-hide-footer=true&embed-hide-headers=true#source=rootsystem.com`}
-      title="Contact form"
-      loading="lazy"
-      allow="camera; microphone; autoplay; encrypted-media;"
-    ></iframe>
-  </div>
+  {
+    sent ? (
+      <div class="prose">
+        <p class="notice success">Thanks — your message is with us.</p>
+        <p>
+          We read everything that comes through here. If it is time-sensitive,
+          <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>
+          reaches us directly.
+        </p>
+      </div>
+    ) : (
+      <div class="prose">
+        {errorMessage && <p class="notice error">{errorMessage}</p>}
 
-  <p class="fallback prose">
-    Trouble with the form? Email us at
-    <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>.
-  </p>
+        <form method="post" action="/api/contact">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required maxlength="120" autocomplete="name" />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required maxlength="254" autocomplete="email" />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="7" required maxlength="5000"></textarea>
+
+          {/* Honeypot. Hidden from people, filled by bots. Not `type=hidden`,
+              which bots skip -- it must look like a real field to a scraper. */}
+          <div class="decoy" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button type="submit">Send</button>
+        </form>
+
+        <p class="alt">
+          Or email us directly:
+          <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>
+        </p>
+      </div>
+    )
+  }
 </Base>
 
 <style>
-  .form-wrap {
-    max-width: var(--measure);
-    margin: 0 auto;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
-  iframe {
+  label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  input,
+  textarea {
+    font: inherit;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 0.625rem 0.75rem;
     width: 100%;
-    height: 400px;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--link);
+  }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    align-self: flex-start;
+    margin-top: 1.5rem;
+    background: var(--link);
+    color: var(--bg);
     border: 0;
+    border-radius: 6px;
+    padding: 0.625rem 1.5rem;
+    cursor: pointer;
   }
 
-  /* The original set 600px on md and up via a breakpoint hook; same intent,
-     expressed as a media query so it needs no JavaScript. */
-  @media (min-width: 48em) {
-    iframe {
-      height: 600px;
-    }
+  button:hover {
+    background: var(--link-hover);
   }
 
-  .fallback {
+  /* Positioned off-screen rather than display:none, because some bots skip
+     fields that are not rendered. */
+  .decoy {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .notice {
+    border-left: 3px solid var(--link);
+    padding: 0.75rem 1rem;
+    background: var(--gray-50);
+  }
+
+  .notice.error {
+    border-left-color: #c53030;
+  }
+
+  .alt {
+    margin-top: 2rem;
     font-size: var(--text-sm);
     color: var(--fg-muted);
   }

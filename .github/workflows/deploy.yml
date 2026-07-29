@@ -84,5 +84,8 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           DEPLOY_CMD: ${{ github.ref == 'refs/heads/primary' && 'deploy' || 'versions upload' }}
+        # fnox exposes the credential as CLOUDFLARE_API_TOKEN, which wrangler
+        # reads directly, so no mapping is needed. DEPLOY_CMD is word-split
+        # deliberately: it is either `deploy` or `versions upload`.
         run: |
-          fnox run -- sh -c 'CLOUDFLARE_API_TOKEN="$CLOUDFLARE_API_KEY" wrangler $DEPLOY_CMD'
+          fnox run -- sh -c 'wrangler $DEPLOY_CMD'

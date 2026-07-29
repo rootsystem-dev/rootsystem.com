@@ -91,7 +91,8 @@ export const landingSchema = z.object({
   }),
 
   contact: z.object({
-    email: z.string().email(),
+    // z.email() rather than the deprecated z.string().email() chain.
+    email: z.email(),
     footer: z.string(),
   }),
 })

@@ -14,7 +14,12 @@ import { assertPublishable } from '../copy/schema'
 assertPublishable(copy)
 
 const hasDraftCopy = copy.hero.draft || copy.closing.draft
-const mailto = `mailto:${copy.contact.email}?subject=Scoping%20a%20case`
+
+// Both calls to action route to the intake form rather than a mailto. A form
+// captures the engagement type and timing that a blank email does not, and the
+// submission lands in D1 for triage. The footer keeps a direct address for
+// anyone who would rather just write.
+const scopeHref = '/scope'
 ---
 
 <Layout
@@ -27,7 +32,7 @@ const mailto = `mailto:${copy.contact.email}?subject=Scoping%20a%20case`
     <h1>{copy.hero.headline}</h1>
     <p class="subhead measure">{copy.hero.subhead}</p>
     <p class="proof measure">{copy.hero.proof}</p>
-    <a class="cta" href={mailto}>{copy.hero.cta} &rarr;</a>
+    <a class="cta" href={scopeHref}>{copy.hero.cta} &rarr;</a>
   </header>
 
   <section class="wrap">
@@ -133,7 +138,7 @@ const mailto = `mailto:${copy.contact.email}?subject=Scoping%20a%20case`
   <section class="wrap closing">
     <h2 class="measure">{copy.closing.headline}</h2>
     <p class="measure">{copy.closing.body}</p>
-    <a class="cta" href={mailto}>{copy.closing.button} &rarr;</a>
+    <a class="cta" href={scopeHref}>{copy.closing.button} &rarr;</a>
   </section>
 
   <footer class="wrap">

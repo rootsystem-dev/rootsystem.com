@@ -1,0 +1,222 @@
+---
+/**
+ * Case-scoping intake.
+ *
+ * Rendered on demand so it can reflect submission state back to the visitor;
+ * the landing page remains prerendered. See sites/www/src/pages/contact.astro
+ * for the same reasoning.
+ *
+ * Deliberately short. A litigator evaluating an unfamiliar expert will abandon
+ * a long form, and everything not asked here can be asked in the reply. Only
+ * name, email and what the dispute turns on are required.
+ *
+ * The confidentiality note is not boilerplate. Free-text description of a live
+ * matter can carry privileged or client-identifying detail, which creates a
+ * conflict-check problem before any engagement exists. Asking submitters to
+ * withhold it is both better practice and less exposure in the database.
+ */
+export const prerender = false
+
+import Layout from '../layouts/Layout.astro'
+import copy from '../copy/landing'
+import { ENGAGEMENT_TYPES } from '../lib/form'
+
+const params = Astro.url.searchParams
+const sent = params.get('sent') === '1'
+const error = params.get('error')
+
+const errorMessage =
+  error === 'invalid'
+    ? 'Please provide your name, a valid email address, and a short description of the matter.'
+    : error === 'server'
+      ? `Something went wrong saving your enquiry. Please email ${copy.contact.email} instead.`
+      : null
+---
+
+<Layout
+  title="Scope a case | Root System"
+  description="Start with a fixed-fee AI-dispute assessment. Tell us what the matter turns on."
+>
+  <div class="wrap page">
+    <p class="eyebrow"><a href="/">Root System</a> · Scope a case</p>
+
+    {
+      sent ? (
+        <div class="measure">
+          <h1>Thanks — that's with us.</h1>
+          <p>
+            We'll come back to you directly. If it's time-critical,
+            <a href={`mailto:${copy.contact.email}`}>{copy.contact.email}</a>
+            reaches us fastest.
+          </p>
+          <p class="fineprint">
+            Nothing in this enquiry creates an engagement or an attorney-expert
+            relationship, and no conflicts check has been performed yet.
+          </p>
+        </div>
+      ) : (
+        <div class="measure">
+          <h1>Scope a case</h1>
+          <p class="lede">
+            Start with the fixed-fee assessment — $2,500, capped at ten hours,
+            credited against a full engagement if the matter proceeds. Tell us
+            what the dispute turns on and we'll come back to you.
+          </p>
+
+          <p class="confidentiality">
+            <strong>Please don't include privileged or client-identifying
+            detail at this stage.</strong> A general description of the
+            technical question is enough to scope the work, and keeps both of us
+            clear of a conflicts problem before one exists.
+          </p>
+
+          {errorMessage && <p class="notice error">{errorMessage}</p>}
+
+          <form method="post" action="/api/intake">
+            <label for="name">Name <span>required</span></label>
+            <input id="name" name="name" type="text" required maxlength="120" autocomplete="name" />
+
+            <label for="email">Email <span>required</span></label>
+            <input id="email" name="email" type="email" required maxlength="254" autocomplete="email" />
+
+            <label for="firm">Firm</label>
+            <input id="firm" name="firm" type="text" maxlength="200" autocomplete="organization" />
+
+            <label for="engagement_type">What kind of help are you after?</label>
+            <select id="engagement_type" name="engagement_type">
+              {ENGAGEMENT_TYPES.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
+
+            <label for="summary">
+              What does the dispute turn on, technically? <span>required</span>
+            </label>
+            <textarea id="summary" name="summary" rows="7" required maxlength="5000"></textarea>
+
+            <label for="timing">Any deadline we should know about?</label>
+            <input id="timing" name="timing" type="text" maxlength="300" placeholder="Expert reports due in three weeks, no deadline yet, …" />
+
+            <label for="referral">How did you hear about us?</label>
+            <input id="referral" name="referral" type="text" maxlength="300" />
+
+            {/* Honeypot — off-screen rather than display:none, which some bots
+                know to skip. */}
+            <div class="decoy" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button type="submit">Send enquiry</button>
+          </form>
+
+          <p class="alt">
+            Prefer email? <a href={`mailto:${copy.contact.email}`}>{copy.contact.email}</a>
+          </p>
+        </div>
+      )
+    }
+  </div>
+</Layout>
+
+<style>
+  .page {
+    padding-top: 3.5rem;
+    padding-bottom: 5rem;
+  }
+
+  h1 {
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
+  }
+
+  .lede {
+    font-size: 1.0625rem;
+  }
+
+  .confidentiality {
+    background: var(--code-bg);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    font-size: 0.9375rem;
+    margin: 2rem 0;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 1.25rem;
+  }
+
+  label span {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.625rem 0.75rem;
+    width: 100%;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--accent);
+  }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    align-self: flex-start;
+    margin-top: 1.75rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: 0;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: var(--accent-2);
+  }
+
+  .decoy {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .notice.error {
+    border-left: 3px solid #c53030;
+    padding: 0.75rem 1rem;
+    background: var(--fill);
+  }
+
+  .alt,
+  .fineprint {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+</style>

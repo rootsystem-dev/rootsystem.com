@@ -1,15 +1,29 @@
 {
-  // rootsystem.com — static assets served by a Worker.
+  // rootsystem.com — static assets plus one on-demand route (the contact form
+  // endpoint), served by a Worker.
   //
-  // No custom domain is declared here. Custom domains are attached in Phase 5,
-  // after the nameserver cutover, because a Worker custom domain requires the
-  // zone to be active on Cloudflare. Until then this deploys to workers.dev.
+  // No custom domain is declared here. Custom domains are attached separately
+  // once the zone is active, so that a deploy cannot move production traffic as
+  // a side effect.
   "name": "rootsystem-www",
   "compatibility_date": "2026-07-29",
+  // The adapter's unified entrypoint, which serves both `astro dev` and
+  // production. Not a path into ./dist -- that does not exist until the build
+  // has run, and the adapter validates this field before building.
+  "main": "@astrojs/cloudflare/entrypoints/server",
   "assets": {
-    "directory": "./dist",
+    "directory": "./dist/client",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
   },
+  "observability": { "enabled": true },
   "workers_dev": true,
-  "preview_urls": true
+  "preview_urls": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rootsystem-forms",
+      "database_id": "218e6fe4-44bd-4d12-a630-9a2c17cc863d"
+    }
+  ]
 }

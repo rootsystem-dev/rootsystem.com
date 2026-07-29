@@ -272,12 +272,20 @@ and mail delivers both directions, before the corresponding legacy host is decom
 
 ## 10. Open items
 
-| Item | Owner | Blocks |
-|---|---|---|
-| Create `rob.rootsystem.com` and `kyle.rootsystem.com` as DNSimple zones holding the four URL records | Rob | Phase 5 — see below |
-| Create the `dmarc@rootsystem.com` alias or group in Google Workspace | Rob | reporting only, not the cutover |
-| DKIM key generation in Google Workspace admin | Rob | Phase 5 |
-| Cloudflare API token expires 2027-01-27 — clear the expiry or diarize it | Rob | future CI deploys |
+Status as of 2026-07-29 12:15.
+
+| Item | Owner | Blocks | State |
+|---|---|---|---|
+| Own-voice rewrite of forensics hero and closing | Rob | forensics production deploy | open |
+| Tagline selection — three candidates in `sites/forensics/src/copy/landing.ts` | Rob | same | open |
+| CTA mechanism — `mailto:` today, or an intake form | Rob | nothing; swap is one line | open |
+| Confirm or revert Direction A (D11), applied without explicit sign-off | Rob | nothing; one constant | open |
+| Nameserver change at the registrar | Rob | Phase 5 | open |
+| Publish DMARC at DNSimple as well as Cloudflare | Rob | nothing, if the cutover is imminent | open |
+| Create `rob.` / `kyle.` DNSimple child zones | Rob | nothing — see below | optional |
+| DKIM key in Google Workspace | Rob | — | **done**, matching on both providers |
+| `dmarc@rootsystem.com` alias | Rob | — | **done** |
+| Cloudflare API token expires 2027-01-27 | Rob | future CI deploys | **diarized** |
 
 **On the delegated subtrees.** The `rob.` and `kyle.` records are currently *flat entries inside
 the `rootsystem.com` zone* at DNSimple, not child zones — `dig SOA` returns the parent. After the

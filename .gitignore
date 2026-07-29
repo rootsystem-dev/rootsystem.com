@@ -34,3 +34,8 @@ yarn-error.log*
 *.iml
 *.iws
 *.ipr
+
+# DNS zone exports. Kept locally as migration reference but not tracked -- they
+# enumerate internal subdomains. History is intentionally not rewritten; the
+# 2026-07-29 export remains in commit 0b43501.
+docs/*.txt

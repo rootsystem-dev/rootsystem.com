@@ -17,27 +17,21 @@ const copy: Landing = landingSchema.parse({
   meta: {
     title: 'Root System — AI & Machine-Learning Dispute Analysis | Expert Witness',
     description:
-      'Reproducible AI/ML expert analysis for litigation — every opinion is a query the other side can re-run. Built by someone who builds these systems.',
+      'Reproducible AI/ML expert analysis for litigation — every opinion is a query or hard experimental data the other side can re-run and verify. Delivered by engineers who build these systems every day.',
   },
 
   hero: {
-    // SCAFFOLDING — awaiting own-voice rewrite. Tagline not yet chosen; the
-    // deck offers three, with the bank in messaging-worksheet.md section 5:
-    //   1. "We show our work." (paired sub carries the rest)
-    //   2. "The expert on what your AI did — built by someone who builds them."
-    //   3. "When the dispute is what the model actually did."
-    draft: true,
     eyebrow: 'AI & Machine-Learning Dispute Analysis',
-    headline: 'We show our work.',
+    headline: 'Our experts don\'t speculate — they empirically validate.',
     subhead:
-      'Technical analysis of what an AI or machine-learning system actually did — how it was built, what data it used, whether it performed as claimed. Every opinion is a query the other side can re-run, proved with a controlled experiment, not an assertion.',
+      'Technical analysis of what an AI or machine-learning system actually did — how it was built, what data it used, whether it performed as claimed. Every thesis is stress-tested against reproducible methodology. Every opinion is grounded in deterministic evidence the other side can re-run, not an empty assertion.',
     proof:
       'A genuine bulk copy of 9,000 files smears its access timestamps across hundreds of seconds. The opposing exhibit clustered thousands of files into a single second — a batch process, not a human copy. Same data; the shape tells the truth.',
     cta: 'Scope a case',
   },
 
   positioning: {
-    body: 'When a matter turns on what an AI/ML system, its training data, or an algorithm actually did, most experts can offer one half of what you need: academics who study models but don’t ship them, economic consultancies who read AI through an economics lens and concede the black box, or digital-forensics vendors who recover bytes but don’t interpret model behavior. Root System is the practitioner who builds these systems and runs the reproducible experiment that makes an opinion hold up under cross-examination.',
+    body: 'When a matter turns on what an AI/ML system, its training data, or an algorithm actually did, most experts can offer one half of what you need: academics who study models but don’t ship them, economic consultancies who read AI through an economics lens and concede the black box, or digital-forensics vendors who recover bytes but don’t interpret model behavior. Root System is the practitioner who builds these systems and runs the reproducible experiments that makes an opinion hold up under cross-examination.',
   },
 
   pillars: [
@@ -47,11 +41,11 @@ const copy: Landing = landingSchema.parse({
     },
     {
       title: 'Even-handed.',
-      body: 'We concede what’s genuinely uncertain and label the unknown unverifiable, not false. It’s what separates an expert from a hired gun — and what survives cross.',
+      body: 'We concede what’s genuinely uncertain and interrogate the evidence with the same rigor a courtroom demands. It’s what separates an expert from a hired gun — and what survives cross.',
     },
     {
       title: 'Depth in machine-generated evidence.',
-      body: 'Timestamp-shape, file-system semantics, at-scale artifacts — where a forensics checklist stops, the real question starts.',
+      body: 'Timestamp-shape, model-temperature-controlled variability, file-system semantics, at-scale artifacts — where a forensics checklist stops, the real question starts.',
     },
     {
       title: 'Cross-document rigor.',
@@ -88,7 +82,7 @@ const copy: Landing = landingSchema.parse({
       },
       {
         title: 'Consulting (non-testifying).',
-        body: 'Behind-the-scenes analysis, case strategy, vetting the other side’s expert — work-product protected.',
+        body: 'Behind-the-scenes analysis, case strategy, experiment definition and stochastic data collection, vetting the other side’s expert — work-product protected.',
       },
       {
         title: 'Early-case assessment.',
@@ -150,12 +144,12 @@ const copy: Landing = landingSchema.parse({
     {
       question: 'Why not a big-name firm or lab?',
       answer:
-        'Big firms apply AI as a tool inside economics testimony and concede the interpretability problem. This is the practitioner who builds the systems, delivering the experiment itself — not a brand markup on a subcontracted analysis.',
+        'Big firms apply AI as a tool inside economics testimony and concede the interpretability problem. This is the practitioner who builds the systems, delivering the empirical validation itself — not a brand markup on a subcontracted analysis.',
     },
     {
       question: 'Aren’t you a hired gun?',
       answer:
-        'The method is the answer. We concede what’s fair, label the uncertain unverifiable, and hand the other side a query they can re-run. Independence is built into the deliverable.',
+        'The method is the answer. We concede what’s fair, label the uncertain unverifiable, and hand the other side a replication they can re-run. We build evaluations daily to prove what our models are capable of in our own products. Independence is built into the deliverable.',
     },
     {
       question: 'This sounds expensive.',
@@ -165,9 +159,7 @@ const copy: Landing = landingSchema.parse({
   ],
 
   closing: {
-    // SCAFFOLDING — awaiting own-voice rewrite.
-    draft: true,
-    headline: 'Have a matter that turns on what a model did?',
+    headline: 'Have a matter that turns on what a model or machine did?',
     body: 'Start with a fixed-fee assessment. You’ll get a reproducible read on the claim and what a full engagement would test — before you commit.',
     button: 'Scope a case',
   },

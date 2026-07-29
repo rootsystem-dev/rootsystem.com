@@ -1,35 +1,19 @@
 {
   "name": "rootsystem.com",
-  "version": "1.0.0",
-  "main": "\"\"",
-  "repository": "git@github.com:dustinlarimer/rootsystem.com.git",
-  "author": "Dustin Larimer <180438+dustinlarimer@users.noreply.github.com>",
+  "version": "3.0.0",
+  "repository": "git@github.com:rootsystem-dev/rootsystem.com.git",
   "license": "MIT",
   "private": true,
+  "packageManager": "yarn@4.18.0",
+  "workspaces": [
+    "sites/*"
+  ],
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "@chakra-ui/icons": "^1.0.15",
-    "@chakra-ui/react": "^1.6.7",
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
-    "@next/bundle-analyzer": "^10.2.3",
-    "@typeform/embed-react": "^1.1.1",
-    "eslint-config-next": "^14.1.0",
-    "framer-motion": "^4",
-    "imagemin-gifsicle": "^7.0.0",
-    "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-optipng": "^8.0.0",
-    "next": "^14.1.0",
-    "next-compose-plugins": "^2.2.1",
-    "next-optimized-images": "^2.6.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.41.3"
+    "dev:www": "yarn workspace @rootsystem/www dev",
+    "dev:forensics": "yarn workspace @rootsystem/forensics dev",
+    "build": "yarn workspaces foreach --all --topological run build",
+    "build:www": "yarn workspace @rootsystem/www build",
+    "build:forensics": "yarn workspace @rootsystem/forensics build",
+    "check": "yarn workspaces foreach --all --topological run check"
   }
 }

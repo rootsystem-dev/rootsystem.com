@@ -1,0 +1,123 @@
+/*
+ * Design tokens for rootsystem.com.
+ *
+ * Ported from the Chakra theme that the Next site used (components/theme/*),
+ * so the rebuild is a stack change and not a redesign — see spec decision D6.
+ * Chakra's runtime theme object is replaced by plain custom properties; the
+ * values are the same ones the old theme resolved to.
+ *
+ * Fonts are self-hosted from ./public/fonts, carried over from the previous
+ * site. Tiempos is a licensed face — it ships as woff2 only, matching what the
+ * old site served.
+ */
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-Regular.woff2') format('woff2'),
+       url('/fonts/OpenSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-SemiBold.woff2') format('woff2'),
+       url('/fonts/OpenSans-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos';
+  src: url('/fonts/Tiempos-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos';
+  src: url('/fonts/Tiempos-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos';
+  src: url('/fonts/Tiempos-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Typefaces */
+  --font-body: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Tiempos', ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale — carried over verbatim from the Chakra fontSizes map */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.3125rem;
+  --text-2xl: 1.4375rem;
+  --text-3xl: 1.5rem;
+  --text-4xl: 1.8125rem;
+  --text-5xl: 2rem;
+  --text-6xl: 2.75rem;
+
+  /* Neutrals */
+  --gray-50: #f2f4f5;
+  --gray-200: #d6dade;
+  --gray-300: #bbc1c7;
+  --gray-400: #9fa7b0;
+  --gray-500: #6d7782;
+  --gray-600: #4d565e;
+  --gray-700: #31363a;
+  --gray-800: #24272b;
+  --gray-900: #15171a;
+
+  /* Primary — Chakra's green scale, which the old theme aliased to `primary` */
+  --primary-100: #c6f6d5;
+  --primary-300: #68d391;
+  --primary-400: #48bb78;
+  --primary-500: #38a169;
+  --primary-600: #2f855a;
+
+  /* Semantic assignments, light theme */
+  --bg: #ffffff;
+  --fg: var(--gray-800);
+  --fg-muted: var(--gray-500);
+  --rule: var(--gray-200);
+  --link: var(--primary-500);
+  --link-hover: var(--primary-600);
+  --selection: var(--primary-100);
+
+  /* Layout */
+  --measure: 34rem;
+  --page-max: 64rem;
+}
+
+/*
+ * Dark theme follows the system preference only. The previous site shipped a
+ * manual color-mode toggle via Chakra; it is not carried over, since the
+ * hydration bugs it caused were a meaningful share of the work on the
+ * abandoned migration branch. Reintroduce it only if there is a reason to.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--gray-900);
+    --fg: #ffffff;
+    --fg-muted: var(--gray-400);
+    --rule: var(--gray-700);
+    --link: var(--primary-400);
+    --link-hover: var(--primary-300);
+    --selection: var(--gray-800);
+  }
+}

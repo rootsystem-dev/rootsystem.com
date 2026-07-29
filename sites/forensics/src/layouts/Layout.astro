@@ -1,0 +1,51 @@
+---
+/**
+ * Page shell for forensics.rootsystem.com.
+ *
+ * DESIGN_DIRECTION selects between the two directions in the GTM mockups.
+ * Changing this one value swaps the entire visual treatment, because the page
+ * markup references only semantic tokens. Pending Rob's pick; 'a' is a
+ * placeholder, not a decision.
+ */
+import '../styles/tokens.css'
+import '../styles/base.css'
+
+const DESIGN_DIRECTION: 'a' | 'b' = 'a'
+
+interface Props {
+  title: string
+  description: string
+  /** True when any copy on the page is still scaffolding. */
+  hasDraftCopy?: boolean
+}
+
+const { title, description, hasDraftCopy = false } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+---
+
+<html lang="en" data-direction={DESIGN_DIRECTION}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    {
+      hasDraftCopy && (
+        <p class="draft-notice">
+          Draft copy — hero and closing are scaffolding pending an own-voice
+          rewrite. This page cannot be built for production in this state.
+        </p>
+      )
+    }
+    <slot />
+  </body>
+</html>

@@ -5,9 +5,13 @@
 
 # Build Output
 out/
+dist/
+.astro/
+.wrangler/
 
 # Dots
 .env
+.env.local
 .ignore
 .mdx-data
 .next

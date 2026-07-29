@@ -1,0 +1,101 @@
+---
+/**
+ * Single Taproot post.
+ *
+ * Drafts get a visible banner rather than rendering identically to published
+ * posts, so a draft opened in a dev server is never mistaken for live copy.
+ */
+import Base from './Base.astro'
+import { formatDate, type Post } from '../lib/taproot'
+
+interface Props {
+  post: Post
+}
+
+const { post } = Astro.props
+const { title, description, publishDate, updatedDate, tags, draft } = post.data
+---
+
+<Base title={`${title} | Taproot`} description={description}>
+  <article>
+    {draft && <p class="draft-banner">Draft — not published.</p>}
+
+    <header>
+      <p class="eyebrow"><a href="/taproot">Taproot</a></p>
+      <h1>{title}</h1>
+      <p class="meta">
+        <time datetime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
+        {
+          updatedDate && (
+            <>
+              {' · updated '}
+              <time datetime={updatedDate.toISOString()}>
+                {formatDate(updatedDate)}
+              </time>
+            </>
+          )
+        }
+      </p>
+      {
+        tags.length > 0 && (
+          <p class="tags">
+            {tags.map((tag) => (
+              <a href={`/taproot/tags/${tag}`}>{tag}</a>
+            ))}
+          </p>
+        )
+      }
+    </header>
+
+    <div class="prose body">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<style>
+  article {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding-top: 3rem;
+  }
+
+  .draft-banner {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--link);
+    padding: 0.75rem 1rem;
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  h1 {
+    font-size: var(--text-4xl);
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .meta {
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+    margin-bottom: 0.5rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    margin-bottom: 2rem;
+  }
+
+  .body {
+    border-top: 1px solid var(--rule);
+    padding-top: 2rem;
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+/**
+ * Page shell for rootsystem.com.
+ *
+ * Assumes every page supplies its own title and description; there is no
+ * fallback copy, because a page shipping with a generic title is a bug we
+ * would rather see at authoring time than in search results.
+ */
+import '../styles/tokens.css'
+import '../styles/base.css'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+
+interface Props {
+  title: string
+  description: string
+}
+
+const { title, description } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Favicons are supplied as separate light and dark sets; the media query
+         picks between them the same way the previous site did. -->
+    <link
+      rel="icon"
+      href="/images/favicon/light/favicon.ico"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      href="/images/favicon/dark/favicon.ico"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="apple-touch-icon" href="/images/favicon/light/apple-touch-icon.png" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/images/rootsystem-card.png', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <Header />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+</style>

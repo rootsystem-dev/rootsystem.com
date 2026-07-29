@@ -1,0 +1,81 @@
+name: deploy
+
+# Builds and deploys each site independently. Path filters mean a change to one
+# site does not redeploy the other.
+#
+# Secrets resolve through fnox from 1Password rather than being stored as
+# GitHub secrets directly; the only GitHub secret is the 1Password service
+# account token that fnox authenticates with.
+#
+# fnox exposes the Cloudflare credential as CLOUDFLARE_API_TOKEN, which is the
+# variable wrangler reads natively, so no mapping is needed here.
+
+on:
+  push:
+    branches: [primary]
+  pull_request:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      www: ${{ steps.filter.outputs.www }}
+      forensics: ${{ steps.filter.outputs.forensics }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            www:
+              - 'sites/www/**'
+              - 'package.json'
+              - 'yarn.lock'
+              - '.github/workflows/deploy.yml'
+            forensics:
+              - 'sites/forensics/**'
+              - 'package.json'
+              - 'yarn.lock'
+              - '.github/workflows/deploy.yml'
+
+  deploy:
+    needs: changes
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - site: www
+            workspace: '@rootsystem/www'
+            changed: ${{ needs.changes.outputs.www }}
+          - site: forensics
+            workspace: '@rootsystem/forensics'
+            changed: ${{ needs.changes.outputs.forensics }}
+    steps:
+      - uses: actions/checkout@v4
+        if: matrix.changed == 'true'
+
+      - uses: jdx/mise-action@v2
+        if: matrix.changed == 'true'
+
+      - name: Install
+        if: matrix.changed == 'true'
+        run: yarn install --immutable
+
+      - name: Build
+        if: matrix.changed == 'true'
+        run: yarn workspace ${{ matrix.workspace }} build
+
+      # Pull requests get a preview deployment; only primary publishes.
+      - name: Deploy
+        if: matrix.changed == 'true'
+        working-directory: sites/${{ matrix.site }}
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          DEPLOY_CMD: ${{ github.ref == 'refs/heads/primary' && 'deploy' || 'versions upload' }}
+        run: |
+          fnox run -- sh -c 'CLOUDFLARE_API_TOKEN="$CLOUDFLARE_API_KEY" wrangler $DEPLOY_CMD'

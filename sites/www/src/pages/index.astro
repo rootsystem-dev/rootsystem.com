@@ -1,0 +1,50 @@
+---
+// Copy is carried over verbatim from the previous site (spec decision D6 —
+// this is a stack change, not a repositioning). Any rewrite of the main-brand
+// positioning is separate work with its own messaging input.
+import Base from '../layouts/Base.astro'
+---
+
+<Base
+  title="Root System — A sweat equity company"
+  description="We're a team of founders and startup veterans who love supporting early-stage entrepreneurs and their teams."
+>
+  <section class="hero">
+    <h1>A sweat equity company</h1>
+    <p class="lede">
+      We're a team of founders and startup veterans who love supporting
+      early-stage entrepreneurs and their teams.
+    </p>
+    <p class="actions">
+      <a href="/about">Learn more</a>
+      <a href="/contact">Get in touch</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  h1 {
+    font-size: var(--text-5xl);
+  }
+
+  .lede {
+    max-width: var(--measure);
+    color: var(--fg-muted);
+    font-size: var(--text-lg);
+  }
+
+  .actions {
+    display: flex;
+    gap: 1.5rem;
+    font-size: var(--text-xl);
+    font-weight: 600;
+  }
+</style>

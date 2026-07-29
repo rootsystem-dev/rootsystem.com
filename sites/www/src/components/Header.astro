@@ -1,0 +1,66 @@
+---
+/**
+ * Site header. The previous site had no persistent navigation on the home page
+ * — links were inline in the hero — so this stays minimal: wordmark plus the
+ * routes that exist. Taproot is included because the blog is a first-class
+ * destination rather than a footer link (spec decision D4).
+ */
+const links = [
+  { href: '/about', label: 'About' },
+  { href: '/taproot', label: 'Taproot' },
+  { href: '/contact', label: 'Contact' },
+]
+
+const path = Astro.url.pathname
+---
+
+<header>
+  <a class="wordmark" href="/">Root System</a>
+  <nav aria-label="Primary">
+    {
+      links.map(({ href, label }) => (
+        <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<style>
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  .wordmark {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .wordmark:hover {
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    gap: 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  nav a {
+    color: var(--fg-muted);
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--fg);
+  }
+</style>

@@ -1,0 +1,15 @@
+[tools]
+node = "22"
+yarn = "latest"
+fnox = "latest"
+# Cloudflare deploy tooling. Both sites publish via `wrangler deploy` against
+# their own wrangler.jsonc; CI uses the same binary so local and CI deploys
+# cannot drift.
+wrangler = "latest"
+
+[env]
+_.file = ".env.local"
+_.fnox-env = { tools = true }
+
+[deps]
+yarn = { auto = true }

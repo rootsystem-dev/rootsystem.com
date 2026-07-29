@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro'
+import { getPosts, getTags, formatDate } from '../../lib/taproot'
+
+const posts = await getPosts()
+const tags = await getTags()
+---
+
+<Base
+  title="Taproot | Root System"
+  description="Writing from Root System on building software, engineering organizations, and the systems underneath them."
+>
+  <header class="masthead">
+    <h1>Taproot</h1>
+    <p class="lede">
+      Writing from Root System on building software, engineering organizations,
+      and the systems underneath them.
+    </p>
+    <p class="feed"><a href="/taproot/rss.xml">RSS</a></p>
+  </header>
+
+  {
+    tags.length > 0 && (
+      <nav class="tag-bar" aria-label="Tags">
+        {tags.map(({ tag, count }) => (
+          <a href={`/taproot/tags/${tag}`}>
+            {tag} <span class="count">{count}</span>
+          </a>
+        ))}
+      </nav>
+    )
+  }
+
+  {
+    posts.length === 0 ? (
+      <p class="empty prose">No posts yet.</p>
+    ) : (
+      <ul class="posts">
+        {posts.map((post) => (
+          <li>
+            <article>
+              <h2><a href={`/taproot/${post.id}`}>{post.data.title}</a></h2>
+              <p class="meta">
+                <time datetime={post.data.publishDate.toISOString()}>
+                  {formatDate(post.data.publishDate)}
+                </time>
+                {post.data.draft && <span class="draft"> · draft</span>}
+              </p>
+              <p class="description">{post.data.description}</p>
+            </article>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>
+
+<style>
+  .masthead {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding-top: 3rem;
+  }
+
+  .masthead h1 {
+    font-size: var(--text-5xl);
+  }
+
+  .lede {
+    color: var(--fg-muted);
+  }
+
+  .feed {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tag-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-width: var(--measure);
+    margin: 0 auto 2rem;
+    font-size: var(--text-xs);
+  }
+
+  .count {
+    color: var(--fg-muted);
+  }
+
+  .posts {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .posts li {
+    border-top: 1px solid var(--rule);
+    padding: 1.75rem 0;
+  }
+
+  .posts h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: 0.25rem;
+  }
+
+  .posts h2 a {
+    color: var(--fg);
+  }
+
+  .meta {
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+    margin-bottom: 0.5rem;
+  }
+
+  .draft {
+    font-weight: 600;
+    color: var(--link);
+  }
+
+  .description {
+    margin: 0;
+  }
+
+  .empty {
+    color: var(--fg-muted);
+  }
+</style>

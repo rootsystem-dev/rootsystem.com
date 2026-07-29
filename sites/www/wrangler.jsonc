@@ -1,0 +1,15 @@
+{
+  // rootsystem.com — static assets served by a Worker.
+  //
+  // No custom domain is declared here. Custom domains are attached in Phase 5,
+  // after the nameserver cutover, because a Worker custom domain requires the
+  // zone to be active on Cloudflare. Until then this deploys to workers.dev.
+  "name": "rootsystem-www",
+  "compatibility_date": "2026-07-29",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": true,
+  "preview_urls": true
+}

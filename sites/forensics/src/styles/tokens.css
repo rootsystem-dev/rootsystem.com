@@ -1,0 +1,62 @@
+/*
+ * Design tokens for forensics.rootsystem.com.
+ *
+ * Both design directions from microsite-design-mockups.html are defined here.
+ * The active one is selected by the `data-direction` attribute on <html>, set
+ * in Layout.astro from a single constant -- so picking A or B is a one-word
+ * change, not a rewrite. The page markup references only semantic token names
+ * and never a direction-specific value.
+ *
+ * Direction A -- "Show Your Work": light editorial. Leans on the reproducibility
+ *   pillar; the page reads like a document with visible method.
+ * Direction B -- "On the Record": dark ink authority. Leans on courtroom
+ *   gravitas and testimony credibility.
+ *
+ * Both use green accents, which keeps the property congruent with
+ * rootsystem.com -- A's #276749 is the same green the main site uses for
+ * primary-600.
+ */
+
+:root {
+  /* Typefaces are shared across both directions. The serif carries headings and
+     the case study; the mono is reserved for the proof/query motif, where the
+     point is that a finding is a thing you can re-run. */
+  --font-serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino,
+    Georgia, 'Times New Roman', serif;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --measure: 68ch;
+  --page-max: 1080px;
+}
+
+/* Direction A — "Show Your Work" */
+:root[data-direction='a'] {
+  --bg: #ffffff;
+  --fill: #f6f8f7;
+  --panel: #f6f8f7;
+  --ink: #242b36;
+  --body: #4a5568;
+  --muted: #7a8794;
+  --line: #e6ebe8;
+  --accent: #276749;
+  --accent-2: #38a169;
+  --code-bg: #f3f7f4;
+  --scheme: light;
+}
+
+/* Direction B — "On the Record" */
+:root[data-direction='b'] {
+  --bg: #171b21;
+  --panel: #1e242c;
+  --panel-2: #232b34;
+  --fill: #1e242c;
+  --ink: #eef2f6;
+  --body: #aab4bf;
+  --muted: #7d8794;
+  --line: #2a323c;
+  --accent: #4ac07a;
+  --accent-2: #2f855a;
+  --code-bg: #232b34;
+  --scheme: dark;
+}

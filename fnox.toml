@@ -1,0 +1,7 @@
+#:tombi schema.strict = false
+[secrets]
+RS_LINEAR_API_KEY = { provider="onepass", value="op://Engineering/linear-api-rs/credential"}
+DNSIMPLE_API_KEY = { provider="onepass", value="op://Engineering/RMJ-RS-DNSIMPLE/credential"}
+# Named CLOUDFLARE_API_TOKEN because that is the variable wrangler reads
+# natively -- any other name means every deploy command needs a mapping shim.
+CLOUDFLARE_API_TOKEN = { provider="onepass", value="op://Engineering/rs-cloudflare-rmj-edit-api-key/credential"}

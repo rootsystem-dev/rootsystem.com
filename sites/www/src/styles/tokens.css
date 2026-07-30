@@ -98,6 +98,10 @@
   --link: var(--primary-500);
   --link-hover: var(--primary-600);
   --selection: var(--primary-100);
+  /* Raised surface for callouts and notices. Must be defined per theme:
+     hardcoding a light grey here puts white text on a near-white panel in dark
+     mode, which is exactly the bug this token exists to prevent. */
+  --surface: var(--gray-50);
 
   /* Layout */
   --measure: 34rem;
@@ -119,5 +123,6 @@
     --link: var(--primary-400);
     --link-hover: var(--primary-300);
     --selection: var(--gray-800);
+    --surface: var(--gray-800);
   }
 }

@@ -42,8 +42,8 @@ const errorMessage =
       <div class="prose">
         <p class="notice success">Thanks — your message is with us.</p>
         <p>
-          We read everything that comes through here. If it is time-sensitive,
-          <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>
+          We read everything that comes through here. If it is time-sensitive,{' '}
+          <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>{' '}
           reaches us directly.
         </p>
       </div>
@@ -72,7 +72,7 @@ const errorMessage =
         </form>
 
         <p class="alt">
-          Or email us directly:
+          Or email us directly:{' '}
           <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>
         </p>
       </div>
@@ -140,10 +140,12 @@ const errorMessage =
     overflow: hidden;
   }
 
+  /* --surface adapts per theme. A literal light grey here renders white-on-
+     near-white in dark mode. */
   .notice {
     border-left: 3px solid var(--link);
     padding: 0.75rem 1rem;
-    background: var(--gray-50);
+    background: var(--surface);
   }
 
   .notice.error {

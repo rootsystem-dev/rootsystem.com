@@ -46,13 +46,26 @@ came back empty and the apex kept serving Netlify — a silent no-op, not an err
 Creating it through the API worked immediately. **Do not treat a successful
 `wrangler deploy` as evidence that a route exists; query the API.**
 
-**The `www` 301 could not be created with the current token** — it was built in
-the dashboard instead. This is still true: the token can `GET /rulesets` (so the
-ruleset is visible in a listing) but cannot read or write the
-`http_request_dynamic_redirect` entrypoint. Both API paths are refused:
+**The `www` 301 had to be built in the dashboard** because the token could not
+write it at the time. Both API paths were refused:
 
 - Rulesets (`http_request_dynamic_redirect`): `"request is not authorized"`
 - Page Rules: `code 1011, "Page Rules endpoint does not support account owned tokens."`
+
+**Resolved 2026-07-30 — the token now has this access**, so future redirect work
+can go through the API. Two things made it hard to grant:
+
+1. The permission group is named **Dynamic Redirect**, which does not contain the
+   word "rules". Searching the token editor for "rules" finds Config Rules,
+   Transform Rules, Cache Rules, Origin Rules and Page Rules — all different
+   features in different phases — and silently misses this one.
+2. Zone-scoped permissions appear under **separate policies** in the token
+   editor. Granting everything visible in one policy block looks exhaustive
+   while another policy still lacks the entry.
+
+The diagnostic that isolates it: an insufficient grant still returns `200` for
+`GET /rulesets`, and only fails on the phase entrypoint. **Test with a write, not
+a read.**
 
 `www.rootsystem.com` was therefore left untouched — it still CNAMEs to
 `rootsystem.netlify.app` and **still serves the legacy site**, so the two

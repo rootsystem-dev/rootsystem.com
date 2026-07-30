@@ -2,9 +2,16 @@
   // rootsystem.com — static assets plus one on-demand route (the contact form
   // endpoint), served by a Worker.
   //
-  // No custom domain is declared here. Custom domains are attached separately
-  // once the zone is active, so that a deploy cannot move production traffic as
-  // a side effect.
+  // Production route, attached 2026-07-29. A route rather than a custom domain:
+  // the apex A record stays pointed at Netlify and merely proxies through
+  // Cloudflare, so the Worker intercepts ahead of an origin that remains a live
+  // fallback. Removing this block and redeploying returns traffic to Netlify
+  // immediately, with no DNS propagation to wait on. See
+  // docs/apex-cutover-runbook.md.
+  //
+  // Note this means a deploy DOES move production traffic. That is now
+  // intentional; it was not before the cutover.
+  "routes": [{ "pattern": "rootsystem.com/*", "zone_name": "rootsystem.com" }],
   "name": "rootsystem-www",
   "compatibility_date": "2026-07-29",
   // The adapter's unified entrypoint, which serves both `astro dev` and

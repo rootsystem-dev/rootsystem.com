@@ -1,6 +1,53 @@
 # Apex cutover runbook — rootsystem.com off Netlify, onto the Worker
 
-Prepared 2026-07-29. **Not executed.** Nothing in production has changed.
+Prepared 2026-07-29 and **executed the same evening, Approach B.**
+`rootsystem.com` now serves the Astro build from the `rootsystem-www` Worker.
+
+## Execution record — 2026-07-29, ~22:40 PDT
+
+| Step | Result |
+|---|---|
+| Pre-flight `dns-verify.sh --http` | `GATE: PASS`, 0 mismatches |
+| Apex A `b8e3227946323c46dbce815235152e82` → `proxied: true` | done; content still `104.198.14.52` |
+| Netlify still serving through the proxy | confirmed (`server: cloudflare`, `cf-ray`, legacy title) |
+| Worker route created | `cfacb0f2dda74596b45274ed80c892a5`, `rootsystem.com/*` → `rootsystem-www` |
+| Apex serves the rebuild | confirmed |
+| Mail | 5 MX, SPF, DMARC, 6 verification TXT all intact |
+| Contact form → D1 | confirmed, row `id 4` (test row, safe to delete) |
+| `www` 301 | **NOT DONE — blocked, see below** |
+| Post-flight `dns-verify.sh --http` | `GATE: PASS`, 0 mismatches |
+
+### Two things did not go as written
+
+**`wrangler deploy` did not create the route.** The `routes` block was added to
+`wrangler.jsonc` and the deploy reported success, but `GET /zones/:id/workers/routes`
+came back empty and the apex kept serving Netlify — a silent no-op, not an error.
+Creating it through the API worked immediately. **Do not treat a successful
+`wrangler deploy` as evidence that a route exists; query the API.**
+
+**The `www` 301 could not be created with the current token.** Both available
+paths are refused:
+
+- Rulesets (`http_request_dynamic_redirect`): `"request is not authorized"`
+- Page Rules: `code 1011, "Page Rules endpoint does not support account owned tokens."`
+
+`www.rootsystem.com` was therefore left untouched — it still CNAMEs to
+`rootsystem.netlify.app` and **still serves the legacy site**, so the two
+hostnames currently disagree. Resolve by either:
+
+1. Cloudflare dashboard → Rules → Redirect Rules → single redirect,
+   `http.host eq "www.rootsystem.com"` → `301` to
+   `concat("https://rootsystem.com", http.request.uri.path)`, preserve query; or
+2. Granting the API token **Zone → Config Rules → Edit** on this zone, after
+   which the `PUT` in step 5 below works as written.
+
+Then replace the `www` CNAME as step 5 describes — the DNS change is deliberately
+left until the redirect exists, so there is never a window where `www` resolves
+to Cloudflare with no rule to act on it.
+
+---
+
+## Original plan, retained for reference and rollback
 
 Decisions already made:
 

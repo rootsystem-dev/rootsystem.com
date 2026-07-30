@@ -63,7 +63,6 @@ compare mail.rootsystem.com                               CNAME
 compare calendar.rootsystem.com                           CNAME
 
 # Web
-compare rootsystem.com                                    A
 compare www.rootsystem.com                                CNAME
 compare insights.rootsystem.com                           CNAME
 compare insights.dev.rootsystem.com                       CNAME
@@ -78,6 +77,11 @@ compare _github-pages-challenge-rootsystem-dev.rootsystem.com TXT
 # drift, and so an unexpected difference still fails loudly.
 compare dev.rootsystem.com  A   "removed on purpose -- confirmed legacy 2026-07-29"
 compare _dmarc.rootsystem.com TXT "added during migration -- absent at DNSimple"
+# The apex moved to the Worker on 2026-07-29, so it is now supposed to differ:
+# DNSimple still lists the Netlify IP, and Cloudflare answers with proxied
+# anycast addresses. Left as a declared difference rather than deleted, so the
+# record is still fetched and a *disappearance* would still be visible.
+compare rootsystem.com A "apex cut over to the Worker 2026-07-29 -- DNSimple retains the stale Netlify IP and is registration-only"
 
 echo
 printf 'match: %d   expected difference: %d   MISMATCH: %d\n' "$pass" "$expected" "$fail"

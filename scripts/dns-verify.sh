@@ -63,7 +63,6 @@ compare mail.rootsystem.com                               CNAME
 compare calendar.rootsystem.com                           CNAME
 
 # Web
-compare www.rootsystem.com                                CNAME
 compare insights.rootsystem.com                           CNAME
 compare insights.dev.rootsystem.com                       CNAME
 compare insights.staging.rootsystem.com                   CNAME
@@ -82,6 +81,10 @@ compare _dmarc.rootsystem.com TXT "added during migration -- absent at DNSimple"
 # anycast addresses. Left as a declared difference rather than deleted, so the
 # record is still fetched and a *disappearance* would still be visible.
 compare rootsystem.com A "apex cut over to the Worker 2026-07-29 -- DNSimple retains the stale Netlify IP and is registration-only"
+# www became a proxied CNAME to the apex on 2026-07-30 and 301s there via a
+# Redirect Rule. `dig +short` reports <empty> for it because the proxied answer
+# is an A/AAAA pair, not a CNAME -- so this is a type change, not a deletion.
+compare www.rootsystem.com CNAME "301s to the apex since 2026-07-30 -- proxied, so the CNAME is not visible in the answer section"
 
 echo
 printf 'match: %d   expected difference: %d   MISMATCH: %d\n' "$pass" "$expected" "$fail"

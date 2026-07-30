@@ -14,8 +14,29 @@ Prepared 2026-07-29 and **executed the same evening, Approach B.**
 | Apex serves the rebuild | confirmed |
 | Mail | 5 MX, SPF, DMARC, 6 verification TXT all intact |
 | Contact form → D1 | confirmed, row `id 4` (test row, safe to delete) |
-| `www` 301 | **NOT DONE — blocked, see below** |
 | Post-flight `dns-verify.sh --http` | `GATE: PASS`, 0 mismatches |
+| `www` 301 | done 2026-07-30, see below |
+
+### `www`, completed 2026-07-30 ~01:05 PDT
+
+Redirect Rule built in the dashboard (the token still cannot write this phase —
+see below), ruleset `291836fc018f43a8934b867d886ddc69`. Then the existing `www`
+record `7cd5f569c298bb416543532611676c2b` was **PATCHed** from
+`CNAME -> rootsystem.netlify.app, DNS-only` to `CNAME -> rootsystem.com, proxied`
+— patched rather than delete-and-recreate, so `www` never stopped resolving and
+the record ID stays stable for rollback.
+
+Verified: `301` to `https://rootsystem.com/`, path preserved
+(`/about` -> `/about`), query string preserved, one hop to `200`.
+
+Order matters and was deliberate: **rule first, DNS second.** Cloudflare warns
+at deploy time that the rule "may not apply to your traffic" because `www` was
+still grey-clouded; that is correct and harmless — the rule sits inert until the
+record is proxied. Deploying the rule after the DNS change would leave a window
+where `www` reached Cloudflare with nothing to act on it. When prompted, take
+"Ignore and deploy rule anyway", **not** "Create a new proxied DNS record" —
+the latter makes a second `www` record that then has to be reconciled with the
+one this runbook tracks.
 
 ### Two things did not go as written
 
@@ -25,8 +46,10 @@ came back empty and the apex kept serving Netlify — a silent no-op, not an err
 Creating it through the API worked immediately. **Do not treat a successful
 `wrangler deploy` as evidence that a route exists; query the API.**
 
-**The `www` 301 could not be created with the current token.** Both available
-paths are refused:
+**The `www` 301 could not be created with the current token** — it was built in
+the dashboard instead. This is still true: the token can `GET /rulesets` (so the
+ruleset is visible in a listing) but cannot read or write the
+`http_request_dynamic_redirect` entrypoint. Both API paths are refused:
 
 - Rulesets (`http_request_dynamic_redirect`): `"request is not authorized"`
 - Page Rules: `code 1011, "Page Rules endpoint does not support account owned tokens."`
@@ -38,8 +61,14 @@ hostnames currently disagree. Resolve by either:
 1. Cloudflare dashboard → Rules → Redirect Rules → single redirect,
    `http.host eq "www.rootsystem.com"` → `301` to
    `concat("https://rootsystem.com", http.request.uri.path)`, preserve query; or
-2. Granting the API token **Zone → Config Rules → Edit** on this zone, after
+2. Granting the API token **Zone → Dynamic Redirect → Edit** on this zone, after
    which the `PUT` in step 5 below works as written.
+
+   Not "Config Rules" — that is Configuration Rules, a different phase. Single
+   Redirects live in `http_request_dynamic_redirect` and have their own
+   permission group. A grant of the wrong one is easy to miss because it still
+   makes `GET /rulesets` return 200; the failure only appears on write, as
+   `"request is not authorized"`. Confirm with a write, not a read.
 
 Then replace the `www` CNAME as step 5 describes — the DNS change is deliberately
 left until the redirect exists, so there is never a window where `www` resolves

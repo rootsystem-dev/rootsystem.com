@@ -14,10 +14,28 @@ import Footer from '../components/Footer.astro'
 interface Props {
   title: string
   description: string
+  /** Set to 'article' on blog posts so link unfurls describe them correctly. */
+  ogType?: 'website' | 'article'
 }
 
-const { title, description } = Astro.props
+const { title, description, ogType = 'website' } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
+const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
+
+// Organization markup belongs on one page, not every page — the home page is the
+// conventional host for it. Kept to fields that are verifiably true today; a
+// `sameAs` list of social profiles is worth adding once those are settled.
+const isHome = Astro.url.pathname === '/'
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Root System',
+  url: 'https://rootsystem.com',
+  logo: new URL('/images/favicon/light/apple-touch-icon.png', Astro.site).href,
+  description:
+    'A sweat equity company. We help startup founders de-risk their products and technology.',
+  email: 'partners@rootsystem.com',
+}
 ---
 
 <html lang="en">
@@ -28,28 +46,53 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
-    <!-- Favicons are supplied as separate light and dark sets; the media query
-         picks between them the same way the previous site did. -->
-    <link
-      rel="icon"
-      href="/images/favicon/light/favicon.ico"
-      media="(prefers-color-scheme: light)"
-    />
-    <link
-      rel="icon"
-      href="/images/favicon/dark/favicon.ico"
-      media="(prefers-color-scheme: dark)"
-    />
+    <!--
+      Favicons come in light and dark sets, chosen by media query as the previous
+      site did. Order matters: browsers take the last supported `rel="icon"` they
+      understand, so the SVGs come after the .ico fallbacks. Apple ignores
+      prefers-color-scheme for touch icons and does not composite transparency
+      well, so that one is a single file on an opaque plate.
+    -->
+    <link rel="icon" href="/images/favicon/light/favicon.ico" sizes="32x32" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/images/favicon/dark/favicon.ico" sizes="32x32" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/light/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/dark/favicon.svg" media="(prefers-color-scheme: dark)" />
     <link rel="apple-touch-icon" href="/images/favicon/light/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/images/rootsystem-card.png', Astro.site)} />
+    <meta property="og:site_name" content="Root System" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Explicit dimensions let crawlers reserve the right aspect before the
+         image loads; the alt text is what screen readers announce on unfurls. -->
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:alt" content="Root System" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <!-- Site-wide so feed readers find Taproot from any page, not just /taproot,
+         which already links it in the body but not in the head. -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Taproot — Root System"
+      href="/taproot/rss.xml"
+    />
+
+    {
+      isHome && (
+        <script type="application/ld+json" set:html={JSON.stringify(organization)} />
+      )
+    }
   </head>
   <body>
     <Header />
@@ -61,9 +104,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
 </html>
 
 <style>
+  /* flex: 1 makes this absorb the leftover height so the footer sits on the
+     bottom edge of the viewport on short pages — the body is the flex column
+     that does the pinning (base.css). */
   main {
+    flex: 1;
+    width: 100%;
     max-width: var(--page-max);
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 var(--gutter);
   }
 </style>

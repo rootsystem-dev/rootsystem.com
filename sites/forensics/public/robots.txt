@@ -1,0 +1,10 @@
+# forensics.rootsystem.com
+#
+# Crawling is open, but note this property is not linked from anywhere yet and
+# its information architecture is still being worked out. If it needs to stay out
+# of search until that lands, the change is `Disallow: /` here rather than
+# per-page noindex tags.
+User-agent: *
+Allow: /
+
+Sitemap: https://forensics.rootsystem.com/sitemap-index.xml

@@ -16,7 +16,7 @@ const { post } = Astro.props
 const { title, description, publishDate, updatedDate, tags, draft } = post.data
 ---
 
-<Base title={`${title} | Taproot`} description={description}>
+<Base title={`${title} | Taproot`} description={description} ogType="article">
   <article>
     {draft && <p class="draft-banner">Draft — not published.</p>}
 

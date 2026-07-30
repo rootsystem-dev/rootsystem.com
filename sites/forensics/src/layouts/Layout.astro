@@ -28,6 +28,7 @@ interface Props {
 
 const { title, description, hasDraftCopy = false } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
+const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
 ---
 
 <html lang="en" data-direction={DESIGN_DIRECTION}>
@@ -37,11 +38,31 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/images/favicon/light/favicon.ico" sizes="32x32" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/images/favicon/dark/favicon.ico" sizes="32x32" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/light/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/dark/favicon.svg" media="(prefers-color-scheme: dark)" />
+    <link rel="apple-touch-icon" href="/images/favicon/light/apple-touch-icon.png" />
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Root System Forensics" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Shares the main brand card for now. `summary_large_image` was already
+         declared here with no image at all, which unfurls as a bare link; a
+         forensics-specific card is worth commissioning. -->
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:alt" content="Root System Forensics" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>

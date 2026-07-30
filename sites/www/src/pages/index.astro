@@ -23,12 +23,21 @@ import Base from '../layouts/Base.astro'
 </Base>
 
 <style>
+  /* Top padding follows the old home page's `pt={{ base: 12, md: 40 }}` — 3rem
+     on small screens, 10rem from md up. That space, not a rule under the header,
+     is what separated the nav from the headline on the previous site. */
   .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 4rem 0;
+    padding: 3rem 0 4rem;
+  }
+
+  @media (min-width: 48em) {
+    .hero {
+      padding-top: 10rem;
+    }
   }
 
   h1 {
@@ -41,10 +50,12 @@ import Base from '../layouts/Base.astro'
     font-size: var(--text-lg);
   }
 
+  /* Sized to the old home page's CTAs: `fontSize="md"` (0.9375rem),
+     `fontWeight="bold"`, and mr/ml of 2 on each link — a 1rem gap between. */
   .actions {
     display: flex;
-    gap: 1.5rem;
-    font-size: var(--text-xl);
-    font-weight: 600;
+    gap: 1rem;
+    font-size: var(--text-md);
+    font-weight: 700;
   }
 </style>

@@ -15,6 +15,12 @@
  * Both use green accents, which keeps the property congruent with
  * rootsystem.com -- A's #276749 is the same green the main site uses for
  * primary-600.
+ *
+ * Direction A additionally has a dark scheme, applied from the system
+ * preference. It is a restatement of A in dark neutrals, NOT a switch to B:
+ * B argues something different, so serving it to dark-mode visitors would
+ * split the brand by OS setting. Assumption: A is the only direction that
+ * needs both schemes, because B is already dark and is not the active choice.
  */
 
 :root {
@@ -42,7 +48,36 @@
   --accent: #276749;
   --accent-2: #38a169;
   --code-bg: #f3f7f4;
+  --danger: #c53030;
   --scheme: light;
+}
+
+/*
+ * Direction A, dark scheme. Neutrals are re-derived rather than borrowed from
+ * B, and the greens come from the main site's dark theme (primary-400 / -300)
+ * so both properties resolve to the same accent in the same scheme.
+ *
+ * --accent flips from #276749 to a lighter green on purpose: A's light-mode
+ * green is ~1.7:1 against this background and would be unreadable. Every value
+ * here is checked against --bg -- --muted is 4.9:1, --accent 7.4:1. Add new
+ * colours as tokens in BOTH blocks, never as literals in a component: a
+ * hardcoded light value is the one failure mode this structure exists to stop.
+ */
+@media (prefers-color-scheme: dark) {
+  :root[data-direction='a'] {
+    --bg: #14181d;
+    --fill: #1c2127;
+    --panel: #1c2127;
+    --ink: #eef2f6;
+    --body: #aab4bf;
+    --muted: #7d8794;
+    --line: #272e36;
+    --accent: #48bb78;
+    --accent-2: #68d391;
+    --code-bg: #1b2128;
+    --danger: #fc8181;
+    --scheme: dark;
+  }
 }
 
 /* Direction B — "On the Record" */
@@ -58,5 +93,6 @@
   --accent: #4ac07a;
   --accent-2: #2f855a;
   --code-bg: #232b34;
+  --danger: #fc8181;
   --scheme: dark;
 }

@@ -40,6 +40,14 @@ a {
   text-underline-offset: 2px;
 }
 
+/* Shifts to the secondary green rather than a neutral, matching how `.cta`
+   already swaps accent -> accent-2. In light mode that reads brighter, in dark
+   mode deeper, because the two tokens invert between themes. */
+a:hover,
+a:focus-visible {
+  color: var(--accent-2);
+}
+
 strong { color: var(--ink); }
 
 :focus-visible {

@@ -9,13 +9,25 @@ const year = new Date().getFullYear()
 </footer>
 
 <style>
+  /*
+   * Centred and spaced to match the previous site's footer (`mt={8}`, `py={6}`,
+   * `textAlign="center"`, gray.500 at fontSize xs). The rule above it is the one
+   * addition: the old footer had no border, but with the footer now pinned to the
+   * bottom of the viewport a short page would otherwise leave it floating in
+   * whitespace with nothing tying it to the page.
+   *
+   * No --page-max here on purpose: the separator is meant to span the full
+   * viewport, so the element runs edge to edge and only the text is centred.
+   * Constraining the footer to the content width would stop the rule short of
+   * the edges.
+   */
   footer {
-    max-width: var(--page-max);
-    margin: 4rem auto 0;
-    padding: 1.5rem;
+    margin-top: 2rem;
+    padding: 1.5rem var(--gutter);
     border-top: 1px solid var(--rule);
     color: var(--fg-muted);
     font-size: var(--text-xs);
+    text-align: center;
   }
 
   footer p {

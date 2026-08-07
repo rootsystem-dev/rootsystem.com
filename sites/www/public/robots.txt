@@ -1,0 +1,13 @@
+# rootsystem.com
+#
+# Nothing is disallowed: every route here is public marketing or blog content.
+# The API route under /api is a POST endpoint that redirects on GET, so there is
+# no crawlable surface to exclude.
+#
+# The absolute Sitemap URL is deliberate — robots.txt is fetched per hostname, so
+# a relative path would resolve against workers.dev on preview deployments and
+# point crawlers at the wrong origin.
+User-agent: *
+Allow: /
+
+Sitemap: https://rootsystem.com/sitemap-index.xml

@@ -1,0 +1,49 @@
+{
+  // rootsystem.com — static assets plus one on-demand route (the contact form
+  // endpoint), served by a Worker.
+  //
+  // Production route, attached 2026-07-29. A route rather than a custom domain:
+  // the apex A record stays pointed at Netlify and merely proxies through
+  // Cloudflare, so the Worker intercepts ahead of an origin that remains a live
+  // fallback. Removing this block and redeploying returns traffic to Netlify
+  // immediately, with no DNS propagation to wait on. See
+  // docs/apex-cutover-runbook.md.
+  //
+  // Note this means a deploy DOES move production traffic. That is now
+  // intentional; it was not before the cutover.
+  "routes": [{ "pattern": "rootsystem.com/*", "zone_name": "rootsystem.com" }],
+  "name": "rootsystem-www",
+  "compatibility_date": "2026-07-29",
+  // The adapter's unified entrypoint, which serves both `astro dev` and
+  // production. Not a path into ./dist -- that does not exist until the build
+  // has run, and the adapter validates this field before building.
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true },
+  "workers_dev": true,
+  "preview_urls": true,
+  // Notification routing. Not secrets, and worth being readable here rather
+  // than hidden in the dashboard -- where a form goes is a thing you want to
+  // find by reading the repo. The sending subdomain has its own SPF and DKIM
+  // and receives no mail; replies go to the submitter via reply_to.
+  //
+  // TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY are both Worker secrets, set
+  // with `wrangler secret put` from 1Password via fnox. The site key is public
+  // and could live here, but splitting the pair across two mechanisms means
+  // rotating the widget touches two places instead of one.
+  "vars": {
+    "NOTIFY_FROM": "Root System forms <forms@send.rootsystem.com>",
+    "NOTIFY_TO": "contact@rootsystem.com"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rootsystem-forms",
+      "database_id": "218e6fe4-44bd-4d12-a630-9a2c17cc863d"
+    }
+  ]
+}

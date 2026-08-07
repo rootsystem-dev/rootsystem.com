@@ -1,0 +1,152 @@
+---
+/**
+ * Site header. Spacing and type weights are matched to the previous site's
+ * `components/elements/header/index.jsx` so the two properties feel like the
+ * same brand during the cutover:
+ *
+ *   - vertical padding 0.75rem, 1.75rem from md up  (old `py={[3, 7]}`)
+ *   - logomark 4rem                                 (old `boxSize={16}`)
+ *   - wordmark 700 / -0.025em, 1.3125 -> 1.4375rem  (old Heading size="lg")
+ *   - nav 0.875rem / 400 / uppercase, 1.5rem gap    (old fontSize="sm")
+ *
+ * Two deliberate departures from the old header: the active route is marked by
+ * colour rather than by switching to bold, because the nav is meant to stay
+ * light against the wordmark; and there is no colour-mode toggle, since the
+ * theme follows the system preference (see tokens.css).
+ *
+ * Taproot is included because the blog is a first-class destination rather than
+ * a footer link (spec decision D4). It replaces the old header's external
+ * "Insights" link; "Careers" is likewise now "Apply", pointing at the same
+ * /apply route the old nav used.
+ */
+import Logomark from './Logomark.astro'
+
+const links = [
+  { href: '/about', label: 'About' },
+  { href: '/taproot', label: 'Taproot' },
+  { href: '/contact', label: 'Contact' },
+]
+
+const path = Astro.url.pathname
+---
+
+<header>
+  <div class="bar">
+    <a class="brand" href="/">
+      <Logomark />
+      <span class="wordmark">Root System</span>
+    </a>
+    <nav aria-label="Primary">
+      {
+        links.map(({ href, label }) => (
+          <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+            {label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  /*
+   * Two elements rather than one: `header` runs the full viewport width so its
+   * rule reaches both edges, matching the footer's, while `.bar` holds the row
+   * at the content width. Putting the border on a --page-max element would stop
+   * it short of the edges on wide screens.
+   *
+   * No bottom rule: the old header had none, and the separation comes from the
+   * space below instead — the hero's 10rem of top padding at desktop. Add
+   * `border-bottom: 1px solid var(--rule)` here if that ever needs a hard edge.
+   */
+  header {
+    padding: 0.75rem var(--gutter);
+  }
+
+  @media (min-width: 48em) {
+    header {
+      padding: 1.75rem var(--gutter);
+    }
+  }
+
+  /*
+   * width: 100% is load-bearing on a flex item with auto cross-axis margins,
+   * which is what this becomes if the border ever moves back onto `header`:
+   * auto margins absorb the free space, align-items: stretch is skipped, and the
+   * element shrinks to its content, leaving space-between nothing to distribute.
+   * Harmless here, and correct if the wrapper goes away.
+   */
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    max-width: var(--page-max);
+    margin: 0 auto;
+  }
+
+  /*
+   * The mark and the wordmark are one link, as they were on the old site.
+   * The gap is explicit now that the mark is cropped to its artwork: the old
+   * header's apparent spacing was the 400x400 viewBox's dead margin, which
+   * worked out to about 0.75rem at the size it rendered.
+   */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--fg);
+  }
+
+  .wordmark {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  @media (min-width: 48em) {
+    .wordmark {
+      font-size: var(--text-2xl);
+    }
+  }
+
+  .brand:hover,
+  .brand:focus-visible {
+    color: var(--link);
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  nav a {
+    color: var(--fg-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--fg);
+  }
+
+  /*
+   * Astro scopes these selectors with an attribute, which outranks the global
+   * `a:hover` in base.css — without explicit rules the header links have no
+   * hover colour at all. The `[aria-current]` variant is restated for the same
+   * reason: it would otherwise stay --fg while hovered.
+   */
+  nav a:hover,
+  nav a:focus-visible,
+  nav a[aria-current='page']:hover,
+  nav a[aria-current='page']:focus-visible {
+    color: var(--link);
+  }
+</style>

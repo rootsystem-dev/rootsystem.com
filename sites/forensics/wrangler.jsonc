@@ -1,0 +1,32 @@
+{
+  // forensics.rootsystem.com — static assets plus the case-intake endpoint.
+  // Shares the rootsystem-forms D1 database with sites/www; see
+  // db/migrations/0001_init.sql for why one database with two tables.
+  "name": "rootsystem-forensics",
+  "compatibility_date": "2026-07-29",
+  // Adapter's unified entrypoint; see sites/www/wrangler.jsonc.
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true },
+  "workers_dev": true,
+  "preview_urls": true,
+  // See sites/www/wrangler.jsonc for why these are vars and the Turnstile keys
+  // are secrets. Both properties notify the same address; the subject line
+  // carries the property, so the two feeds stay filterable without a second
+  // mailbox to maintain.
+  "vars": {
+    "NOTIFY_FROM": "Root System forms <forms@send.rootsystem.com>",
+    "NOTIFY_TO": "contact@rootsystem.com"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rootsystem-forms",
+      "database_id": "218e6fe4-44bd-4d12-a630-9a2c17cc863d"
+    }
+  ]
+}

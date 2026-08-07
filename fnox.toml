@@ -1,0 +1,20 @@
+#:tombi schema.strict = false
+
+# The `onepass` provider every secret below names. Previously this was defined
+# only in a developer's global fnox config, so CI resolved nothing and failed
+# with `Provider 'onepass' not configured in profile 'default'`. Neither the
+# vault name nor the account domain is a secret; the credential is the service
+# account token, which reaches CI as a GitHub secret and never appears here.
+[providers]
+onepass = { type = "1password", vault = "Engineering", account = "root-system.1password.com" }
+
+[secrets]
+RS_LINEAR_API_KEY = { provider="onepass", value="op://Engineering/linear-api-rs/credential"}
+DNSIMPLE_API_KEY = { provider="onepass", value="op://Engineering/RMJ-RS-DNSIMPLE/credential"}
+# Named CLOUDFLARE_API_TOKEN because that is the variable wrangler reads
+# natively -- any other name means every deploy command needs a mapping shim.
+CLOUDFLARE_API_TOKEN = { provider="onepass", value="op://Engineering/rs-cloudflare-rmj-edit-api-key/credential"}
+TURNSTILE_SECRET_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/credential" }
+TURNSTILE_SITE_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/yg5rjudzx7yw7r4yvydwxcoqn4" }
+RESEND_API_KEY = { provider="onepass", value="op://Engineering/rs-resend-rs-dot-com-sending-api-key/credential"}
+

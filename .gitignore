@@ -5,9 +5,13 @@
 
 # Build Output
 out/
+dist/
+.astro/
+.wrangler/
 
 # Dots
 .env
+.env.local
 .ignore
 .mdx-data
 .next
@@ -30,3 +34,12 @@ yarn-error.log*
 *.iml
 *.iws
 *.ipr
+
+# DNS zone exports. Kept locally as migration reference but not tracked -- they
+# enumerate internal subdomains. History is intentionally not rewritten; the
+# 2026-07-29 export remains in commit 0b43501.
+docs/*.txt
+
+# Wrangler local secrets. The .example copy is tracked; this is not.
+.dev.vars
+!.dev.vars.example

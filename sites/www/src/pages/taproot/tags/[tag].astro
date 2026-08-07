@@ -1,0 +1,89 @@
+---
+import Base from '../../../layouts/Base.astro'
+import { getPosts, formatDate } from '../../../lib/taproot'
+
+export async function getStaticPaths() {
+  const posts = await getPosts()
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))]
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { posts: posts.filter((post) => post.data.tags.includes(tag)) },
+  }))
+}
+
+const { tag } = Astro.params
+const { posts } = Astro.props
+---
+
+<Base
+  title={`Posts tagged ${tag} | Taproot`}
+  description={`Taproot posts tagged ${tag}.`}
+>
+  <header class="masthead">
+    <p class="eyebrow"><a href="/taproot">Taproot</a></p>
+    <h1>{tag}</h1>
+  </header>
+
+  <ul class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <h2><a href={`/taproot/${post.id}`}>{post.data.title}</a></h2>
+          <p class="meta">
+            <time datetime={post.data.publishDate.toISOString()}>
+              {formatDate(post.data.publishDate)}
+            </time>
+          </p>
+          <p class="description">{post.data.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
+
+<style>
+  .masthead {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding-top: 3rem;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .posts {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .posts li {
+    border-top: 1px solid var(--rule);
+    padding: 1.75rem 0;
+  }
+
+  .posts h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: 0.25rem;
+  }
+
+  .posts h2 a {
+    color: var(--fg);
+  }
+
+  .meta {
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    margin: 0;
+  }
+</style>

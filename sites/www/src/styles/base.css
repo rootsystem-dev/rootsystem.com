@@ -1,0 +1,124 @@
+/* Element defaults. Kept deliberately small — no CSS framework, per spec §3. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/*
+ * The column layout pins the footer to the bottom of the viewport on short
+ * pages, which is what the old site did with
+ * `<Flex direction="column" minHeight="100vh">` in pages/_app.js. `main` takes
+ * the slack via flex: 1 below.
+ *
+ * 100dvh rather than 100vh: on mobile Safari 100vh means the *largest* viewport
+ * height, so a short page would push the footer below the fold behind the
+ * browser chrome — the opposite of the intent.
+ */
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* letter-spacing matches the old theme's `letterSpacing: "tight"` on h1-h4
+   (tokens.css letterSpacings.tight = -0.0125em). Without it the same 2rem
+   headline sets about 20px wider than the old site's. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.0125em;
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: var(--text-5xl); }
+h2 { font-size: var(--text-xl); }
+
+p {
+  margin: 0 0 1.25rem;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+/*
+ * Shared page furniture. `.page-title` and `.prose` reproduce the centered
+ * heading and measure-constrained body column the Chakra pages built inline,
+ * so each page does not restate the same layout.
+ */
+.page-title {
+  padding-top: 3rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+@media (min-width: 48em) {
+  .page-title {
+    padding-top: 6rem;
+  }
+}
+
+.prose {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.prose h2 {
+  color: var(--fg-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: 2rem 0 0.75rem;
+}
+
+.prose ul {
+  margin: 0 0 1.5rem;
+  padding-left: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose a {
+  font-weight: 600;
+}

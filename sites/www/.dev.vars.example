@@ -1,0 +1,10 @@
+# Local development only. Cloudflare's always-pass dummy Turnstile pair, so
+# `astro dev` never calls the live service. See docs/superpowers/specs/
+# 2026-08-06-form-spam-gate-design.md §8 for the always-fail and
+# token-already-spent values.
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+
+# Empty on purpose. sendNotification() returns 'pending' without a key, so a
+# local submission is stored and not emailed.
+RESEND_API_KEY=

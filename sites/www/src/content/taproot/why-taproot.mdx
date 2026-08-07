@@ -1,0 +1,37 @@
+---
+title: Why Taproot
+description: A note on what this is for, and why the blog moved.
+publishDate: 2026-07-29
+tags: [meta]
+draft: true
+---
+
+This post is scaffolding. It exists so the collection has an entry, the layouts
+have something to render, and the draft mechanism has something to hide. Replace
+or delete it before the first real post.
+
+It is marked `draft: true`, so it renders in `astro dev` with a draft banner and
+is excluded from production builds entirely.
+
+## Frontmatter
+
+Every field below is validated at build time. A missing `description` or a
+malformed `publishDate` fails the build rather than shipping a broken card.
+
+```yaml
+title: string            # required
+description: string      # required — used for meta tags and index cards
+publishDate: date        # required — YYYY-MM-DD
+updatedDate: date        # optional
+tags: string[]           # optional, defaults to []
+draft: boolean           # optional, defaults to false
+```
+
+## Writing
+
+Posts are Markdown or MDX in `src/content/taproot/`. The filename becomes the
+URL: this file is `why-taproot.mdx`, so it lives at `/taproot/why-taproot`.
+
+Tags generate their own index pages automatically. The RSS feed at
+`/taproot/rss.xml` is built from the same source as the index, so the two cannot
+disagree about what is published.

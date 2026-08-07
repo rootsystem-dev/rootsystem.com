@@ -1,0 +1,106 @@
+name: deploy
+
+# Builds and deploys each site independently. Path filters mean a change to one
+# site does not redeploy the other.
+#
+# Secrets resolve through fnox from 1Password rather than being stored as
+# GitHub secrets directly; the only GitHub secret is the 1Password service
+# account token that fnox authenticates with.
+#
+# fnox exposes the Cloudflare credential as CLOUDFLARE_API_TOKEN, which is the
+# variable wrangler reads natively, so no mapping is needed here.
+
+on:
+  push:
+    branches: [primary]
+  pull_request:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      www: ${{ steps.filter.outputs.www }}
+      forensics: ${{ steps.filter.outputs.forensics }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            www:
+              - 'sites/www/**'
+              - 'package.json'
+              - 'yarn.lock'
+              - '.github/workflows/deploy.yml'
+            forensics:
+              - 'sites/forensics/**'
+              - 'package.json'
+              - 'yarn.lock'
+              - '.github/workflows/deploy.yml'
+
+  deploy:
+    needs: changes
+    # An explicit name, because the generated one interpolates every matrix
+    # value -- including `changed`. That makes the status context differ
+    # between `deploy (www, @rootsystem/www, true)` and the `false` variant, so
+    # a branch rule requiring one of them can never be satisfied by a pull
+    # request that did not touch that site. This name is stable either way.
+    name: deploy (${{ matrix.site }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - site: www
+            workspace: '@rootsystem/www'
+            changed: ${{ needs.changes.outputs.www }}
+          - site: forensics
+            workspace: '@rootsystem/forensics'
+            changed: ${{ needs.changes.outputs.forensics }}
+    steps:
+      - uses: actions/checkout@v5
+        if: matrix.changed == 'true'
+
+      - uses: jdx/mise-action@v3
+        if: matrix.changed == 'true'
+
+      - name: Install
+        if: matrix.changed == 'true'
+        env:
+          # Hardened mode validates lockfile content against the registry,
+          # catching lockfile poisoning. Yarn turns it on automatically for
+          # pull requests on public repositories; this repository is private,
+          # so it is set explicitly. Enabled only for pull requests, since it
+          # costs extra network round-trips on every install.
+          YARN_ENABLE_HARDENED_MODE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
+        run: yarn install --immutable
+
+      - name: Build
+        if: matrix.changed == 'true'
+        run: yarn workspace ${{ matrix.workspace }} build
+
+      # fnox's 1Password provider shells out to `op`. A runner has no 1Password
+      # desktop app, so the service account token is the only credential path.
+      # Installed via the official action rather than as a mise tool: a
+      # mise-managed `op` on a developer's machine would shadow the Homebrew
+      # binary that the local Touch ID bootstrap is authorised against.
+      - name: Install the 1Password CLI
+        if: matrix.changed == 'true'
+        uses: 1password/install-cli-action@v1
+
+      # Pull requests get a preview deployment; only primary publishes.
+      - name: Deploy
+        if: matrix.changed == 'true'
+        working-directory: sites/${{ matrix.site }}
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          DEPLOY_CMD: ${{ github.ref == 'refs/heads/primary' && 'deploy' || 'versions upload' }}
+        # fnox exposes the credential as CLOUDFLARE_API_TOKEN, which wrangler
+        # reads directly, so no mapping is needed. DEPLOY_CMD is word-split
+        # deliberately: it is either `deploy` or `versions upload`.
+        run: |
+          fnox run -- sh -c 'wrangler $DEPLOY_CMD'

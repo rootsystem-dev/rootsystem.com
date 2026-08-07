@@ -1,0 +1,79 @@
+---
+/**
+ * Page shell for forensics.rootsystem.com.
+ *
+ * DESIGN_DIRECTION selects between the two directions in the GTM mockups.
+ * Changing this one value swaps the entire visual treatment, because the page
+ * markup references only semantic tokens.
+ *
+ * Set to 'a' -- "Show Your Work" -- deliberately. Direction B sells courtroom
+ * gravitas, which is the axis this practice is weakest on today; the FAQ
+ * answers "you've testified once" by arguing that a reproducible opinion does
+ * not rest on tenure, and B's visual argument would contradict that. A makes
+ * the actual differentiator visible: the hero is a query and its output.
+ * It is also the closer sibling to rootsystem.com, which matters because
+ * referrals arrive through Rob personally and prospects see both properties.
+ */
+import '../styles/tokens.css'
+import '../styles/base.css'
+
+const DESIGN_DIRECTION: 'a' | 'b' = 'a'
+
+interface Props {
+  title: string
+  description: string
+  /** True when any copy on the page is still scaffolding. */
+  hasDraftCopy?: boolean
+}
+
+const { title, description, hasDraftCopy = false } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
+---
+
+<html lang="en" data-direction={DESIGN_DIRECTION}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/images/favicon/light/favicon.ico" sizes="32x32" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="/images/favicon/dark/favicon.ico" sizes="32x32" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/light/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/dark/favicon.svg" media="(prefers-color-scheme: dark)" />
+    <link rel="apple-touch-icon" href="/images/favicon/light/apple-touch-icon.png" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Root System Forensics" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Shares the main brand card for now. `summary_large_image` was already
+         declared here with no image at all, which unfurls as a bare link; a
+         forensics-specific card is worth commissioning. -->
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:alt" content="Root System Forensics" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    {
+      hasDraftCopy && (
+        <p class="draft-notice">
+          Draft copy — hero and closing are scaffolding pending an own-voice
+          rewrite. This page cannot be built for production in this state.
+        </p>
+      )
+    }
+    <slot />
+  </body>
+</html>

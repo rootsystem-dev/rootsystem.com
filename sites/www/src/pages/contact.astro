@@ -1,0 +1,197 @@
+---
+/**
+ * Contact page.
+ *
+ * Replaces the Typeform embed. The previous implementation pulled React in via
+ * @typeform/embed-react to render what was ultimately an iframe; this is a
+ * plain form posting to /api/contact, which writes to D1.
+ *
+ * Rendered on demand rather than prerendered, because it reflects submission
+ * state (?sent, ?error) back to the visitor. A static page cannot read query
+ * parameters without client-side JavaScript, and adding a script to this site
+ * to display one message would be a poor trade. The page is low-traffic and the
+ * render is trivial.
+ *
+ * The form posts and the endpoint redirects with 303, so a refresh afterwards
+ * does not resubmit. It does now require JavaScript, because the Turnstile
+ * widget will not render without it and the endpoint rejects a submission that
+ * carries no token. The noscript block below is the fallback for that case.
+ */
+export const prerender = false
+
+import { env } from 'cloudflare:workers'
+import Base from '../layouts/Base.astro'
+
+const params = Astro.url.searchParams
+const sent = params.get('sent') === '1'
+const error = params.get('error')
+
+const errorMessage =
+  error === 'invalid'
+    ? 'Please provide your name, a valid email address, and a message.'
+    : error === 'captcha'
+      ? // Deliberately not phrased as a failed check. The common causes are a
+        // stale form and an expired token -- Turnstile tokens last 300 seconds
+        // and are single-use -- none of which are the submitter's doing.
+        'That form had expired. Please reload the page and send it again, or email partners@rootsystem.com.'
+      : error === 'server'
+        ? 'Something went wrong saving your message. Please email partners@rootsystem.com instead.'
+        : null
+
+const turnstileSiteKey = env.TURNSTILE_SITE_KEY
+---
+
+<Base
+  title="Contact Us | Root System"
+  description="Questions, feedback, or just saying hello? Let's chat."
+>
+  <h1 class="page-title">Contact</h1>
+
+  {
+    sent ? (
+      <div class="prose">
+        <p class="notice success">Thanks — your message is with us.</p>
+        <p>
+          We read everything that comes through here. If it is time-sensitive,{' '}
+          <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>{' '}
+          reaches us directly.
+        </p>
+      </div>
+    ) : (
+      <div class="prose">
+        {errorMessage && <p class="notice error">{errorMessage}</p>}
+
+        <form method="post" action="/api/contact">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required maxlength="120" autocomplete="name" />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required maxlength="254" autocomplete="email" />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="7" required maxlength="5000"></textarea>
+
+          {/* Honeypot. Hidden from people, filled by bots. Not `type=hidden`,
+              which bots skip -- it must look like a real field to a scraper. */}
+          <div class="decoy" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          {/* Implicit rendering: the script finds this container and injects
+              the cf-turnstile-response input into the enclosing form itself, so
+              none of our own JavaScript is involved in wiring up the token. */}
+          <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+
+          <noscript>
+            <p class="notice error">
+              This form needs JavaScript to verify the submission. Please email{' '}
+              <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a> instead.
+            </p>
+          </noscript>
+
+          <button type="submit">Send</button>
+        </form>
+
+        {/* is:inline keeps Astro from processing this as a bundled module and
+            dropping the async/defer attributes. */}
+        <script
+          is:inline
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          async
+          defer
+        ></script>
+
+        <p class="alt">
+          Or email us directly:{' '}
+          <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a>
+        </p>
+      </div>
+    )
+  }
+</Base>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  input,
+  textarea {
+    font: inherit;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 0.625rem 0.75rem;
+    width: 100%;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--link);
+  }
+
+  /* The widget sizes itself; this only separates it from the last field. It
+     reserves no height, so the page shifts slightly when the widget loads. */
+  .cf-turnstile {
+    margin-top: 1.5rem;
+  }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    align-self: flex-start;
+    margin-top: 1.5rem;
+    background: var(--link);
+    color: var(--bg);
+    border: 0;
+    border-radius: 6px;
+    padding: 0.625rem 1.5rem;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: var(--link-hover);
+  }
+
+  /* Positioned off-screen rather than display:none, because some bots skip
+     fields that are not rendered. */
+  .decoy {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  /* --surface adapts per theme. A literal light grey here renders white-on-
+     near-white in dark mode. */
+  .notice {
+    border-left: 3px solid var(--link);
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+  }
+
+  .notice.error {
+    border-left-color: #c53030;
+  }
+
+  .alt {
+    margin-top: 2rem;
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+  }
+</style>

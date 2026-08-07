@@ -66,6 +66,19 @@ Two projects:
   today. Deletable only after step 0 and step 2, once `insights` is confirmed
   serving from Cloudflare.
 
+## 3b. GitHub app installations and branch rules
+
+The branch ruleset on `primary` was named "only netlify/vercel can deploy main"
+and granted standing bypass to the Netlify and Vercel GitHub Apps. It was
+replaced on 2026-08-06 with one requiring a pull request and green deploy
+checks, bypassable by organization admins only, still blocking deletion and
+force-push. The two app bypasses are gone.
+
+The app *installations* remain on the organization. Once step 1 and step 3 are
+done, `netlify` (app 13473) and `vercel` (app 8329) have nothing left to serve
+and their installations can be removed. Deleting a site or project does not
+remove the app's access to the organization's repositories.
+
 ## 4. Sanity
 
 Last. Only after Vercel is gone and the export from step 0 is verified readable.

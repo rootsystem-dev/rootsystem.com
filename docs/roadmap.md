@@ -5,6 +5,11 @@ carry their open questions here and get their own spec when they come up.
 
 Standing operational items are not roadmap items and are not listed below.
 
+Work goes on a short-lived branch off `primary` with a pull request. A pull
+request runs `wrangler versions upload`, which publishes a Worker version that
+takes no traffic; only a push to `primary` runs `wrangler deploy`. Merging is
+therefore a production event. See `.github/workflows/deploy.yml`.
+
 ## Where things stand
 
 *Source: `curl -I` against each hostname on 2026-08-06, plus the repository at

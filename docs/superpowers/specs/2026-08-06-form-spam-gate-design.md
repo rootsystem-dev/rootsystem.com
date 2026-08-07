@@ -297,7 +297,11 @@ reached `siteverify` with a secret Cloudflare accepted.
 A real browser submission through the rendered widget followed, recorded as row
 id 8: `status = 'notified'`, `spam_reason` null. That covers the remaining path
 — a token that passes `siteverify`, a clean insert, and a send Resend accepted.
-`notified` records acceptance by the API, not delivery to the mailbox.
+Delivery to `contact@rootsystem.com` was confirmed by hand for that submission.
+
+Note for future reading of the column: `notified` records acceptance by the
+Resend API, not delivery. The two coincided here because delivery was checked
+separately.
 
 Row id 7 is the synthetic garbage-token check above, left in place as evidence;
 it is `held`, so a backlog sweep will not pick it up.

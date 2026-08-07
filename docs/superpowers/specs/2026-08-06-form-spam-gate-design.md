@@ -294,10 +294,13 @@ The last check is the load-bearing one: the error code is
 `invalid-input-response` rather than `invalid-input-secret`, so the Worker
 reached `siteverify` with a secret Cloudflare accepted.
 
-**Not verified:** a submission that passes Turnstile, and therefore the Resend
-delivery behind it. Minting a real token requires a browser. Row id 7 is the
-synthetic check above and is left in place as evidence; it is `held`, so a
-backlog sweep will not pick it up.
+A real browser submission through the rendered widget followed, recorded as row
+id 8: `status = 'notified'`, `spam_reason` null. That covers the remaining path
+— a token that passes `siteverify`, a clean insert, and a send Resend accepted.
+`notified` records acceptance by the API, not delivery to the mailbox.
+
+Row id 7 is the synthetic garbage-token check above, left in place as evidence;
+it is `held`, so a backlog sweep will not pick it up.
 
 The four rows that predate this change defaulted to `status = 'pending'`. They
 are the synthetic cutover tests from 2026-07-29, not a real backlog.

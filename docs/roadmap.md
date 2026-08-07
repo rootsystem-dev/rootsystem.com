@@ -34,15 +34,13 @@ every stored row, and email the clean ones to `contact@rootsystem.com` via
 Resend. Migration `0002` is applied to the remote D1; secrets are set on both
 Workers; both Workers are deployed.
 
-One path is unverified: a submission that *passes* Turnstile, and the Resend
-delivery that follows it. That needs a real browser to mint a token, and the
-rejection and quarantine paths were the only ones reachable from the command
-line. See §9 of the spec for what was covered.
+Every path is verified end to end, including a real browser submission that
+passed Turnstile and was accepted by Resend. See §9 of the spec.
 
 This track also touches a gate in `docs/teardown-order.md` §1, which holds the
 Netlify deletion until at least one genuine inbound contact submission from a
-stranger has landed. The form changed, so that gate now measures the new path —
-and a passing submission satisfies both at once.
+stranger has landed. The form path is now proven working, so that gate is
+waiting only on a real inbound rather than on the mechanism.
 
 ## Track 2 — forensics case flow
 

@@ -26,16 +26,23 @@ Taproot holds one post (`sites/www/src/content/taproot/why-taproot.mdx`).
 
 ## Track 1 — spam gate on both forms
 
-Anti-automation on both form endpoints is a honeypot field alone
-(`isBot()` in `sites/www/src/lib/form.ts` and its forensics twin). No rate limit,
-no challenge. Two endpoints: `/api/contact` on the main site, `/api/intake` on
-forensics.
+**Deployed 2026-08-06.** Specced in
+`docs/superpowers/specs/2026-08-06-form-spam-gate-design.md`.
 
-Specced in `docs/superpowers/specs/2026-08-06-form-spam-gate-design.md`.
+Both endpoints verify a Turnstile token server-side, record a spam verdict on
+every stored row, and email the clean ones to `contact@rootsystem.com` via
+Resend. Migration `0002` is applied to the remote D1; secrets are set on both
+Workers; both Workers are deployed.
+
+One path is unverified: a submission that *passes* Turnstile, and the Resend
+delivery that follows it. That needs a real browser to mint a token, and the
+rejection and quarantine paths were the only ones reachable from the command
+line. See §9 of the spec for what was covered.
 
 This track also touches a gate in `docs/teardown-order.md` §1, which holds the
 Netlify deletion until at least one genuine inbound contact submission from a
-stranger has landed. Changing the form changes the path that gate measures.
+stranger has landed. The form changed, so that gate now measures the new path —
+and a passing submission satisfies both at once.
 
 ## Track 2 — forensics case flow
 

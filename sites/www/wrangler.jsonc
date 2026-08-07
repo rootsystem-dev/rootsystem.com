@@ -37,7 +37,7 @@
   // rotating the widget touches two places instead of one.
   "vars": {
     "NOTIFY_FROM": "Root System forms <forms@send.rootsystem.com>",
-    "NOTIFY_TO": "partners@rootsystem.com"
+    "NOTIFY_TO": "contact@rootsystem.com"
   },
   "d1_databases": [
     {

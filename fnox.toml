@@ -7,3 +7,5 @@ DNSIMPLE_API_KEY = { provider="onepass", value="op://Engineering/RMJ-RS-DNSIMPLE
 CLOUDFLARE_API_TOKEN = { provider="onepass", value="op://Engineering/rs-cloudflare-rmj-edit-api-key/credential"}
 TURNSTILE_SECRET_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/credential" }
 TURNSTILE_SITE_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/yg5rjudzx7yw7r4yvydwxcoqn4" }
+RESEND_API_KEY = { provider="onepass", value="op://Engineering/rs-resend-rs-dot-com-sending-api-key/credential"}
+

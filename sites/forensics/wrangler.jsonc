@@ -15,12 +15,12 @@
   "workers_dev": true,
   "preview_urls": true,
   // See sites/www/wrangler.jsonc for why these are vars and the Turnstile keys
-  // are secrets. Case intake goes to its own address rather than partners@:
-  // the table holds matter descriptions from litigators, and keeping that feed
-  // separable from general partner mail is worth one alias.
+  // are secrets. Both properties notify the same address; the subject line
+  // carries the property, so the two feeds stay filterable without a second
+  // mailbox to maintain.
   "vars": {
     "NOTIFY_FROM": "Root System forms <forms@send.rootsystem.com>",
-    "NOTIFY_TO": "intake@rootsystem.com"
+    "NOTIFY_TO": "contact@rootsystem.com"
   },
   "d1_databases": [
     {

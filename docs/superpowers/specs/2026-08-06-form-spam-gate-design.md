@@ -72,7 +72,7 @@ Both keys are referenced from `fnox.toml`, resolving to
 | S4 | Keep the honeypot, and record its hits | It costs nothing and runs before the network call to `siteverify`. Unlike v1 it now stores the row rather than discarding it. |
 | S5 | `spam_reason` and `spam_detail`, no boolean | Spam-ness is `spam_reason IS NOT NULL`. A separate flag would be a second source of truth for the same fact. `spam_reason` is a short category, `spam_detail` is free text. |
 | S6 | Resend, sending from `send.rootsystem.com` | A dedicated subdomain carries its own SPF and DKIM, leaving the apex records that serve Google Workspace untouched. |
-| S7 | Per-property notification addresses | `partners@rootsystem.com` for contact, `intake@rootsystem.com` for case intake. |
+| S7 | One notification address, `contact@rootsystem.com` | Both properties notify the same mailbox. The subject line carries the property, so the feeds stay filterable without a second mailbox to maintain. Revised 2026-08-06 from the per-property split originally chosen. |
 | S8 | Notification awaited, not backgrounded | `ctx.waitUntil` would return the redirect sooner but leaves `status` written after the response. At this volume the accuracy is worth a few hundred milliseconds. |
 | S9 | No shared package | `sites/www/src/lib/form.ts` carries a note to extract at a third consumer. This is the second. The duplication stays, though the Turnstile helpers roughly triple the size of the duplicated part. |
 | S10 | An unreachable `siteverify` is **not** spam | Added during implementation. A failed verification is a judgment about the submitter; an unreachable endpoint is a fact about our own infrastructure. Folding the second into the first would mean a Cloudflare incident silently converts every genuine enquiry into a held row nobody is notified about. |
@@ -186,8 +186,11 @@ before the Resend account is configured; a later backfill can sweep `pending`.
 
 | Property | To | Subject |
 |---|---|---|
-| Contact | `partners@rootsystem.com` | `[rootsystem.com] Contact — <name>` |
-| Case intake | `intake@rootsystem.com` | `[forensics] Case intake — <name>` |
+| Contact | `contact@rootsystem.com` | `[rootsystem.com] Contact — <name>` |
+| Case intake | `contact@rootsystem.com` | `[forensics] Case intake — <name>` |
+
+The `mailto:` fallback printed on both pages remains `partners@rootsystem.com`.
+That is the public address; `contact@` is where the Worker delivers.
 
 ### Confidentiality of the intake body
 
@@ -197,11 +200,10 @@ client-identifying detail, and that rows should be triaged and cleared promptly
 rather than accumulating. Emailing that text copies it into a Gmail mailbox,
 which is a second place it persists outside the triage window.
 
-The design includes the summary in the notification. The destination is a
-Workspace mailbox under the same control as the database, and a notification
-without the substance would not support triage. **This is the assumption most
-worth reversing if Rob disagrees** — the alternative is an email carrying only
-the row id and the non-privileged metadata, with the summary read from D1.
+The notification includes the summary. Confirmed by Rob on 2026-08-06, on two
+grounds: a litigator is not expected to type privileged detail into a web form,
+and the database side is already secured. A notification without the substance
+would not support triage.
 
 ---
 
@@ -277,6 +279,29 @@ the `?error=captcha` copy.
 The `unavailable` branch (S10) is not covered by these runs — reproducing it
 means making `challenges.cloudflare.com` unreachable from the Worker.
 
+### Post-deploy, against production
+
+Run on 2026-08-06 after deploying both Workers.
+
+| Check | Result |
+|---|---|
+| `GET https://rootsystem.com/` | 200 |
+| `/contact` markup | production sitekey `0x4AAAAAAEIqxIXHXECV_Vvj`, widget container, `<noscript>` |
+| POST with no token | 303 `?error=captcha`, no row |
+| POST with a garbage token | 303 `?error=captcha`; remote row id 7 `status=held`, `spam_reason=turnstile`, detail `turnstile: invalid-input-response` |
+
+The last check is the load-bearing one: the error code is
+`invalid-input-response` rather than `invalid-input-secret`, so the Worker
+reached `siteverify` with a secret Cloudflare accepted.
+
+**Not verified:** a submission that passes Turnstile, and therefore the Resend
+delivery behind it. Minting a real token requires a browser. Row id 7 is the
+synthetic check above and is left in place as evidence; it is `held`, so a
+backlog sweep will not pick it up.
+
+The four rows that predate this change defaulted to `status = 'pending'`. They
+are the synthetic cutover tests from 2026-07-29, not a real backlog.
+
 `docs/teardown-order.md` §1 holds Netlify deletion until a genuine inbound
 contact submission from a stranger has landed. That gate measures the path this
 change alters, so a live check runs after deploying to the apex, where a deploy
@@ -288,9 +313,17 @@ moves production traffic.
 
 | Item | Owner | Blocks |
 |---|---|---|
-| Add `send.rootsystem.com` to Resend, mint a domain-scoped key, store as a new Engineering 1Password entry | Rob | notification only |
-| Create the `intake@rootsystem.com` Workspace alias | Rob | intake notification only |
-| Confirm or reverse the intake-body decision in §6 | Rob | intake notification only |
+| — | — | — |
 
-Neither open item blocks the Turnstile gate, the schema, or the spam verdict.
-Those ship with notification inert.
+All items from draft-v2 are closed as of 2026-08-06:
+
+- `send.rootsystem.com` is added to Resend and its SPF, DKIM and feedback MX
+  records are live in the Cloudflare zone. *Source:
+  `GET /zones/6404dc8cf899e2a7d7af28bd94f1b198/dns_records`.*
+- The sending key is a send-only, domain-scoped key at
+  `op://Engineering/rs-resend-rs-dot-com-sending-api-key`, referenced from
+  `fnox.toml`. It cannot read the Resend account, which is why domain status
+  here is evidenced from DNS rather than from the Resend API.
+- Notification goes to `contact@rootsystem.com` for both properties (S7), so no
+  new alias is needed.
+- The intake-body question in §6 is resolved.

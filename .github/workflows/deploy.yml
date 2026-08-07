@@ -44,6 +44,12 @@ jobs:
 
   deploy:
     needs: changes
+    # An explicit name, because the generated one interpolates every matrix
+    # value -- including `changed`. That makes the status context differ
+    # between `deploy (www, @rootsystem/www, true)` and the `false` variant, so
+    # a branch rule requiring one of them can never be satisfied by a pull
+    # request that did not touch that site. This name is stable either way.
+    name: deploy (${{ matrix.site }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

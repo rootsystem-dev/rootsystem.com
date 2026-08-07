@@ -7,6 +7,14 @@ fnox = "latest"
 # cannot drift.
 wrangler = "latest"
 
+# `_.fnox-env` below is provided by a plugin, and mise resolves plugin names
+# only against configs it can see. Declaring it here rather than relying on a
+# developer's global config is what makes the repository self-contained: CI
+# checks out this file and nothing else, and without this it fails at setup
+# with `Invalid version: fnox-env`.
+[plugins]
+fnox-env = "https://github.com/jdx/mise-env-fnox"
+
 [env]
 _.file = ".env.local"
 _.fnox-env = { tools = true }

@@ -5,3 +5,5 @@ DNSIMPLE_API_KEY = { provider="onepass", value="op://Engineering/RMJ-RS-DNSIMPLE
 # Named CLOUDFLARE_API_TOKEN because that is the variable wrangler reads
 # natively -- any other name means every deploy command needs a mapping shim.
 CLOUDFLARE_API_TOKEN = { provider="onepass", value="op://Engineering/rs-cloudflare-rmj-edit-api-key/credential"}
+TURNSTILE_SECRET_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/credential" }
+TURNSTILE_SITE_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/yg5rjudzx7yw7r4yvydwxcoqn4" }

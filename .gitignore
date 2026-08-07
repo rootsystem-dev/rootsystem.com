@@ -39,3 +39,7 @@ yarn-error.log*
 # enumerate internal subdomains. History is intentionally not rewritten; the
 # 2026-07-29 export remains in commit 0b43501.
 docs/*.txt
+
+# Wrangler local secrets. The .example copy is tracked; this is not.
+.dev.vars
+!.dev.vars.example

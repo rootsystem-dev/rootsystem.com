@@ -26,6 +26,19 @@
   "observability": { "enabled": true },
   "workers_dev": true,
   "preview_urls": true,
+  // Notification routing. Not secrets, and worth being readable here rather
+  // than hidden in the dashboard -- where a form goes is a thing you want to
+  // find by reading the repo. The sending subdomain has its own SPF and DKIM
+  // and receives no mail; replies go to the submitter via reply_to.
+  //
+  // TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY are both Worker secrets, set
+  // with `wrangler secret put` from 1Password via fnox. The site key is public
+  // and could live here, but splitting the pair across two mechanisms means
+  // rotating the widget touches two places instead of one.
+  "vars": {
+    "NOTIFY_FROM": "Root System forms <forms@send.rootsystem.com>",
+    "NOTIFY_TO": "partners@rootsystem.com"
+  },
   "d1_databases": [
     {
       "binding": "DB",

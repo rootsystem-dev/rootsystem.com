@@ -12,11 +12,14 @@
  * to display one message would be a poor trade. The page is low-traffic and the
  * render is trivial.
  *
- * The form itself needs no JavaScript: it posts, the endpoint redirects with
- * 303, and a refresh afterwards does not resubmit.
+ * The form posts and the endpoint redirects with 303, so a refresh afterwards
+ * does not resubmit. It does now require JavaScript, because the Turnstile
+ * widget will not render without it and the endpoint rejects a submission that
+ * carries no token. The noscript block below is the fallback for that case.
  */
 export const prerender = false
 
+import { env } from 'cloudflare:workers'
 import Base from '../layouts/Base.astro'
 
 const params = Astro.url.searchParams
@@ -26,9 +29,16 @@ const error = params.get('error')
 const errorMessage =
   error === 'invalid'
     ? 'Please provide your name, a valid email address, and a message.'
-    : error === 'server'
-      ? 'Something went wrong saving your message. Please email partners@rootsystem.com instead.'
-      : null
+    : error === 'captcha'
+      ? // Deliberately not phrased as a failed check. The common causes are a
+        // stale form and an expired token -- Turnstile tokens last 300 seconds
+        // and are single-use -- none of which are the submitter's doing.
+        'That form had expired. Please reload the page and send it again, or email partners@rootsystem.com.'
+      : error === 'server'
+        ? 'Something went wrong saving your message. Please email partners@rootsystem.com instead.'
+        : null
+
+const turnstileSiteKey = env.TURNSTILE_SITE_KEY
 ---
 
 <Base
@@ -68,8 +78,29 @@ const errorMessage =
             <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
           </div>
 
+          {/* Implicit rendering: the script finds this container and injects
+              the cf-turnstile-response input into the enclosing form itself, so
+              none of our own JavaScript is involved in wiring up the token. */}
+          <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+
+          <noscript>
+            <p class="notice error">
+              This form needs JavaScript to verify the submission. Please email{' '}
+              <a href="mailto:partners@rootsystem.com">partners@rootsystem.com</a> instead.
+            </p>
+          </noscript>
+
           <button type="submit">Send</button>
         </form>
+
+        {/* is:inline keeps Astro from processing this as a bundled module and
+            dropping the async/defer attributes. */}
+        <script
+          is:inline
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          async
+          defer
+        ></script>
 
         <p class="alt">
           Or email us directly:{' '}
@@ -111,6 +142,12 @@ const errorMessage =
   input:focus-visible,
   textarea:focus-visible {
     border-color: var(--link);
+  }
+
+  /* The widget sizes itself; this only separates it from the last field. It
+     reserves no height, so the page shifts slightly when the widget loads. */
+  .cf-turnstile {
+    margin-top: 1.5rem;
   }
 
   button {

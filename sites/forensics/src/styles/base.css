@@ -78,9 +78,18 @@ strong { color: var(--ink); }
 
 section {
   /* padding-block, so this rule states only the axis it owns and can never
-     clobber the inline padding `.wrap` sets on the same element. */
-  padding-block: 4.5rem;
+     clobber the inline padding `.wrap` sets on the same element.
+
+     Mobile-first: 3rem below 48em, where 4.5rem is a third of the viewport
+     height and pushes the next argument off screen. */
+  padding-block: 3rem;
   border-top: 1px solid var(--line);
+}
+
+@media (min-width: 48em) {
+  section {
+    padding-block: 4.5rem;
+  }
 }
 
 .eyebrow {

@@ -7,10 +7,13 @@
  * the wordmark in Tiempos 700 / -0.025em, and nav at --text-sm, uppercase,
  * weight 400, 1.5rem gap.
  *
- * No JavaScript, no dropdown, no hamburger -- these items wrap at narrow
- * widths. A property whose argument is reproducibility should not need a
- * script to show its own menu, which is the same reasoning that rejected
- * scroll-reveal for the page body.
+ * Inline nav from 48em; below that the links collapse behind a hamburger. The
+ * spec originally rejected a hamburger outright, on the grounds that a
+ * property arguing reproducibility should not need a script to show its own
+ * menu. The collapse was asked for after seeing three stacked rows of chrome
+ * on a phone, and a <details> disclosure satisfies both: still no JavaScript,
+ * and the links stay in the served HTML at every width, so a crawler reads
+ * what a desktop reader reads.
  *
  * The call to action is suppressed on /scope, where the reader has already
  * arrived. The nav links stay: a form page with no way out is a trap, and a
@@ -24,6 +27,10 @@ const links = [
   { href: '/engagements/', label: 'Engagements' },
 ]
 
+// startsWith rather than ===: Astro serves these routes with a trailing slash,
+// so an equality test against the href would never match. This is true once for
+// the whole component, which is why it is a note here rather than a comment
+// wrapping every rendered link.
 const path = Astro.url.pathname
 const onScope = path.startsWith('/scope')
 ---
@@ -38,18 +45,22 @@ const onScope = path.startsWith('/scope')
       </span>
     </a>
     <nav aria-label="Primary">
-      {
-        links.map(({ href, label }) => (
-          <Fragment>
-            {/* startsWith rather than ===: Astro serves these routes with a trailing
-                slash, so an equality test against the href would never match. */}
-            <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
-              {label}
-            </a>
-          </Fragment>
-        ))
-      }
-      {!onScope && <a class="cta" href="/scope">Scope a case &rarr;</a>}
+      <details class="disclosure">
+        <summary>
+          <span class="bars" aria-hidden="true"></span>
+          Menu
+        </summary>
+        <div class="links">
+          {
+            links.map(({ href, label }) => (
+              <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+                {label}
+              </a>
+            ))
+          }
+          {!onScope && <a class="cta" href="/scope">Scope a case &rarr;</a>}
+        </div>
+      </details>
     </nav>
   </div>
 </header>
@@ -68,6 +79,8 @@ const onScope = path.startsWith('/scope')
    */
   header {
     padding-block: 0.75rem;
+    /* Positioning context for the narrow-width menu panel below. */
+    position: relative;
   }
 
   @media (min-width: 48em) {
@@ -129,11 +142,150 @@ const onScope = path.startsWith('/scope')
   }
 
   nav {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.5rem;
     font-size: var(--text-sm);
+  }
+
+  /*
+   * The narrow-width menu is a <details> disclosure, not a scripted dropdown.
+   *
+   * The spec rejected a hamburger to avoid a JavaScript dependency on a
+   * property whose argument is reproducibility. A disclosure honours both: the
+   * links sit in the served HTML at every viewport and are only visually
+   * collapsed, so a crawler reads the same markup a desktop reader does, and
+   * <summary> is focusable and toggles on Enter/Space with no script.
+   */
+  summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--body);
+    /* Both are needed: `list-style` covers Firefox, the pseudo-element covers
+       older WebKit. Without them the default triangle sits beside the bars. */
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:hover,
+  summary:focus-visible {
+    color: var(--accent);
+  }
+
+  /* Three bars from one element: the middle is the box, the outer two are its
+     pseudo-elements. They rotate into a cross when the disclosure is open. */
+  .bars,
+  .bars::before,
+  .bars::after {
+    display: block;
+    width: 1.125rem;
+    height: 2px;
+    background: currentColor;
+    transition: transform 120ms ease, background-color 120ms ease;
+  }
+
+  .bars {
+    position: relative;
+  }
+
+  .bars::before,
+  .bars::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .bars::before {
+    top: -6px;
+  }
+
+  .bars::after {
+    top: 6px;
+  }
+
+  details[open] .bars {
+    background: transparent;
+  }
+
+  details[open] .bars::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  details[open] .bars::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  /*
+   * The open menu is a panel positioned against the header, not an inline
+   * block inside nav. Inline, opening it widened nav enough to wrap onto its
+   * own row, which shunted the toggle from the right edge to the left and grew
+   * the header from 64px to 307px — the toggle moved out from under the thumb
+   * that had just tapped it. Taking the panel out of flow keeps the header a
+   * fixed height in both states.
+   */
+  .links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0.5rem var(--gutter) 1rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bars,
+    .bars::before,
+    .bars::after {
+      transition: none;
+    }
+  }
+
+  /*
+   * From 48em the disclosure stops being one: the toggle is removed from the
+   * accessibility tree along with the box, and the links lay out inline as an
+   * ordinary nav.
+   *
+   * Two declarations force the content open because browsers hide a closed
+   * <details> two different ways. Firefox and Safari hide the slotted content
+   * with `display`, which an author rule can override. Chrome 131+ uses
+   * `content-visibility: hidden` on `::details-content`, which `display`
+   * cannot reach. Setting both covers every engine; dropping either leaves the
+   * desktop nav invisible on some of them.
+   */
+  @media (min-width: 48em) {
+    summary {
+      display: none;
+    }
+
+    .links {
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0;
+      background: none;
+      border-bottom: 0;
+    }
+
+    .disclosure::details-content {
+      content-visibility: visible;
+    }
   }
 
   /* --body rather than --muted: at 14px/400 the muted token is 3.67:1 on white,

@@ -57,7 +57,13 @@ const scopeHref = '/scope'
      carries .wrap, and the shorthand's implicit 0 for the inline axis won on
      specificity, pulling the hero 28px left of the sections below it. */
   .hero {
-    padding-block: 5rem 4rem;
+    padding-block: 3rem 2.5rem;
+  }
+
+  @media (min-width: 48em) {
+    .hero {
+      padding-block: 5rem 4rem;
+    }
   }
 
   .subhead {

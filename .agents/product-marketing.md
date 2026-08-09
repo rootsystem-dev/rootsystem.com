@@ -1,6 +1,6 @@
 # Product Marketing Context
 
-**Document version:** v4
+**Document version:** v5
 **Last updated:** 2026-08-09
 
 Scope: the Root System Forensics property (`forensics.rootsystem.com`, source at
@@ -9,6 +9,12 @@ buyer and is out of scope for this document except where the brand is shared.
 
 Items marked **[INFERRED]** were drafted from the codebase, specs, and copy deck
 rather than stated by Rob. They are the first things to correct.
+
+Primary sources outside this repo: the `Forensics-Expert-Witness-GTM` folder in
+Rob's Obsidian vault (Dropbox) — `offering-scope.md`, `rate-card.md`,
+`icp-target-list.md`, `messaging-worksheet.md`, `market-landscape.md`,
+`landing-copy.md`. Tracked in Linear under project *Forensics and Expert Witness
+Services* (ROBOPS).
 
 ## Product Overview
 
@@ -48,8 +54,31 @@ the bench. Copy revision is agreed and pending.
 | AI-Dispute Assessment | $2,500 flat, up to 10 hours | Fixed-scope reproducible-experiment analysis plus a written assessment of the claim and its strength. Credited against a full engagement. |
 | Full Engagement | $400/hr plus retainer | Live matter through analysis, expert report, and testimony. Expedited turnaround and deposition/trial testimony billed at a premium; large or long-running matters eligible for volume rates. |
 
+Rate modifiers, published on `/engagements` as of 2026-08-09. They apply to the
+hours they cover, not to the whole engagement.
+
+| When | Adjustment | Rate |
+|---|---|---|
+| Expedited turnaround | +50% | $600/hr |
+| Deposition and trial testimony | +25% | $500/hr |
+| Large scope or long time horizon | −25% | $300/hr |
+
 Publishing pricing at all is a deliberate divergence: the competitive scan found
 none of the four closest comparables publishes rates.
+
+**Held back deliberately — do not put these in public copy.** The base rate is
+negotiable early, but list price is what is held publicly. The assessment's
+effective hourly (~$250) and its role as a budget-fit front door rather than the
+margin engine stay internal, as does the rate ladder toward $450–$700+ as
+testimony history accrues. The Tier-2 retainer amount is unset, and whether the
+expedited and testimony modifiers stack is an open decision — the published note
+says the engagement letter sets the rate for those hours before any are billed,
+which is true either way.
+
+Publishing the −25% discount is a live risk worth watching: it invites every
+enquiry to argue its matter is large or long-running, on a rate the internal
+guidance says to hold at list publicly. Removing that one row is a one-line
+change if enquiries start anchoring on it.
 
 ## The Bench
 
@@ -103,15 +132,35 @@ landing pages, no second category claim.
 
 ## Target Audience
 
-**Target companies:** Law firms litigating matters that turn on what an AI/ML
-system, its training data, or an algorithm did. Trade-secret and mass-copying
-claims, IP, and algorithmic-performance disputes are the demonstrated shape.
-**[INFERRED — practice areas and firm size are read off the one representative
-matter; confirm the real target segment.]**
+**Target companies:** US litigators and IP/technology counsel handling disputes
+that turn on what an AI or ML system actually did — how it was built, trained,
+what data it used, whether it performed as claimed.
+
+**Horizontal by decision, not by default.** "AI-dispute analysis," not a single
+vertical. Named subfoci emerge later from customer-call data rather than being
+picked up front; staying horizontal keeps referral doors open while the network
+is thin.
+
+Densest demand, from the docket and firm-page research in the GTM workspace
+(~40 verified firm rows, compiled 2026-07-16):
+
+| Vein | Why it fits | Who |
+|---|---|---|
+| Plaintiff GenAI copyright / training data | Must prove how a model was built and what it ingested — exactly this lane. The single richest vein. | Joseph Saveri, Susman Godfrey lead most active training-data cases |
+| Plaintiff AV / driver-assist wrongful death | Turns on telemetry, perception, and decision-system forensics | Singleton Schreiber; copycat wave after the Benavides v. Tesla Autopilot verdict |
+| Algorithmic-hiring class actions | In live discovery now, needs affirmative ML and statistics experts; small plaintiff firms most likely to source an outside expert | Mobley v. Workday, Huskey v. State Farm |
+| AI-washing securities plaintiff firms | Cleanest cold channel — their playbook already pairs ex-engineers with ML experts to survive motions to dismiss | Hagens Berman, Pomerantz, Rosen |
+
+Defense-side buyers are equally identified (Latham, MoFo, Keker, Orrick,
+Crowell) and are the denser spend, but the plaintiff boutiques are the more
+reachable first sale for a practice with a thin referral network.
+
+Directories are the discoverability floor, not demand. The credibility flywheel
+named in the research is Sedona WG13 → PLI faculty → ABA SciTech → IAPP AIGP.
 
 **Decision-makers:** The retaining attorney — lead trial counsel or the partner
-running the matter. **[INFERRED — the intake form captures firm and engagement
-type but nothing about seniority, so this is unvalidated.]**
+running the matter. **[INFERRED — the target list names attorneys of record, but
+nothing confirms who inside a firm actually selects the expert.]**
 
 **Primary use case:** A technical declaration is on file (theirs or ours) and
 counsel needs an AI/ML opinion that survives Daubert and cross-examination.
@@ -381,6 +430,36 @@ Forensics launch blockers are treated as revenue blockers.
 enquiry. Secondary: a direct email to `partners@rootsystem.com`. Submissions land
 in D1 (`case_intake`) with a Turnstile spam verdict and are emailed on.
 
+**Published commitment:** we reply within 24 hours. Stated on `/scope` before the
+form and in the confirmation. This is an operational promise, not copy — the
+intake notification currently routes to `contact@rootsystem.com` (`NOTIFY_TO` in
+`sites/forensics/wrangler.jsonc`), and holding 24 hours over a weekend depends on
+that mailbox reaching someone who can answer.
+
+## Conflicts and confidentiality
+
+Root System also builds AI systems for clients. The rule, now stated publicly on
+`/engagements` as the first step of intake rather than left to post-submission
+fine print:
+
+1. Every intake opens with a written conflict questionnaire, walked through in
+   the intake interview. It captures named parties and their counsel, affiliated
+   and parent entities, and the specific AI/ML systems, products, models, or
+   vendors at issue.
+2. Decline anything adverse to a current or recent Root System build
+   relationship — and screen build-side sales against live or likely expert
+   matters, symmetrically.
+3. NDA before any confidential material moves. No case files, code, or model
+   artifacts change hands ahead of an executed NDA.
+4. When in doubt, decline. An ambiguous conflict is not worth one matter.
+
+Counsel has not yet blessed the questionnaire and NDA templates — that review is
+open in the GTM workspace and gates first external use.
+
+The dual-line position is treated as an asset rather than a problem, but the
+framing that makes it one ("we build systems that keep you out of legal
+trouble") is explicitly a later message, not a launch message.
+
 **Current metrics:** Traffic is roughly dozens of visits a month, and PostHog is
 not instrumented (roadmap track 5, unstarted). A/B testing is therefore not
 viable, which is why the site's structure was chosen on reasoning rather than by
@@ -394,11 +473,14 @@ crawling.
 
 ## Open questions
 
-1. **No buyer research exists.** Everything in Target Audience, Personas,
-   Customer Language, and Switching Dynamics is inference from the copy. Attorney
-   discovery interviews were planned to run in parallel with the build; whether
-   any have happened is unknown here. Until they do, downstream copy work is
-   writing at a hypothesis.
+1. **Market research exists; buyer research does not.** The GTM workspace has a
+   real target list built from live dockets and firm case pages. What it does not
+   have is a single conversation with a buyer. Personas, Switching Dynamics, and
+   above all Customer Language remain inference — there is still no verbatim
+   attorney language anywhere, so downstream copy writes in Rob's framing rather
+   than in-market. Two prerequisites are recorded in the research and unmet: the
+   target list has not been scored against Rob's own network for warm paths, and
+   outreach is gated on the public property being live.
 2. **The four-mode summary on the root page.** Currently four bare mode titles
    with no explanatory clause. A reviewer argued a label is not an argument for a
    referral reader who never clicks. Undecided.
@@ -410,6 +492,7 @@ crawling.
 
 *Newest first. One line per revision: what changed and why.*
 
+- v5 (2026-08-09) — Folded in the GTM workspace: the real target list (four demand veins, named firms, docket-sourced) replaces the inferred audience; the rate card's modifiers, and the internal terms that stay unpublished; the conflict-and-confidentiality rule as its own section; and the published 24-hour response commitment with the notification-routing risk attached. Downgraded open question 1 from "no research" to "market research yes, buyer research no."
 - v4 (2026-08-09) — Scope decision (Rob): stay on product and technology with AI/ML as the lead pillar, showing the bench's breadth as depth behind the lead rather than as separate practice areas. Closed the broaden-or-narrow open question; the bench belongs on `/method`.
 - v3 (2026-08-09) — Added The Bench section: a dozen fractional CTOs and CPOs, their disciplines, the staffing model, and the method's provenance in startup experimentation work. Reordered Differentiation around provenance, cross-functional bench, and the intake process. Set testimony as downplayed by decision rather than by omission. Opened the AI/ML-only-versus-broaden question raised by the product-side half of the bench.
 - v2 (2026-08-08) — Repositioned from solo practitioner to a multi-expert practice with a per-matter assigned bench (Rob, correcting v1). Reframed Product Overview, Competitive Landscape, Differentiation, Switching Dynamics, and Proof Points accordingly; noted that site copy still reads single-practitioner and needs revision. Marked the publish-gate draft flags as stale — the own-voice rewrite is in progress.

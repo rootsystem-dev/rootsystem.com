@@ -55,10 +55,23 @@ strong { color: var(--ink); }
   outline-offset: 3px;
 }
 
+/*
+ * Longhand, deliberately — not `padding: 0 var(--gutter)`.
+ *
+ * Every section element carries both `section` and `.wrap`. The shorthand's
+ * implicit `0` for top and bottom beat `section { padding: 4.5rem 0 }` on
+ * specificity (`.wrap` is 0,1,0; `section` is 0,0,1), which silently collapsed
+ * the vertical rhythm of every section on the property. The hero escaped it
+ * only because Astro scopes `.hero` to 0,2,0.
+ *
+ * Setting only the two axes this rule is responsible for leaves the block
+ * padding to whichever element rule owns it.
+ */
 .wrap {
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
 
 .measure { max-width: var(--measure); }

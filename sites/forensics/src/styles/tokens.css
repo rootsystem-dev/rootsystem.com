@@ -93,7 +93,12 @@
   --text-xl: 1.3125rem;
   --text-2xl: 1.4375rem;
 
-  --measure: 68ch;
+  /* A length, not a ch count. `ch` scales with the element's own font size, so
+     a 68ch heading and a 68ch paragraph resolved to visibly different widths
+     and their right edges never lined up — the ragged column that read as
+     broken alignment. In rem, every measure-constrained block wraps at the
+     same place regardless of type size. */
+  --measure: 38rem;
   --page-max: 72rem;
   --gutter: 1.75rem;
 }

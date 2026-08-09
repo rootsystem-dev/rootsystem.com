@@ -40,7 +40,11 @@ const { form = 'full' } = Astro.props
   .modes {
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    /* 24rem resolves to two columns at the 72rem container, so the four modes
+       land 2 + 2. At 17rem it resolved to three and stranded the fourth alone
+       on its own row — the same orphan the pillars grid had. min() keeps the
+       track from exceeding a narrow viewport and reintroducing overflow. */
+    grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr));
   }
 
   .modes p {

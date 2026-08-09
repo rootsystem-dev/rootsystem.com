@@ -1,0 +1,161 @@
+---
+/**
+ * Site masthead for forensics.rootsystem.com.
+ *
+ * Metrics are matched to sites/www/src/components/Header.astro so the two
+ * properties read as one brand: 0.75rem padding rising to 1.75rem from 48em,
+ * the wordmark in Tiempos 700 / -0.025em, and nav at --text-sm, uppercase,
+ * weight 400, 1.5rem gap.
+ *
+ * No JavaScript, no dropdown, no hamburger -- four items wrap at narrow
+ * widths. A property whose argument is reproducibility should not need a
+ * script to show its own menu, which is the same reasoning that rejected
+ * scroll-reveal for the page body.
+ *
+ * The call to action is suppressed on /scope, where the reader has already
+ * arrived. The nav links stay: a form page with no way out is a trap, and a
+ * reader wanting to check the method first needs a route to it.
+ */
+import Logomark from './Logomark.astro'
+
+const links = [
+  { href: '/method', label: 'Method' },
+  { href: '/matters', label: 'Matters' },
+  { href: '/engagements', label: 'Engagements' },
+]
+
+const path = Astro.url.pathname
+const onScope = path.startsWith('/scope')
+---
+
+<header>
+  <div class="bar">
+    <a class="brand" href="/">
+      <Logomark size="2.5rem" />
+      <span class="lockup">
+        <span class="wordmark">Root System</span>
+        <span class="qualifier">Forensics</span>
+      </span>
+    </a>
+    <nav aria-label="Primary">
+      {
+        links.map(({ href, label }) => (
+          <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+            {label}
+          </a>
+        ))
+      }
+      {!onScope && <a class="cta" href="/scope">Scope a case &rarr;</a>}
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* `header` spans the viewport so a rule could reach both edges; `.bar` holds
+     the row at content width. Same two-element split as the main site's. */
+  header {
+    padding: 0.75rem var(--gutter);
+  }
+
+  @media (min-width: 48em) {
+    header {
+      padding: 1.75rem var(--gutter);
+    }
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    max-width: var(--page-max);
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .lockup {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .wordmark {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  @media (min-width: 48em) {
+    .wordmark {
+      font-size: var(--text-2xl);
+    }
+  }
+
+  .qualifier {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .brand:hover,
+  .brand:focus-visible {
+    color: var(--accent);
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  nav a {
+    color: var(--muted);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.5rem 0;
+    text-decoration: none;
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--ink);
+  }
+
+  /* Astro scopes these with an attribute, which outranks the global `a:hover`
+     in base.css -- without them the nav links have no hover colour at all.
+     The [aria-current] variant is restated for the same reason. */
+  nav a:hover,
+  nav a:focus-visible,
+  nav a[aria-current='page']:hover,
+  nav a[aria-current='page']:focus-visible {
+    color: var(--accent);
+  }
+
+  /* The CTA keeps .cta's fill from base.css, so only the metrics differ. */
+  nav a.cta {
+    color: var(--bg);
+    padding: 0.5rem 1rem;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+
+  nav a.cta:hover,
+  nav a.cta:focus-visible {
+    color: var(--bg);
+  }
+</style>

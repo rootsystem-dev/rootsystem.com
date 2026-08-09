@@ -16,6 +16,7 @@
  */
 import '../styles/tokens.css'
 import '../styles/base.css'
+import Masthead from '../components/Masthead.astro'
 
 const DESIGN_DIRECTION: 'a' | 'b' = 'a'
 
@@ -66,6 +67,7 @@ const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     {
       hasDraftCopy && (
         <p class="draft-notice">
@@ -74,6 +76,9 @@ const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
         </p>
       )
     }
-    <slot />
+    <Masthead />
+    <main id="main">
+      <slot />
+    </main>
   </body>
 </html>

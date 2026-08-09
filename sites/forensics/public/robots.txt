@@ -1,9 +1,9 @@
 # forensics.rootsystem.com
 #
-# Crawling is open, but note this property is not linked from anywhere yet and
-# its information architecture is still being worked out. If it needs to stay out
-# of search until that lands, the change is `Disallow: /` here rather than
-# per-page noindex tags.
+# Crawling is open. The information architecture was settled by the 2026-08-08
+# IA spec, and the launch gate is ship-now-learn-from-live, so there is no
+# reason to hold the property out of search. If that ever changes, the change
+# is `Disallow: /` here rather than per-page noindex tags.
 User-agent: *
 Allow: /
 

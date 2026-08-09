@@ -1,6 +1,9 @@
 # Forensics property — information architecture is unresolved
 
-Status: **open, blocking launch of forensics.rootsystem.com**. Recorded 2026-07-29.
+Status: **resolved 2026-08-08** by
+`docs/superpowers/specs/2026-08-08-forensics-ia-design.md`, which chose the
+complete-hub-with-expanding-spokes structure. Recorded 2026-07-29. Kept for the
+reasoning trail; the spec is the current document.
 
 ## The problem
 

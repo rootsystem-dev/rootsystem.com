@@ -13,8 +13,9 @@
  *   gravitas and testimony credibility.
  *
  * Both use green accents, which keeps the property congruent with
- * rootsystem.com -- A's #276749 is the same green the main site uses for
- * primary-600.
+ * rootsystem.com. A's light accent is #2f855a, the main site's primary-600 --
+ * it previously read #276749, which this comment wrongly claimed was the same
+ * value. The dark greens (#48bb78 / #68d391) always did match primary-400/300.
  *
  * Direction A additionally has a dark scheme, applied from the system
  * preference. It is a restatement of A in dark neutrals, NOT a switch to B:
@@ -23,17 +24,78 @@
  * needs both schemes, because B is already dark and is not the active choice.
  */
 
+/*
+ * Self-hosted faces, identical to sites/www/public/fonts. The two properties
+ * share type as part of the brand convergence in the 2026-08-08 IA spec §6:
+ * the buyer is different, the brand is not. Tiempos is licensed; coverage for
+ * this second hostname was confirmed 2026-08-08.
+ */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-Regular.woff2') format('woff2'),
+       url('/fonts/OpenSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-SemiBold.woff2') format('woff2'),
+       url('/fonts/OpenSans-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos';
+  src: url('/fonts/Tiempos-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos';
+  src: url('/fonts/Tiempos-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tiempos';
+  src: url('/fonts/Tiempos-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  /* Typefaces are shared across both directions. The serif carries headings and
-     the case study; the mono is reserved for the proof/query motif, where the
-     point is that a finding is a thing you can re-run. */
-  --font-serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino,
-    Georgia, 'Times New Roman', serif;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Typefaces now match rootsystem.com. --font-serif and --font-sans are kept
+     as aliases so existing rules in base.css and the page components resolve
+     without a sweep; new rules should prefer --font-heading / --font-body. */
+  --font-heading: 'Tiempos', ui-serif, Georgia, serif;
+  --font-body: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-heading);
+  --font-sans: var(--font-body);
+  /* Mono stays a system stack, as it is on the main site. The proof/query
+     motif is the only thing that uses it. */
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
+  /* Type scale, carried over from sites/www so masthead metrics match. */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.3125rem;
+  --text-2xl: 1.4375rem;
+
   --measure: 68ch;
-  --page-max: 1080px;
+  --page-max: 72rem;
+  --gutter: 1.75rem;
 }
 
 /* Direction A — "Show Your Work" */
@@ -45,7 +107,7 @@
   --body: #4a5568;
   --muted: #7a8794;
   --line: #e6ebe8;
-  --accent: #276749;
+  --accent: #2f855a;
   --accent-2: #38a169;
   --code-bg: #f3f7f4;
   --danger: #c53030;

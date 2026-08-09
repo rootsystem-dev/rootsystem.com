@@ -1,6 +1,6 @@
 # Product Marketing Context
 
-**Document version:** v5
+**Document version:** v6
 **Last updated:** 2026-08-09
 
 Scope: the Root System Forensics property (`forensics.rootsystem.com`, source at
@@ -61,24 +61,28 @@ hours they cover, not to the whole engagement.
 |---|---|---|
 | Expedited turnaround | +50% | $600/hr |
 | Deposition and trial testimony | +25% | $500/hr |
-| Large scope or long time horizon | −25% | $300/hr |
+
+**They do not stack — the higher rate governs those hours** (Rob, 2026-08-09,
+closing the open item in the rate card).
 
 Publishing pricing at all is a deliberate divergence: the competitive scan found
 none of the four closest comparables publishes rates.
 
-**Held back deliberately — do not put these in public copy.** The base rate is
-negotiable early, but list price is what is held publicly. The assessment's
-effective hourly (~$250) and its role as a budget-fit front door rather than the
-margin engine stay internal, as does the rate ladder toward $450–$700+ as
-testimony history accrues. The Tier-2 retainer amount is unset, and whether the
-expedited and testimony modifiers stack is an open decision — the published note
-says the engagement letter sets the rate for those hours before any are billed,
-which is true either way.
+**Held back deliberately — do not put these in public copy.**
 
-Publishing the −25% discount is a live risk worth watching: it invites every
-enquiry to argue its matter is large or long-running, on a rate the internal
-guidance says to hold at list publicly. Removing that one row is a one-line
-change if enquiries start anchoring on it.
+- **The volume adjustment** (−25%, $300/hr, large scope or long time horizon).
+  It exists, but publishing a discount invites every enquiry to argue it
+  qualifies. Handled in conversation against an internal bar for "long horizon"
+  that is not yet written down. The page says such matters are quoted against a
+  volume rate and invites the ask, without naming the number.
+- **That the base rate is negotiable early.** List price is what is held
+  publicly.
+- **The assessment's effective hourly** (~$250) and its role as a budget-fit
+  front door rather than the margin engine.
+- **The rate ladder** toward $450–$700+ as testimony history accrues.
+
+The Tier-2 retainer amount is still unset in the rate card and appears nowhere
+public, which is consistent — the site says "retainer plus hourly" and stops.
 
 ## The Bench
 
@@ -430,11 +434,15 @@ Forensics launch blockers are treated as revenue blockers.
 enquiry. Secondary: a direct email to `partners@rootsystem.com`. Submissions land
 in D1 (`case_intake`) with a Turnstile spam verdict and are emailed on.
 
-**Published commitment:** we reply within 24 hours. Stated on `/scope` before the
-form and in the confirmation. This is an operational promise, not copy — the
-intake notification currently routes to `contact@rootsystem.com` (`NOTIFY_TO` in
-`sites/forensics/wrangler.jsonc`), and holding 24 hours over a weekend depends on
-that mailbox reaching someone who can answer.
+**Published commitment:** we reply within one business day. Stated on `/scope`
+before the form and in the confirmation. Business day rather than 24 hours so the
+promise survives a Friday evening enquiry.
+
+This is an operational promise, not copy. The intake notification goes to
+`contact@rootsystem.com` and copies `rob@rootsystem.com` (`NOTIFY_TO` and
+`NOTIFY_CC` in `sites/forensics/wrangler.jsonc`), so it reaches a named person
+rather than only a shared mailbox. `sites/www` has no equivalent commitment and
+sends no copy.
 
 ## Conflicts and confidentiality
 
@@ -453,8 +461,10 @@ fine print:
    artifacts change hands ahead of an executed NDA.
 4. When in doubt, decline. An ambiguous conflict is not worth one matter.
 
-Counsel has not yet blessed the questionnaire and NDA templates — that review is
-open in the GTM workspace and gates first external use.
+Counsel has not yet blessed the questionnaire and NDA templates. That review is
+open in the GTM workspace and was originally recorded as gating first external
+use; Rob's call (2026-08-09) is to publish the process now and get the review
+done in parallel rather than hold the copy for it.
 
 The dual-line position is treated as an asset rather than a problem, but the
 framing that makes it one ("we build systems that keep you out of legal
@@ -492,6 +502,7 @@ crawling.
 
 *Newest first. One line per revision: what changed and why.*
 
+- v6 (2026-08-09) — Pricing decisions (Rob): modifiers do not stack, higher rate governs; the volume discount comes off the published list and moves to conversation against an internal bar. Response commitment softened from 24 hours to one business day, with the notification now copying a named recipient. Legal review of the conflict questionnaire and NDA runs in parallel rather than gating the copy.
 - v5 (2026-08-09) — Folded in the GTM workspace: the real target list (four demand veins, named firms, docket-sourced) replaces the inferred audience; the rate card's modifiers, and the internal terms that stay unpublished; the conflict-and-confidentiality rule as its own section; and the published 24-hour response commitment with the notification-routing risk attached. Downgraded open question 1 from "no research" to "market research yes, buyer research no."
 - v4 (2026-08-09) — Scope decision (Rob): stay on product and technology with AI/ML as the lead pillar, showing the bench's breadth as depth behind the lead rather than as separate practice areas. Closed the broaden-or-narrow open question; the bench belongs on `/method`.
 - v3 (2026-08-09) — Added The Bench section: a dozen fractional CTOs and CPOs, their disciplines, the staffing model, and the method's provenance in startup experimentation work. Reordered Differentiation around provenance, cross-functional bench, and the intake process. Set testimony as downplayed by decision rather than by omission. Opened the AI/ML-only-versus-broaden question raised by the product-side half of the bench.

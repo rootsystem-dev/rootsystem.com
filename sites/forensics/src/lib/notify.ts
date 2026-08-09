@@ -29,6 +29,12 @@ export type NotifyConfig = {
   apiKey: string | undefined
   from: string | undefined
   to: string | undefined
+  /**
+   * Optional copy recipient. Absent on sites/www, which has no equivalent
+   * commitment; forensics publishes a one-business-day reply, and `to` is a
+   * shared mailbox, so the notification also has to reach a named person.
+   */
+  cc?: string | undefined
 }
 
 /**
@@ -45,7 +51,7 @@ export async function sendNotification(
   config: NotifyConfig,
   message: { subject: string; text: string; replyTo: string },
 ): Promise<NotifyResult> {
-  const { apiKey, from, to } = config
+  const { apiKey, from, to, cc } = config
   if (!apiKey || !from || !to) return 'pending'
 
   try {
@@ -55,9 +61,13 @@ export async function sendNotification(
         'Content-Type': 'application/json',
         Authorization: `Bearer ${apiKey}`,
       },
+      // `cc` is omitted from the payload rather than sent empty when it is not
+      // configured: Resend rejects an empty recipient array, so a site without
+      // a copy recipient must not send the key at all.
       body: JSON.stringify({
         from,
         to: [to],
+        ...(cc ? { cc: [cc] } : {}),
         reply_to: message.replyTo,
         subject: message.subject,
         text: message.text,

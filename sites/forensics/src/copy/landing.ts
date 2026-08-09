@@ -202,13 +202,12 @@ const copy: Landing = landingSchema.parse({
           adjustment: '+25%',
           rate: '$500/hr',
         },
-        {
-          when: 'Large scope or long time horizon',
-          adjustment: '−25%',
-          rate: '$300/hr',
-        },
       ],
-      note: 'Where more than one applies, the engagement letter sets the rate for those hours before any of them are billed.',
+      // Deliberately not listed: the volume adjustment for large or long-horizon
+      // matters. It exists, but publishing a discount invites every enquiry to
+      // argue it qualifies; it is handled in conversation against an internal
+      // bar. Nothing here claims these two are the only adjustments.
+      note: 'Where more than one applies, the higher rate governs those hours — they do not stack. Large or long-horizon matters are quoted against a volume rate; ask.',
     },
   },
 
@@ -296,9 +295,11 @@ const copy: Landing = landingSchema.parse({
     footer:
       'Root System · Forensic & expert-witness services · Rob Jacques, principal',
     // Published because counsel needs it before they decide to write, not
-    // after. This is a commitment, not a nicety -- it holds over a weekend as
-    // written, and the intake notification has to reach someone who can answer.
-    responseTime: 'We reply within 24 hours.',
+    // after. One business day rather than 24 hours: the promise has to survive
+    // a Friday evening enquiry. It is a commitment, not a nicety -- the intake
+    // notification copies a named recipient so it reaches someone who can
+    // answer (NOTIFY_CC in wrangler.jsonc).
+    responseTime: 'We reply within one business day.',
   },
 })
 

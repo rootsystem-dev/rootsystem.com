@@ -6,6 +6,7 @@ interface __BaseEnv_Env {
 	ASSETS: Fetcher;
 	NOTIFY_FROM: "Root System forms <forms@send.rootsystem.com>";
 	NOTIFY_TO: "contact@rootsystem.com";
+	NOTIFY_CC: "rob@rootsystem.com";
 	TURNSTILE_SITE_KEY: string;
 	TURNSTILE_SECRET_KEY: string;
 	RESEND_API_KEY: string;

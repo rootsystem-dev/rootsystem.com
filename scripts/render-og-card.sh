@@ -42,6 +42,15 @@ svg{display:block;}
   --force-device-scale-factor=1 \
   --window-size=1440,640 \
   --screenshot="$out" \
-  "file://$work/card.html" 2>/dev/null
+  "file://$work/card.html"
+
+# set -e catches a non-zero exit; it cannot catch Chrome exiting 0 having
+# written a blank or truncated screenshot, which is the failure this script
+# exists to prevent. Assert the artifact, not just the exit code.
+[ -s "$out" ] || { echo "render produced no output at $out" >&2; exit 1; }
+file "$out" | grep -q '1440 x 640' || {
+  echo "render produced wrong dimensions: $(file "$out")" >&2
+  exit 1
+}
 
 echo "wrote $out"

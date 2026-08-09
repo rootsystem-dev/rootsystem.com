@@ -1,5 +1,9 @@
 ---
-/** Shared footer. Every route renders it. */
+/**
+ * Shared footer. Rendered once by Layout.astro, after </main>, so it is a
+ * contentinfo landmark on every route rather than a generic element nested
+ * inside main.
+ */
 import copy from '../copy/landing'
 ---
 

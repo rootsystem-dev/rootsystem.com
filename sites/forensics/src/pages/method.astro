@@ -7,7 +7,6 @@ import Layout from '../layouts/Layout.astro'
 import copy from '../copy/landing'
 import Pillars from '../components/Pillars.astro'
 import Contrast from '../components/Contrast.astro'
-import SiteFooter from '../components/SiteFooter.astro'
 ---
 
 <Layout title={copy.routes.method.title} description={copy.routes.method.description}>
@@ -23,8 +22,6 @@ import SiteFooter from '../components/SiteFooter.astro'
     <a class="cta" href="/scope">{copy.closing.button} &rarr;</a>
     <p class="back"><a href="/">Back to the overview</a></p>
   </section>
-
-  <SiteFooter />
 </Layout>
 
 <style>

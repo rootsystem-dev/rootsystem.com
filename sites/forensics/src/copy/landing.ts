@@ -31,7 +31,7 @@ const copy: Landing = landingSchema.parse({
     matters: {
       title:
         'Representative matter — refuting a mass-copying claim | Root System Forensics',
-      heading: 'Representative matters',
+      heading: 'A representative matter',
       description:
         'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy on like media, showed the distribution’s shape was the discriminator, and impeached the declaration against his own earlier filing.',
     },

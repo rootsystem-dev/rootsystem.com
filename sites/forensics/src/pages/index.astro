@@ -2,8 +2,9 @@
 /**
  * The forensics root page.
  *
- * Composition only. Every section is a component that reads src/copy/landing
- * itself, so this file carries no copy and no section styling.
+ * Composition plus the hero. Section copy lives in src/copy/landing; the
+ * expansion-link labels and the hero's own styles are here, because they are
+ * chrome for this page rather than argument copy shared with the spokes.
  */
 import Layout from '../layouts/Layout.astro'
 import copy from '../copy/landing'
@@ -12,7 +13,6 @@ import Pillars from '../components/Pillars.astro'
 import CaseStudy from '../components/CaseStudy.astro'
 import Services from '../components/Services.astro'
 import Pricing from '../components/Pricing.astro'
-import SiteFooter from '../components/SiteFooter.astro'
 import ExpandLink from '../components/ExpandLink.astro'
 
 const scopeHref = '/scope'
@@ -30,17 +30,19 @@ const scopeHref = '/scope'
   <Positioning />
 
   <Pillars form="summary">
-    <ExpandLink href="/method" label="The full method" />
+    <ExpandLink href="/method/" label="The full method" />
   </Pillars>
 
   <CaseStudy form="summary">
-    <ExpandLink href="/matters" label="Read the matter" />
+    <ExpandLink href="/matters/" label="Read the matter" />
   </CaseStudy>
 
-  <Services form="summary" />
+  <Services form="summary">
+    <ExpandLink href="/engagements/" label="How we work" />
+  </Services>
 
   <Pricing form="summary">
-    <ExpandLink href="/engagements" label="Fees and objections" />
+    <ExpandLink href="/engagements/" label="Fees and objections" />
   </Pricing>
 
   <section class="wrap closing">
@@ -48,8 +50,6 @@ const scopeHref = '/scope'
     <p class="measure">{copy.closing.body}</p>
     <a class="cta" href={scopeHref}>{copy.closing.button} &rarr;</a>
   </section>
-
-  <SiteFooter />
 </Layout>
 
 <style>

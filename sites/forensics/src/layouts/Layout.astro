@@ -17,6 +17,7 @@
 import '../styles/tokens.css'
 import '../styles/base.css'
 import Masthead from '../components/Masthead.astro'
+import SiteFooter from '../components/SiteFooter.astro'
 import copy from '../copy/landing'
 import { assertPublishable } from '../copy/schema'
 
@@ -89,5 +90,6 @@ const ogImage = new URL('/images/forensics-card.png', Astro.site)
     <main id="main">
       <slot />
     </main>
+    <SiteFooter />
   </body>
 </html>

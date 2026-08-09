@@ -7,7 +7,7 @@
  * the wordmark in Tiempos 700 / -0.025em, and nav at --text-sm, uppercase,
  * weight 400, 1.5rem gap.
  *
- * No JavaScript, no dropdown, no hamburger -- four items wrap at narrow
+ * No JavaScript, no dropdown, no hamburger -- these items wrap at narrow
  * widths. A property whose argument is reproducibility should not need a
  * script to show its own menu, which is the same reasoning that rejected
  * scroll-reveal for the page body.
@@ -19,9 +19,9 @@
 import Logomark from './Logomark.astro'
 
 const links = [
-  { href: '/method', label: 'Method' },
-  { href: '/matters', label: 'Matters' },
-  { href: '/engagements', label: 'Engagements' },
+  { href: '/method/', label: 'Method' },
+  { href: '/matters/', label: 'Matters' },
+  { href: '/engagements/', label: 'Engagements' },
 ]
 
 const path = Astro.url.pathname
@@ -40,9 +40,13 @@ const onScope = path.startsWith('/scope')
     <nav aria-label="Primary">
       {
         links.map(({ href, label }) => (
-          <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
-            {label}
-          </a>
+          <Fragment>
+            {/* startsWith rather than ===: Astro serves these routes with a trailing
+                slash, so an equality test against the href would never match. */}
+            <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+              {label}
+            </a>
+          </Fragment>
         ))
       }
       {!onScope && <a class="cta" href="/scope">Scope a case &rarr;</a>}
@@ -122,8 +126,12 @@ const onScope = path.startsWith('/scope')
     font-size: var(--text-sm);
   }
 
+  /* --body rather than --muted: at 14px/400 the muted token is 3.67:1 on white,
+     under the 4.5:1 AA floor. The main site's header uses a darker muted token
+     that clears it; matching its metrics without matching its contrast was the
+     bug. --ink on aria-current keeps the active route distinct. */
   nav a {
-    color: var(--muted);
+    color: var(--body);
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.04em;

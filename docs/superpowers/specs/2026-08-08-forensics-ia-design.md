@@ -82,6 +82,9 @@ Rejected alternatives:
 Copy already lives as validated data in `sites/forensics/src/copy/landing.ts`
 against a Zod schema in `src/copy/schema.ts`, and no text is hardcoded in
 markup. This is a routing and content-model change, not a copy migration.
+Chrome labels — navigation, expansion links, and back links — are an exception
+and live in markup: they are wayfinding for a specific page rather than argument
+copy shared between a root summary and its spoke.
 
 Short and long form are **not** separate files or duplicated blocks. Each block
 gains a `summary` field beside its existing `body` in the same object:

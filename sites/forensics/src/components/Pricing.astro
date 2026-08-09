@@ -24,7 +24,11 @@ const { form = 'full' } = Astro.props
         <article>
           <h3>{tier.name}</h3>
           <p class="price">{tier.price}</p>
-          {form === 'full' && <p>{tier.body}</p>}
+          {/* Root previously rendered name and price only, which dropped the
+              line saying the assessment fee is credited against a full
+              engagement -- the strongest risk reversal on the property, missing
+              from the page most readers never leave. */}
+          <p>{form === 'summary' ? tier.summary : tier.body}</p>
         </article>
       ))
     }

@@ -74,20 +74,51 @@ export const landingSchema = z.object({
     pullQuote: z.string(),
   }),
 
+  // The bench. Half the argument for this practice is that a dispute over what
+  // a system did crosses discipline boundaries, and a solo expert covers one of
+  // them. `groups` is validated as a list rather than fixed at two so a third
+  // discipline group does not require a schema change.
+  bench: z.object({
+    label: z.string(),
+    heading: z.string(),
+    intro: z.string(),
+    groups: z
+      .array(
+        z.object({
+          name: z.string(),
+          disciplines: z.array(z.string()).min(1),
+        }),
+      )
+      .min(1),
+    provenance: z.string(),
+    staffing: z.string(),
+  }),
+
   services: z.object({
     label: z.string(),
     intro: z.string(),
+    // `summary` is the root page's one-clause form, `body` the spoke's. Same
+    // adjacency rule as the pillars: both live on one object so drift shows up
+    // on neighbouring lines. Root rendered bare titles before this field
+    // existed, which told a referral reader who never clicks nothing at all.
     modes: z
-      .array(z.object({ title: z.string(), body: z.string() }))
+      .array(
+        z.object({ title: z.string(), summary: z.string(), body: z.string() }),
+      )
       .length(4),
   }),
 
   pricing: z.object({
     label: z.string(),
+    // `summary` carries the one line about each tier that root cannot afford to
+    // drop -- for the assessment that is the credit against a full engagement,
+    // which is the strongest risk reversal on the property and was previously
+    // absent from the page most readers never leave.
     tiers: z.array(
       z.object({
         name: z.string(),
         price: z.string(),
+        summary: z.string(),
         body: z.string(),
       }),
     ),

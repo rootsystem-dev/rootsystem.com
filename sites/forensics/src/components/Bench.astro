@@ -1,0 +1,87 @@
+---
+/**
+ * The bench.
+ *
+ * Sits between the pillars and the contrast table on /method: the pillars
+ * establish how an opinion is made to hold up, this shows the depth executing
+ * it, and the table then shows what the alternatives lack. It is the only place
+ * on the property that answers "who is actually doing this work."
+ *
+ * Disciplines are listed rather than named to people. Individual expert
+ * profiles are the later move if a niche justifies them; a list of disciplines
+ * is what a reader needs to judge whether the practice reaches their matter.
+ *
+ * Appears on /method only, so it takes no `form` prop -- unlike Pillars and
+ * CaseStudy, there is no root-page short form to switch to.
+ */
+import copy from '../copy/landing'
+---
+
+<section class="wrap" id="bench">
+  <p class="eyebrow">{copy.bench.label}</p>
+  <h2 class="measure">{copy.bench.heading}</h2>
+  <p class="measure intro">{copy.bench.intro}</p>
+
+  <div class="groups">
+    {
+      copy.bench.groups.map((group) => (
+        <article>
+          <h3>{group.name}</h3>
+          <ul>
+            {group.disciplines.map((discipline) => (
+              <li>{discipline}</li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="measure notes">
+    <p>{copy.bench.provenance}</p>
+    <p>{copy.bench.staffing}</p>
+  </div>
+</section>
+
+<style>
+  .intro {
+    color: var(--body);
+  }
+
+  .groups {
+    display: grid;
+    /* Two groups at the 72rem container, stacking below the track minimum.
+       min() keeps the track from exceeding a narrow viewport, the same guard
+       the pillars grid carries. */
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .groups h3 {
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .groups ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .groups li {
+    padding-block: 0.375rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .notes {
+    margin-top: 2.5rem;
+  }
+
+  .notes p:last-child {
+    margin-bottom: 0;
+  }
+</style>

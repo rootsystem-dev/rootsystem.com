@@ -26,7 +26,7 @@ const copy: Landing = landingSchema.parse({
       title: 'Method — reproducible AI/ML analysis | Root System Forensics',
       heading: 'How an AI/ML opinion holds up under cross',
       description:
-        'How an AI/ML opinion is made to hold up: findings stated as a query and its output, conceded uncertainty, and depth in machine-generated evidence — set against what academics, economic consultancies and forensics vendors each leave out.',
+        'How an AI/ML opinion is made to hold up: findings stated as a query and its output, conceded uncertainty, and depth in machine-generated evidence — plus the bench of engineering and product experts behind it, set against what academics, economic consultancies and forensics vendors each leave out.',
     },
     matters: {
       title:
@@ -47,14 +47,14 @@ const copy: Landing = landingSchema.parse({
     eyebrow: 'AI & Machine-Learning Dispute Analysis',
     headline: 'Our experts don\'t speculate — they empirically validate.',
     subhead:
-      'Technical analysis of what an AI or machine-learning system actually did — how it was built, what data it used, whether it performed as claimed. Every thesis is stress-tested against reproducible methodology. Every opinion is grounded in deterministic evidence the other side can re-run, not an empty assertion.',
+      'Technical analysis of what an AI or machine-learning system actually did — how it was built, what data it used, whether it performed as claimed. Every opinion is stated as an experiment the other side can run themselves and check.',
     proof:
       'A genuine bulk copy of 9,000 files smears its access timestamps across hundreds of seconds. The opposing exhibit clustered thousands of files into a single second — a batch process, not a human copy. Same data; the shape tells the truth.',
     cta: 'Scope a case',
   },
 
   positioning: {
-    body: 'When a matter turns on what an AI/ML system, its training data, or an algorithm actually did, most experts can offer one half of what you need: academics who study models but don’t ship them, economic consultancies who read AI through an economics lens and concede the black box, or digital-forensics vendors who recover bytes but don’t interpret model behavior. Root System is the practitioner who builds these systems and runs the reproducible experiments that makes an opinion hold up under cross-examination.',
+    body: 'When a matter turns on what an AI/ML system, its training data, or an algorithm actually did, most experts can offer one half of what you need: academics who study models but don’t ship them, economic consultancies who read AI through an economics lens and concede the black box, or digital-forensics vendors who recover bytes but don’t interpret model behavior. Root System is a practice of engineers and product leaders who build these systems, and who run the reproducible experiments that make an opinion hold up under cross-examination.',
   },
 
   pillars: [
@@ -74,19 +74,19 @@ const copy: Landing = landingSchema.parse({
       title: 'Depth in machine-generated evidence.',
       summary:
         'Timestamp shape, model variability, file-system semantics — where a forensics checklist stops.',
-      body: 'Timestamp-shape, model-temperature-controlled variability, file-system semantics, at-scale artifacts — where a forensics checklist stops, the real question starts.',
+      body: 'Timestamp shape, output variability controlled by fixing model temperature, file-system semantics, artifacts that only appear at scale — where a forensics checklist stops, the real question starts.',
     },
     {
       title: 'Cross-document rigor.',
       summary:
         'We diff an opponent’s own successive filings for dropped caveats and silent overstatements.',
-      body: 'We diff an opponent’s own successive filings for dropped caveats and silent overstatements — a technique most vendors don’t perform.',
+      body: 'We diff an opponent’s own successive filings for dropped caveats and silent overstatements. A declaration that quietly strengthens between filings is impeachable on its own record — and almost nobody looks.',
     },
     {
-      title: 'Built by a builder.',
+      title: 'Built by builders.',
       summary:
-        'Argued by the practitioner who ships these systems, not someone who only studies them.',
-      body: 'Disputes over what AI/ML systems did, argued by the practitioner who ships them — a credential the market is short on.',
+        'Argued by the people who ship these systems, not by people who only study them.',
+      body: 'Disputes over what AI/ML systems did, argued by the people who ship them. The expert across the table is usually an academic or a forensics vendor; neither has reproduced the behavior at production scale.',
     },
   ],
 
@@ -98,9 +98,46 @@ const copy: Landing = landingSchema.parse({
       'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy: a genuine one smears across hundreds of seconds, while his exhibit clustered thousands of files into a handful — the signature of a batch process. His own earlier declaration carried the caveats the later one dropped.',
     body: [
       'An opposing digital-forensics expert filed a declaration asserting that tens of thousands of files had been "accessed in rapid succession" — evidence, he said, of mass copying. We did not argue the unfalsifiable "a copy leaves no trace." We characterized the file system’s actual timestamp policy, then measured a real bulk copy on like media. A genuine sequential copy smears its access timestamps across hundreds of seconds; the opposing exhibit clustered thousands of files into a handful of seconds — the signature of an automatic batch process, not a human copy. The distribution’s shape was the discriminator, and we conceded openly what was fair: copying is not timestamp-silent.',
-      'Then we impeached the expert on his own record. His earlier declaration, on the same numbers, had carried qualifiers — that grouped accesses "can be caused by copying, searching, and other automated processes." The later federal declaration dropped them while the numbers stayed identical. Same data, stronger claim, deleted caveats.',
+      'Then we impeached the expert on his own record. His earlier declaration, on the same numbers, had carried qualifiers — that grouped accesses "can be caused by copying, searching, and other automated processes." The later federal declaration dropped them while the numbers stayed identical.',
     ],
-    pullQuote: 'The matter settled.',
+    // The pull quote states the finding rather than the outcome. "The matter
+    // settled" was the previous line; settlement is not attributable to the
+    // work, and a litigator knows that better than anyone.
+    pullQuote: 'Same data. The shape tells the truth.',
+  },
+
+  bench: {
+    label: 'The bench',
+    heading: 'A dozen experts, assembled per matter',
+    intro:
+      'A dispute over what a system did rarely stays inside one discipline. It touches how the system was architected, what data it collected, how the product presented itself to users, and what the metrics were defined to mean. A single expert covers one of those.',
+    groups: [
+      {
+        name: 'Technology leadership',
+        disciplines: [
+          'Computer science',
+          'Machine-learning architecture',
+          'Experimentation and research',
+          'Information security',
+          'Distributed systems',
+        ],
+      },
+      {
+        name: 'Product leadership',
+        disciplines: [
+          'Usability and user experience',
+          'Product strategy',
+          'User research',
+          'Product analytics and experimentation',
+          'Product operations and delivery',
+          'Growth and monetization',
+        ],
+      },
+    ],
+    provenance:
+      'These are the fractional CTOs and CPOs who run Root System’s consulting practice, building product for companies that have not yet found a business model. That work makes experimentation and analytical data collection the outcome rather than a report at the end of one. The reproducible experiments filed in a matter come out of the same discipline, not a technique adopted for court.',
+    staffing:
+      'Every matter is scoped directly rather than routed. One lead sets the strategic approach, assembles the team to meet it, stays with the work, and runs technical analysis as one of the experts. People are brought in against the approach, not assigned off a rota.',
   },
 
   services: {
@@ -109,18 +146,25 @@ const copy: Landing = landingSchema.parse({
     modes: [
       {
         title: 'Opposing-expert rebuttal.',
+        summary:
+          'Refute a technical declaration with a counter-experiment they can run themselves.',
         body: 'Refute a technical declaration with a reproducible counter-experiment and cross-document impeachment.',
       },
       {
         title: 'Affirmative analysis & testimony.',
+        summary: 'Establish, provably, what a system, corpus, or algorithm did.',
         body: 'Establish, provably, what a system, corpus, or algorithm did.',
       },
       {
         title: 'Consulting (non-testifying).',
+        summary:
+          'Case strategy, experiment design, and vetting the other side’s expert — work-product protected.',
         body: 'Behind-the-scenes analysis, case strategy, experiment definition and stochastic data collection, vetting the other side’s expert — work-product protected.',
       },
       {
         title: 'Early-case assessment.',
+        summary:
+          'A merits screen before you commit: is there an AI/ML claim, and how strong.',
         body: 'A merits screen before you commit: is there an AI/ML claim, and how strong.',
       },
     ],
@@ -132,11 +176,15 @@ const copy: Landing = landingSchema.parse({
       {
         name: 'AI-Dispute Assessment',
         price: '$2,500 flat (up to 10 hours)',
+        summary:
+          'A written read on the claim and its strength. Credited against a full engagement if the matter proceeds.',
         body: 'A fixed-fee, fixed-scope read: a reproducible-experiment analysis and a written assessment of the claim and its strength. Predictable cost, defined deliverable. If the matter proceeds to a full engagement, the assessment fee is credited.',
       },
       {
         name: 'Full Engagement',
         price: '$400/hr',
+        summary:
+          'Retainer plus hourly, through analysis, expert report, and testimony.',
         body: 'Retainer plus hourly for a live matter through analysis, expert report, and testimony. Expedited turnaround and deposition/trial testimony are billed at a premium; large or long-running matters are eligible for volume rates.',
       },
     ],
@@ -164,7 +212,10 @@ const copy: Landing = landingSchema.parse({
         who: 'Root System',
         strength:
           'Builds the systems + reproducible experimental rebuttal + even-handed',
-        gap: '—',
+        // A stated limit, not a dash. Every other row names a weakness; the one
+        // row that named none was the row belonging to the practice whose
+        // second pillar is conceding what is genuinely uncertain.
+        gap: 'Newer practice — the method is the credential, not the mileage',
         isUs: true,
       },
     ],
@@ -172,9 +223,9 @@ const copy: Landing = landingSchema.parse({
 
   faq: [
     {
-      question: 'You’ve testified once.',
+      question: 'Your testimony record is short.',
       answer:
-        'A reproducible opinion doesn’t rest on tenure. Every finding is a query the other side can re-run — it’s defensible on its own terms, not on reputation. A first-principles, reproducible analysis is more durable under Daubert than a veteran’s say-so.',
+        'It is, and we don’t dress it up. A reproducible opinion doesn’t rest on tenure: every finding is a query the other side can re-run, so it’s defensible on its own terms rather than on reputation. Under Daubert, a first-principles analysis anyone can replicate is more durable than a veteran’s say-so.',
     },
     {
       question: 'Why not a big-name firm or lab?',
@@ -184,7 +235,7 @@ const copy: Landing = landingSchema.parse({
     {
       question: 'Aren’t you a hired gun?',
       answer:
-        'The method is the answer. We concede what’s fair, label the uncertain unverifiable, and hand the other side a replication they can re-run. We build evaluations daily to prove what our models are capable of in our own products. Independence is built into the deliverable.',
+        'The method came before the litigation work. Root System builds product for companies that haven’t found a business model yet, where experimentation and honest data collection are the job — a flattering result that doesn’t replicate is worthless to a founder betting a company on it. The same discipline produces the experiments we file. We concede what’s fair, label the unverifiable, and hand the other side a replication they can run. Independence is built into the deliverable.',
     },
     {
       question: 'This sounds expensive.',

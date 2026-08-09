@@ -24,17 +24,20 @@ const copy: Landing = landingSchema.parse({
   routes: {
     method: {
       title: 'Method — reproducible AI/ML analysis | Root System Forensics',
+      heading: 'How an AI/ML opinion holds up under cross',
       description:
         'How an AI/ML opinion is made to hold up: findings stated as a query and its output, conceded uncertainty, and depth in machine-generated evidence — set against what academics, economic consultancies and forensics vendors each leave out.',
     },
     matters: {
       title:
         'Representative matter — refuting a mass-copying claim | Root System Forensics',
+      heading: 'Representative matters',
       description:
         'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy on like media, showed the distribution’s shape was the discriminator, and impeached the declaration against his own earlier filing.',
     },
     engagements: {
       title: 'Engagements and fees | Root System Forensics',
+      heading: 'Engagements and fees',
       description:
         'Four ways to engage — opposing-expert rebuttal, affirmative analysis and testimony, non-testifying consulting, and early-case assessment — with a $2,500 fixed-fee assessment that credits toward a full engagement.',
     },

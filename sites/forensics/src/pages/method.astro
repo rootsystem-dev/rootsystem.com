@@ -11,6 +11,10 @@ import SiteFooter from '../components/SiteFooter.astro'
 ---
 
 <Layout title={copy.routes.method.title} description={copy.routes.method.description}>
+  <header class="wrap page-head">
+    <h1 class="measure">{copy.routes.method.heading}</h1>
+  </header>
+
   <Pillars form="full" />
   <Contrast />
 
@@ -24,6 +28,10 @@ import SiteFooter from '../components/SiteFooter.astro'
 </Layout>
 
 <style>
+  .page-head {
+    padding: 4rem 0 1rem;
+  }
+
   .closing {
     padding-bottom: 5rem;
   }

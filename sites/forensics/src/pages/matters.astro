@@ -9,6 +9,10 @@ import SiteFooter from '../components/SiteFooter.astro'
 ---
 
 <Layout title={copy.routes.matters.title} description={copy.routes.matters.description}>
+  <header class="wrap page-head">
+    <h1 class="measure">{copy.routes.matters.heading}</h1>
+  </header>
+
   <CaseStudy form="full" />
 
   <section class="wrap closing">
@@ -21,6 +25,10 @@ import SiteFooter from '../components/SiteFooter.astro'
 </Layout>
 
 <style>
+  .page-head {
+    padding: 4rem 0 1rem;
+  }
+
   .closing {
     padding-bottom: 5rem;
   }

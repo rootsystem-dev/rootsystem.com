@@ -27,10 +27,13 @@ export const landingSchema = z.object({
 
   // Per-route metadata. Distinct titles are the whole search argument for the
   // hub-and-spoke structure, so they are validated rather than left optional.
+  // `title` is the <title> tag and carries the brand suffix; `heading` is the
+  // on-page <h1>, which every spoke needs for its document outline and which
+  // a page composed only of section components would otherwise lack.
   routes: z.object({
-    method: z.object({ title: z.string(), description: z.string() }),
-    matters: z.object({ title: z.string(), description: z.string() }),
-    engagements: z.object({ title: z.string(), description: z.string() }),
+    method: z.object({ title: z.string(), heading: z.string(), description: z.string() }),
+    matters: z.object({ title: z.string(), heading: z.string(), description: z.string() }),
+    engagements: z.object({ title: z.string(), heading: z.string(), description: z.string() }),
   }),
 
   hero: draftable({

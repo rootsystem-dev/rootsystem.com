@@ -481,7 +481,24 @@ Then edit **only** the `<style>` block of the forensics copy — the path data a
 </style>
 ```
 
-Also update the component's header comment, replacing `ported verbatim from the previous site's` with `ported from sites/www/src/components/Logomark.astro; path data unchanged, token names mapped to the forensics set`.
+Also replace the component's opening comment paragraph. The copied file begins:
+
+```
+ * Root System logomark, ported verbatim from the previous site's
+ * `components/elements/brand/logomark/index.jsx`. The path data is unchanged;
+ * only the colour plumbing differs.
+```
+
+Replace those three lines — the whole paragraph, not a substring of it — with:
+
+```
+ * Root System logomark, ported from sites/www/src/components/Logomark.astro.
+ * The path data and the viewBox crop are byte-identical, so both properties
+ * render the same mark; only the colour plumbing differs, because forensics
+ * names its tokens --ink and --accent where the main site uses --fg and --link.
+```
+
+Leave the remaining paragraphs of the comment as they are.
 
 - [ ] **Step 2: Create the masthead**
 

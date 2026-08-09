@@ -53,8 +53,11 @@ const scopeHref = '/scope'
 </Layout>
 
 <style>
+  /* padding-block, not the `padding: 5rem 0 4rem` shorthand. The hero also
+     carries .wrap, and the shorthand's implicit 0 for the inline axis won on
+     specificity, pulling the hero 28px left of the sections below it. */
   .hero {
-    padding: 5rem 0 4rem;
+    padding-block: 5rem 4rem;
   }
 
   .subhead {

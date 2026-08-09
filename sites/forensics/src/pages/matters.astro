@@ -22,8 +22,12 @@ import CaseStudy from '../components/CaseStudy.astro'
 </Layout>
 
 <style>
+  /* padding-block, not the `padding: 4rem 0 1rem` shorthand: this element also
+     carries .wrap, and the shorthand's implicit 0 for the inline axis beat
+     .wrap's padding-left on specificity (Astro scopes this rule to 0,2,0), so
+     the heading hung 28px left of every section below it. */
   .page-head {
-    padding: 4rem 0 1rem;
+    padding-block: 4rem 1rem;
   }
 
   .closing {

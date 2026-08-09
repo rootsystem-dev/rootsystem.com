@@ -55,15 +55,24 @@ const onScope = path.startsWith('/scope')
 </header>
 
 <style>
-  /* `header` spans the viewport so a rule could reach both edges; `.bar` holds
-     the row at content width. Same two-element split as the main site's. */
+  /*
+   * `header` spans the viewport so a rule could reach both edges; `.bar` holds
+   * the row at content width. Same two-element split as the main site's.
+   *
+   * The gutter belongs on `.bar`, not on `header`. With the inline padding on
+   * the full-width header, `.bar`'s `margin: 0 auto` centred it inside the
+   * already-inset box, so the brand lockup landed at the viewport's centring
+   * offset while every `.wrap` below landed at that offset plus the gutter —
+   * the masthead sat 28px left of the page content. Putting the gutter inside
+   * the centred box reproduces `.wrap`'s geometry exactly.
+   */
   header {
-    padding: 0.75rem var(--gutter);
+    padding-block: 0.75rem;
   }
 
   @media (min-width: 48em) {
     header {
-      padding: 1.75rem var(--gutter);
+      padding-block: 1.75rem;
     }
   }
 
@@ -76,6 +85,7 @@ const onScope = path.startsWith('/scope')
     width: 100%;
     max-width: var(--page-max);
     margin: 0 auto;
+    padding-inline: var(--gutter);
   }
 
   .brand {

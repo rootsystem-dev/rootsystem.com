@@ -25,6 +25,14 @@ export const landingSchema = z.object({
     description: z.string(),
   }),
 
+  // Per-route metadata. Distinct titles are the whole search argument for the
+  // hub-and-spoke structure, so they are validated rather than left optional.
+  routes: z.object({
+    method: z.object({ title: z.string(), description: z.string() }),
+    matters: z.object({ title: z.string(), description: z.string() }),
+    engagements: z.object({ title: z.string(), description: z.string() }),
+  }),
+
   hero: draftable({
     eyebrow: z.string(),
     headline: z.string(),
@@ -40,13 +48,25 @@ export const landingSchema = z.object({
 
   // The five pillars. Each was earned in a real matter; the copy deck is
   // explicit that these are not aspirational claims.
+  //
+  // `summary` is the root page's short form and `body` the spoke's long form.
+  // Both are required and live on the same object so drift between them is
+  // visible on adjacent lines rather than across two files.
   pillars: z
-    .array(z.object({ title: z.string(), body: z.string() }))
+    .array(
+      z.object({
+        title: z.string(),
+        summary: z.string(),
+        body: z.string(),
+      }),
+    )
     .length(5),
 
   caseStudy: z.object({
     label: z.string(),
     headline: z.string(),
+    // Root's short form. The full `body` paragraphs render on /matters.
+    summary: z.string(),
     body: z.array(z.string()).min(1),
     pullQuote: z.string(),
   }),

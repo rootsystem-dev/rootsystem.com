@@ -1,0 +1,71 @@
+---
+/**
+ * The four engagement modes. 'summary' lists the mode titles only; 'full'
+ * carries each mode's description.
+ */
+import copy from '../copy/landing'
+
+interface Props {
+  form?: 'summary' | 'full'
+}
+
+const { form = 'full' } = Astro.props
+---
+
+<section class="wrap" id="engagements">
+  <p class="eyebrow">{copy.services.label}</p>
+  <h2>{copy.services.intro}</h2>
+  {
+    form === 'summary' ? (
+      <ul class="mode-list measure">
+        {copy.services.modes.map((mode) => (
+          <li>{mode.title}</li>
+        ))}
+      </ul>
+    ) : (
+      <div class="modes">
+        {copy.services.modes.map((mode) => (
+          <article>
+            <h3>{mode.title}</h3>
+            <p>{mode.body}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+  <slot />
+</section>
+
+<style>
+  .modes {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  }
+
+  .modes p {
+    margin-bottom: 0;
+  }
+
+  .mode-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .mode-list li {
+    font-family: var(--font-heading);
+    color: var(--ink);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .mode-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0.25rem;
+    color: var(--accent);
+  }
+</style>

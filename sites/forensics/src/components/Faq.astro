@@ -1,0 +1,35 @@
+---
+/**
+ * Objections, answered. Renders on /engagements only -- the objections are
+ * mostly about cost and credentials, which is the question a reader has once
+ * they are looking at fees.
+ */
+import copy from '../copy/landing'
+---
+
+<section class="wrap">
+  <h2>Objections, answered</h2>
+  <dl class="faq measure">
+    {
+      copy.faq.map((item) => (
+        <div>
+          <dt>{item.question}</dt>
+          <dd>{item.answer}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .faq dt {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    color: var(--ink);
+    margin-top: 1.75rem;
+  }
+
+  .faq dd {
+    margin: 0.5rem 0 0;
+  }
+</style>

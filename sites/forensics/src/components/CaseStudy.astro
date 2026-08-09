@@ -1,0 +1,45 @@
+---
+/**
+ * The representative matter. 'summary' is a single paragraph for the root
+ * page; 'full' is the two-paragraph account plus the pull quote.
+ */
+import copy from '../copy/landing'
+
+interface Props {
+  form?: 'summary' | 'full'
+}
+
+const { form = 'full' } = Astro.props
+---
+
+<section class="wrap" id="matters">
+  <p class="eyebrow">{copy.caseStudy.label}</p>
+  <h2 class="measure">{copy.caseStudy.headline}</h2>
+  <div class="measure">
+    {
+      form === 'summary' ? (
+        <p>{copy.caseStudy.summary}</p>
+      ) : (
+        <>
+          {copy.caseStudy.body.map((para) => (
+            <p>{para}</p>
+          ))}
+          <p class="pull">{copy.caseStudy.pullQuote}</p>
+        </>
+      )
+    }
+    <slot />
+  </div>
+</section>
+
+<style>
+  .pull {
+    font-family: var(--font-heading);
+    font-size: 1.375rem;
+    font-style: italic;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding-left: 1.25rem;
+    margin-top: 2rem;
+  }
+</style>

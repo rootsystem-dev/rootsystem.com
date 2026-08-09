@@ -1,0 +1,80 @@
+---
+/**
+ * The "unlike the alternatives" table. Renders on /method only, so it takes
+ * no form prop.
+ */
+import copy from '../copy/landing'
+---
+
+<section class="wrap">
+  <h2 class="eyebrow">{copy.contrast.label}</h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">What they do well</th>
+          <th scope="col">Where they leave the gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          copy.contrast.rows.map((row) => (
+            <tr class={row.isUs ? 'us' : undefined}>
+              <th scope="row">{row.who}</th>
+              <td>{row.strength}</td>
+              <td>{row.gap}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  /* Wide content scrolls inside its own container so the page body never
+     scrolls horizontally on narrow viewports. */
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 40rem;
+    font-size: 0.9375rem;
+  }
+
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  thead th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  tbody th {
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  tr.us {
+    background: var(--fill);
+  }
+
+  tr.us th,
+  tr.us td {
+    font-weight: 600;
+    color: var(--ink);
+  }
+</style>

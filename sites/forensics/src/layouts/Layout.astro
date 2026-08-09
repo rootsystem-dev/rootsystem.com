@@ -17,17 +17,24 @@
 import '../styles/tokens.css'
 import '../styles/base.css'
 import Masthead from '../components/Masthead.astro'
+import copy from '../copy/landing'
+import { assertPublishable } from '../copy/schema'
+
+// Enforced here rather than per page: with five routes, a gate that only one
+// route runs is not a gate -- a spoke could ship draft copy through a green
+// build.
+assertPublishable(copy)
+
+const hasDraftCopy = copy.hero.draft || copy.closing.draft
 
 const DESIGN_DIRECTION: 'a' | 'b' = 'a'
 
 interface Props {
   title: string
   description: string
-  /** True when any copy on the page is still scaffolding. */
-  hasDraftCopy?: boolean
 }
 
-const { title, description, hasDraftCopy = false } = Astro.props
+const { title, description } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
 ---

@@ -1,0 +1,56 @@
+---
+/**
+ * The five pillars.
+ *
+ * `form` selects which field renders, not which layout: 'summary' and 'full'
+ * are the same markup reading `summary` or `body`. One component with a field
+ * switch is therefore honest here rather than two components behind a flag.
+ */
+import copy from '../copy/landing'
+
+interface Props {
+  form?: 'summary' | 'full'
+}
+
+const { form = 'full' } = Astro.props
+---
+
+<section class="wrap" id="method">
+  <h2>How the work holds up</h2>
+  <ol class="pillars">
+    {
+      copy.pillars.map((pillar) => (
+        <li>
+          <h3>{pillar.title}</h3>
+          <p>{form === 'summary' ? pillar.summary : pillar.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+  <slot />
+</section>
+
+<style>
+  .pillars {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    list-style: none;
+    padding: 0;
+    counter-reset: pillar;
+  }
+
+  .pillars li::before {
+    counter-increment: pillar;
+    content: counter(pillar);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .pillars p {
+    margin-bottom: 0;
+  }
+</style>

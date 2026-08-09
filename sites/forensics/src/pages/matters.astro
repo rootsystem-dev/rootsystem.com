@@ -1,0 +1,33 @@
+---
+/**
+ * The matters spoke: the representative matter at full length.
+ */
+import Layout from '../layouts/Layout.astro'
+import copy from '../copy/landing'
+import CaseStudy from '../components/CaseStudy.astro'
+import SiteFooter from '../components/SiteFooter.astro'
+---
+
+<Layout title={copy.routes.matters.title} description={copy.routes.matters.description}>
+  <CaseStudy form="full" />
+
+  <section class="wrap closing">
+    <h2 class="measure">{copy.closing.headline}</h2>
+    <a class="cta" href="/scope">{copy.closing.button} &rarr;</a>
+    <p class="back"><a href="/">Back to the overview</a></p>
+  </section>
+
+  <SiteFooter />
+</Layout>
+
+<style>
+  .closing {
+    padding-bottom: 5rem;
+  }
+
+  .back {
+    margin: 2rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+</style>

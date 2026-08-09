@@ -1,0 +1,37 @@
+---
+/**
+ * The hub-to-spoke affordance.
+ *
+ * This link is the only thing distinguishing a summary from a truncation.
+ * Without it a scanning reader takes the root page for an incomplete page
+ * rather than a complete short form, which is the failure this whole
+ * structure exists to avoid.
+ */
+interface Props {
+  href: string
+  label: string
+}
+
+const { href, label } = Astro.props
+---
+
+<p class="expand"><a href={href}>{label} &rarr;</a></p>
+
+<style>
+  .expand {
+    margin: 2rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .expand a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+  }
+
+  .expand a:hover,
+  .expand a:focus-visible {
+    border-bottom-color: var(--accent-2);
+  }
+</style>

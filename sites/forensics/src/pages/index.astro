@@ -12,9 +12,8 @@ import Pillars from '../components/Pillars.astro'
 import CaseStudy from '../components/CaseStudy.astro'
 import Services from '../components/Services.astro'
 import Pricing from '../components/Pricing.astro'
-import Contrast from '../components/Contrast.astro'
-import Faq from '../components/Faq.astro'
 import SiteFooter from '../components/SiteFooter.astro'
+import ExpandLink from '../components/ExpandLink.astro'
 
 const scopeHref = '/scope'
 ---
@@ -29,12 +28,20 @@ const scopeHref = '/scope'
   </header>
 
   <Positioning />
-  <Pillars />
-  <CaseStudy />
-  <Services />
-  <Pricing />
-  <Contrast />
-  <Faq />
+
+  <Pillars form="summary">
+    <ExpandLink href="/method" label="The full method" />
+  </Pillars>
+
+  <CaseStudy form="summary">
+    <ExpandLink href="/matters" label="Read the matter" />
+  </CaseStudy>
+
+  <Services form="summary" />
+
+  <Pricing form="summary">
+    <ExpandLink href="/engagements" label="Fees and objections" />
+  </Pricing>
 
   <section class="wrap closing">
     <h2 class="measure">{copy.closing.headline}</h2>

@@ -57,7 +57,7 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY
         <div class="measure">
           <h1>Thanks — that's with us.</h1>
           <p>
-            We'll come back to you directly. If it's time-critical,{' '}
+            {copy.contact.responseTime} If it's time-critical,{' '}
             <a href={`mailto:${copy.contact.email}`}>{copy.contact.email}</a>{' '}
             reaches us fastest.
           </p>
@@ -72,7 +72,7 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY
           <p class="lede">
             Start with the fixed-fee assessment — $2,500, capped at ten hours,
             credited against a full engagement if the matter proceeds. Tell us
-            what the dispute turns on and we'll come back to you.
+            what the dispute turns on. {copy.contact.responseTime}
           </p>
 
           <p class="confidentiality">
@@ -80,6 +80,18 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY
             detail at this stage.</strong> A general description of the
             technical question is enough to scope the work, and keeps both of us
             clear of a conflicts problem before one exists.
+          </p>
+
+          {/* The conflict rule stated before the form rather than after it.
+              Root System also builds AI systems for clients, and counsel
+              deciding whether to describe a live matter to an unfamiliar expert
+              should know how that is handled first. Links to the full sequence
+              on /engagements rather than restating it. */}
+          <p class="fineprint">
+            Nothing here creates an engagement yet. Every intake opens with a
+            written conflict screen, and an NDA is executed before any
+            confidential material moves — <a href="/engagements/#process">how an
+            engagement starts</a>.
           </p>
 
           {errorMessage && <p class="notice error">{errorMessage}</p>}

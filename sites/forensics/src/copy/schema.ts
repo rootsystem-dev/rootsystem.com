@@ -122,6 +122,36 @@ export const landingSchema = z.object({
         body: z.string(),
       }),
     ),
+    // The rate modifiers, published rather than described. "Billed at a
+    // premium" was the vaguest sentence on the property, sitting inside the one
+    // block whose differentiator is that the rates are public at all. Applies
+    // to the hours each covers, not to the whole engagement.
+    modifiers: z.object({
+      intro: z.string(),
+      rows: z
+        .array(
+          z.object({
+            when: z.string(),
+            adjustment: z.string(),
+            rate: z.string(),
+          }),
+        )
+        .min(1),
+      note: z.string(),
+    }),
+  }),
+
+  // How an engagement starts. The conflict screen is the first step and is
+  // stated in public rather than left to the post-submission fine print:
+  // Root System also builds AI systems for clients, and counsel evaluating an
+  // unfamiliar expert is entitled to see how that is handled before typing a
+  // matter into a form.
+  process: z.object({
+    label: z.string(),
+    heading: z.string(),
+    steps: z
+      .array(z.object({ name: z.string(), body: z.string() }))
+      .min(1),
   }),
 
   contrast: z.object({
@@ -148,6 +178,7 @@ export const landingSchema = z.object({
     // z.email() rather than the deprecated z.string().email() chain.
     email: z.email(),
     footer: z.string(),
+    responseTime: z.string(),
   }),
 })
 

@@ -1,8 +1,11 @@
 ---
 /**
- * Engagement tiers. 'summary' shows name and price only -- pricing was the
- * lowest-probability closer of the arguments on this page, so the root page
- * states the numbers and leaves the terms to /engagements.
+ * Engagement tiers, and on /engagements the rate modifiers.
+ *
+ * 'summary' carries each tier's one-line short form; 'full' carries the terms
+ * plus the modifier table. The modifiers are deliberately absent from root:
+ * the root page states the two headline numbers, and a reader who has got as
+ * far as caring what expedited hours cost has got as far as /engagements.
  */
 import copy from '../copy/landing'
 
@@ -33,6 +36,36 @@ const { form = 'full' } = Astro.props
       ))
     }
   </div>
+
+  {
+    form === 'full' && (
+      <div class="modifiers">
+        <p class="measure">{copy.pricing.modifiers.intro}</p>
+        <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">When</th>
+              <th scope="col">Adjustment</th>
+              <th scope="col">Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {copy.pricing.modifiers.rows.map((row) => (
+              <tr>
+                <th scope="row">{row.when}</th>
+                <td class="num">{row.adjustment}</td>
+                <td class="num">{row.rate}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
+        <p class="measure note">{copy.pricing.modifiers.note}</p>
+      </div>
+    )
+  }
+
   <slot />
 </section>
 
@@ -59,5 +92,55 @@ const { form = 'full' } = Astro.props
     color: var(--accent);
     font-size: 1.0625rem;
     margin-bottom: 0.75rem;
+  }
+
+  .modifiers {
+    margin-top: 2.5rem;
+  }
+
+  /* Same guard as the contrast table: wide content scrolls inside its own
+     container so the page body never scrolls horizontally. */
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 26rem;
+    font-size: 0.9375rem;
+  }
+
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  thead th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  tbody th {
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+
+  .note {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--muted);
   }
 </style>

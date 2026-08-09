@@ -1,0 +1,71 @@
+---
+/**
+ * How an engagement starts.
+ *
+ * The conflict screen is the first step and it is stated in public rather than
+ * left to the post-submission fine print. Root System also builds AI systems
+ * for clients; counsel evaluating an unfamiliar expert is entitled to see how
+ * that is handled before they type a live matter into a form, and a practice
+ * whose whole argument is even-handedness cannot make the conflict rule
+ * something you only learn after committing.
+ *
+ * Rendered on /engagements, ahead of the FAQ: the objections section reads
+ * differently once a reader has seen that the practice declines work.
+ */
+import copy from '../copy/landing'
+---
+
+<section class="wrap" id="process">
+  <p class="eyebrow">{copy.process.label}</p>
+  <h2 class="measure">{copy.process.heading}</h2>
+
+  <ol class="steps">
+    {
+      copy.process.steps.map((step) => (
+        <li>
+          <h3>{step.name}</h3>
+          <p class="measure">{step.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    counter-reset: step;
+  }
+
+  .steps li {
+    border-top: 1px solid var(--line);
+    padding-top: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .steps li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Numbered like the pillars, in mono, so the sequence reads as a sequence
+     rather than as three unrelated assurances. */
+  .steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .steps h3 {
+    font-size: var(--text-lg);
+  }
+
+  .steps p {
+    margin-bottom: 0;
+  }
+</style>

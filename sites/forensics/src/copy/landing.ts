@@ -137,12 +137,12 @@ const copy: Landing = landingSchema.parse({
     provenance:
       'These are the fractional CTOs and CPOs who run Root System’s consulting practice, building product for companies that have not yet found a business model. That work makes experimentation and analytical data collection the outcome rather than a report at the end of one. The reproducible experiments filed in a matter come out of the same discipline, not a technique adopted for court.',
     staffing:
-      'Every matter is scoped directly rather than routed. One lead sets the strategic approach, assembles the team to meet it, stays with the work, and runs technical analysis as one of the experts. People are brought in against the approach, not assigned off a rota.',
+      'Every matter is scoped directly rather than routed. Rob Jacques sets the strategic approach, assembles the team to meet it, stays with the work, and runs technical analysis as one of the experts. People are brought in against the approach, not assigned off a rota.',
   },
 
   services: {
     label: 'How we work',
-    intro: 'Four modes, one on-ramp.',
+    intro: 'Four modes, one on-ramp — and a conflict screen before any of them.',
     modes: [
       {
         title: 'Opposing-expert rebuttal.',
@@ -185,7 +185,48 @@ const copy: Landing = landingSchema.parse({
         price: '$400/hr',
         summary:
           'Retainer plus hourly, through analysis, expert report, and testimony.',
-        body: 'Retainer plus hourly for a live matter through analysis, expert report, and testimony. Expedited turnaround and deposition/trial testimony are billed at a premium; large or long-running matters are eligible for volume rates.',
+        body: 'Retainer plus hourly for a live matter through analysis, expert report, and testimony. The base rate moves for the kind of hours involved — the adjustments are below rather than described as "a premium."',
+      },
+    ],
+    modifiers: {
+      intro:
+        'Rate adjustments apply to the hours they cover, not to the whole engagement: testimony hours bill at the testimony rate while analysis hours bill at the base.',
+      rows: [
+        {
+          when: 'Expedited turnaround',
+          adjustment: '+50%',
+          rate: '$600/hr',
+        },
+        {
+          when: 'Deposition and trial testimony',
+          adjustment: '+25%',
+          rate: '$500/hr',
+        },
+        {
+          when: 'Large scope or long time horizon',
+          adjustment: '−25%',
+          rate: '$300/hr',
+        },
+      ],
+      note: 'Where more than one applies, the engagement letter sets the rate for those hours before any of them are billed.',
+    },
+  },
+
+  process: {
+    label: 'How an engagement starts',
+    heading: 'Conflicts first, then anything else',
+    steps: [
+      {
+        name: 'Conflict screen',
+        body: 'Every intake opens with a written conflict questionnaire, walked through with you directly. It captures the named parties and their counsel, affiliated and parent entities, and the specific AI/ML systems, products, models, or vendors at issue. Root System also builds AI systems for clients, and we decline any matter adverse to a current or recent build relationship. Where a conflict is ambiguous, we decline — the reproducibility argument only works if it is unimpeachable.',
+      },
+      {
+        name: 'NDA',
+        body: 'A non-disclosure agreement covering client, company, and product information is executed before any confidential material moves. No case files, code, or model artifacts change hands ahead of it.',
+      },
+      {
+        name: 'Assessment',
+        body: 'The fixed-fee assessment: a reproducible-experiment analysis and a written read on the claim and its strength, capped at ten hours. If the matter proceeds, the fee is credited against the full engagement.',
       },
     ],
   },
@@ -252,7 +293,12 @@ const copy: Landing = landingSchema.parse({
 
   contact: {
     email: 'partners@rootsystem.com',
-    footer: 'Root System · Forensic & expert-witness services',
+    footer:
+      'Root System · Forensic & expert-witness services · Rob Jacques, principal',
+    // Published because counsel needs it before they decide to write, not
+    // after. This is a commitment, not a nicety -- it holds over a weekend as
+    // written, and the intake notification has to reach someone who can answer.
+    responseTime: 'We reply within 24 hours.',
   },
 })
 

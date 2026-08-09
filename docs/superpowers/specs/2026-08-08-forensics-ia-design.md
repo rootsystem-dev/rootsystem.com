@@ -264,6 +264,40 @@ To build:
 - An internal link graph. Nothing on this property links to anything today; the
   masthead plus per-section expansion links is what makes spokes discoverable to
   a crawler.
+- A forensics OG card. See below.
+
+### OG card
+
+Everything in the Open Graph block is already property-specific except the
+image: `og:site_name` is "Root System Forensics", and title and description come
+from forensics copy per route. The image is the single shared artifact —
+`rootsystem-card.png` is byte-identical across `sites/forensics`, `sites/www`,
+and `docs/Brand`. A referral link to this property currently unfurls in an
+attorney's inbox showing the generic company card.
+
+Four routes make that worse rather than neutral: `/`, `/method`, `/matters`, and
+`/engagements` would all preview identically, so sharing one specific argument
+loses the specificity that splitting them was meant to create.
+
+One property-level card, not four. It is authored as an SVG committed to
+`docs/Brand/Social/`, exported to `sites/forensics/public/images/` as a
+1440×640 PNG — the dimensions `Layout.astro` already declares. It uses the
+forensics tokens, the Tiempos wordmark, and the existing logomark path data, so
+it inherits the §6 convergence rather than introducing a separate visual
+language. Committing the SVG source keeps it re-editable; a PNG alone would be a
+dead end the next time the copy changes.
+
+The card is light-scheme only. Open Graph previews do not respond to a viewer's
+theme preference, so there is one card and it is the light one.
+
+Favicons stay identical to the main site's. A favicon is the company mark rather
+than a property identity, and §6 pulls the two properties together rather than
+apart.
+
+Per-route generated cards — build-time generation giving each spoke its own
+title in the preview — are the natural later improvement. They were considered
+and deferred: the machinery adds a build dependency to a property that currently
+has three, which is not worth it for four pages.
 
 `robots.txt` stays `Allow: /`. The launch gate is ship-now-learn-from-live, and
 the condition its current comment describes — an unresolved IA — is satisfied by
@@ -271,9 +305,6 @@ this work. The comment is rewritten accordingly.
 
 ## 10. Out of scope
 
-- **Forensics-specific OG card.** The property shares the main brand's card.
-  This is a design asset, not code. It survives as an open item and now applies
-  to four routes rather than one.
 - **DNS.** `wrangler.jsonc` declares no routes, so the property is workers.dev
   only and `forensics.rootsystem.com` has no DNS record. Deliberate — the
   hostname is not published until there is something worth routing to. Adding it
@@ -311,6 +342,8 @@ Manual, run against `astro build` output before merge:
   body scroll.
 - `/scope` renders the masthead without its call-to-action button, and its old
   eyebrow back-link is gone.
+- All five routes reference `forensics-card.png`, not `rootsystem-card.png`, and
+  the exported PNG is 1440×640 to match the declared dimensions.
 
 Future, not now: once the property carries traffic and more than four routes, a
 small Playwright smoke suite asserting the link graph and per-route titles is

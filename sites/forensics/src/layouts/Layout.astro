@@ -36,7 +36,7 @@ interface Props {
 
 const { title, description } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
-const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
+const ogImage = new URL('/images/forensics-card.png', Astro.site)
 ---
 
 <html lang="en" data-direction={DESIGN_DIRECTION}>
@@ -59,9 +59,11 @@ const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Root System Forensics" />
     <meta property="og:locale" content="en_US" />
-    <!-- Shares the main brand card for now. `summary_large_image` was already
-         declared here with no image at all, which unfurls as a bare link; a
-         forensics-specific card is worth commissioning. -->
+    <!-- One property-level card rather than one per route. Source SVG lives at
+         docs/Brand/Social/rootsystem-forensics-social.svg; regenerate with
+         scripts/render-og-card.sh after editing it. Per-route generated cards
+         are the natural later improvement -- deferred because the build
+         dependency is not worth it for five pages. -->
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1440" />
     <meta property="og:image:height" content="640" />

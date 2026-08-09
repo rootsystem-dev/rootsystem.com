@@ -119,7 +119,7 @@
  * B, and the greens come from the main site's dark theme (primary-400 / -300)
  * so both properties resolve to the same accent in the same scheme.
  *
- * --accent flips from #276749 to a lighter green on purpose: A's light-mode
+ * --accent flips from #2f855a to a lighter green on purpose: A's light-mode
  * green is ~1.7:1 against this background and would be unreadable. Every value
  * here is checked against --bg -- --muted is 4.9:1, --accent 7.4:1. Add new
  * colours as tokens in BOTH blocks, never as literals in a component: a

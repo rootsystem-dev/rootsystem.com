@@ -222,13 +222,23 @@ yarn build:forensics && ls sites/forensics/dist/client/fonts/
 
 Expected: build succeeds; seven font files present in `dist/client/fonts/`.
 
-- [ ] **Step 7: Confirm no stale `#276749` remains**
+- [ ] **Step 7: Confirm no stale `#276749` declaration remains**
+
+The value must be gone from every declaration. It survives only in prose that explains the correction, so grep for the declaration rather than the string:
 
 ```bash
-grep -rn '276749' sites/forensics/src/ || echo "clean"
+grep -rn -- '--accent: #276749' sites/forensics/src/ || echo "no stale declaration"
 ```
 
-Expected: `clean`.
+Expected: `no stale declaration`.
+
+Then check every remaining mention is a comment that is still *true* after the change:
+
+```bash
+grep -rn '276749' sites/forensics/src/
+```
+
+Expected: two hits, both comments. The dark-scheme comment that reads `--accent flips from #276749 to a lighter green` is now wrong — light mode no longer starts there. Correct it to `--accent flips from #2f855a to a lighter green`.
 
 - [ ] **Step 8: Commit**
 

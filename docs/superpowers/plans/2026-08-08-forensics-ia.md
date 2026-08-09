@@ -15,7 +15,7 @@
 - **No test framework exists.** There is no vitest, no Playwright, no test file in either workspace. The red-green cycle in this plan runs through the Zod build gate: add a required field, watch `yarn build:forensics` fail, add the data, watch it pass. That is a real failing-then-passing check, not a substitute for one. Steps say exactly which command to run and what output to expect.
 - All commands run from the repo root: `/Users/robertjacques/RootsystemProjects/rootsystem-internal/rootsystem.com`.
 - Build: `yarn build:forensics`. Type/template check: `yarn workspace @rootsystem/forensics check`. Dev server: `yarn dev:forensics`.
-- Never add a colour as a literal in a component. Every colour is a token defined in **both** the light and dark blocks of `tokens.css`.
+- Never add a colour as a literal in a component. Every colour is a token defined in **both** the light and dark blocks of `tokens.css`. Two narrow exceptions, each of which must carry a comment saying why: the logomark's dark-mode `fill: #ffffff`, ported verbatim from `sites/www` so both properties render the same mark; and the card SVG in Task 7, which has no access to the stylesheet at all.
 - Dark neutrals stay at `--bg: #14181d`. Do not converge to the main site's pure black.
 - No JavaScript is added to any page. The masthead, the anchors, and the expansion links are plain HTML. `/scope` keeps its existing Turnstile script; that is pre-existing and out of scope.
 - Commit after every task. Conventional-commit prefixes, matching repo history (`feat:`, `docs:`, `refactor:`, `style:`).

@@ -49,6 +49,33 @@ export const landingSchema = z.object({
     body: z.string(),
   }),
 
+  // The practice areas -- the kinds of matter this practice takes.
+  //
+  // Added 2026-08-11 after a paralegal reviewing the site read an AI/ML-only
+  // hero as an AI/ML-only practice and flagged the matters it would turn away.
+  // AI/ML is one area among four rather than the whole category claim; the
+  // ordering of the array is the emphasis, so a variant re-ranks by reordering
+  // rather than by editing prose.
+  //
+  // `summary` is the root page's one-clause form and `body` the spoke's long
+  // form, the same adjacency rule the pillars and modes follow. `examples` are
+  // matter types, not claims of matters handled -- keep them generic.
+  practiceAreas: z.object({
+    label: z.string(),
+    heading: z.string(),
+    intro: z.string(),
+    areas: z
+      .array(
+        z.object({
+          name: z.string(),
+          summary: z.string(),
+          body: z.string(),
+          examples: z.array(z.string()).min(1),
+        }),
+      )
+      .min(3),
+  }),
+
   // The five pillars. Each was earned in a real matter; the copy deck is
   // explicit that these are not aspirational claims.
   //

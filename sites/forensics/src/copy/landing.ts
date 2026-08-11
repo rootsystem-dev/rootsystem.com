@@ -57,6 +57,64 @@ const copy: Landing = landingSchema.parse({
     body: 'When a matter turns on what an AI/ML system, its training data, or an algorithm actually did, most experts can offer one half of what you need: academics who study models but don’t ship them, economic consultancies who read AI through an economics lens and concede the black box, or digital-forensics vendors who recover bytes but don’t interpret model behavior. Root System is a practice of engineers and product leaders who build these systems, and who run the reproducible experiments that make an opinion hold up under cross-examination.',
   },
 
+  // Base scaffolding, added 2026-08-11 with the practiceAreas schema block.
+  // The four areas and the decision that all four engagement modes apply to
+  // every one of them are Rob's (2026-08-11); the prose here is placeholder
+  // that each positioning variant replaces wholesale. Examples are matter
+  // types, not a claim that matters of that type have been handled.
+  practiceAreas: {
+    label: 'What we take',
+    heading: 'Four kinds of technical dispute',
+    intro:
+      'Matters that turn on what a system, a codebase, or a dataset actually did. AI and machine learning is one of the four, not the gate on the other three.',
+    areas: [
+      {
+        name: 'Software and source code',
+        summary:
+          'Source-code comparison, code provenance and authorship, technical read of infringement claims.',
+        body: 'Source-code comparison in trade-secret and IP matters, code provenance and authorship, and the technical read behind an infringement or misappropriation claim.',
+        examples: [
+          'Trade-secret misappropriation',
+          'Copyright and patent infringement',
+          'Code provenance and authorship',
+        ],
+      },
+      {
+        name: 'Data and systems forensics',
+        summary:
+          'ESI and metadata, timestamp and log analysis, file-system semantics, incident reconstruction.',
+        body: 'ESI and metadata, timestamp and log analysis, file-system semantics, and reconstruction of a security or data-handling incident from what the systems recorded.',
+        examples: [
+          'Metadata and timestamp disputes',
+          'Data exfiltration and access claims',
+          'Breach and incident reconstruction',
+        ],
+      },
+      {
+        name: 'AI and machine learning',
+        summary:
+          'How a model was built, what data it used, and whether it performed as claimed.',
+        body: 'How a model was built and trained, what data it ingested, how its outputs vary, and whether it performed as represented.',
+        examples: [
+          'Training-data and model-provenance claims',
+          'Algorithmic decision and disparate-impact claims',
+          'Representations about AI capability',
+        ],
+      },
+      {
+        name: 'Software failure and performance',
+        summary:
+          'Defect and root-cause analysis, outage and SLA disputes, capacity and scaling failures.',
+        body: 'Defect and root-cause analysis, outage and service-level disputes, capacity and scaling failures, and the technical record behind a contract-performance claim.',
+        examples: [
+          'Failed implementation and delivery disputes',
+          'Outage and service-level claims',
+          'Product defect and root cause',
+        ],
+      },
+    ],
+  },
+
   pillars: [
     {
       title: 'Reproducible, not assertive.',

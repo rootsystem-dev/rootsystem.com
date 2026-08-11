@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config'
 import cloudflare from '@astrojs/cloudflare'
 import sitemap from '@astrojs/sitemap'
 
-// forensics.rootsystem.com — the AI/ML expert-witness property.
+// forensics.rootsystem.com — the technical expert-witness property.
 //
 // Deliberately a separate Astro application from sites/www rather than a route
 // group: the buyer is different (litigators and IP counsel, not founders). See

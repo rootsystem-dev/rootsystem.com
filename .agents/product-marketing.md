@@ -1,7 +1,7 @@
 # Product Marketing Context
 
-**Document version:** v6
-**Last updated:** 2026-08-09
+**Document version:** v7-D (vetting-first variant)
+**Last updated:** 2026-08-19
 
 Scope: the Root System Forensics property (`forensics.rootsystem.com`, source at
 `sites/forensics/`). The parent consultancy at `rootsystem.com` is a different
@@ -18,8 +18,9 @@ Services* (ROBOPS).
 
 ## Product Overview
 
-**One-liner:** AI and machine-learning dispute analysis — expert-witness work
-where every opinion is a query the other side can re-run.
+**One-liner:** Technical expert-witness analysis of what a system actually did,
+where every opinion is a query the other side can re-run — and where the things
+counsel screens an expert on are answered on the page rather than on the call.
 
 **What it does:** Technical analysis of what an AI or machine-learning system
 actually did — how it was built, what data it used, whether it performed as
@@ -32,10 +33,13 @@ consulting, or an early-case merits screen.
 specialty. The "shelf" is expert-witness directories (JurisPro, SEAK) and
 attorney referral networks, not software categories.
 
-Scope is product and technology, with AI/ML as the lead pillar. AI/ML leads the
-category claim; the bench's wider product and engineering disciplines are shown
-as the depth behind that lead rather than as separate practice areas. See
-**The Bench**.
+Scope is product and technology across four peer practice areas — software and
+source code, data and systems evidence, AI and machine learning, and software
+failure and performance. AI/ML is one of the four rather than the category
+claim; see the superseded scope decision under **The Bench** for why that
+changed. In this variant the areas are presented as the answer to counsel's
+first screening question — whether the expert has hands-on depth in the
+technology the case turns on.
 
 **Product type:** Professional services, delivered by a Root System practice
 group — a bench of roughly a dozen experts assembled per matter, not a single
@@ -148,14 +152,50 @@ The whole team collaborates on strategic approach, covering the ways technology
 is built, implemented, and used, with the same focus on deterministic evidence
 and outcomes.
 
-**Scope decision (2026-08-09).** The practice stays focused on product and
-technology, with AI/ML as the lead pillar, while showing that the bench is
-generalist and broadly capable. AI/ML leads every page and every title; the
-breadth is shown as depth behind the lead, not as a second practice area. The
-fractional-CPO disciplines — usability, user research, product analytics,
-growth and monetization — are presented as part of the cross-functional read a
-technology dispute requires, not as standalone service lines. No product-side
-landing pages, no second category claim.
+**Scope decision (2026-08-09) — SUPERSEDED.** The earlier decision made AI/ML
+the lead pillar on every page and every title, with the bench's breadth shown
+as depth behind that lead rather than as peer practice areas. It was reversed
+on 2026-08-11 after a paralegal review (Lauren Cirina, OWD) found that an
+AI-led hero reads as an AI-only practice and would turn away matters the bench
+is qualified for. It is recorded here rather than deleted because the reasoning
+behind it — one clear category claim beats four hedged ones — is still the
+strongest argument against the reversal.
+
+**Scope decision (2026-08-19), this variant.** Four peer practice areas, and
+the site organized as a vetting instrument rather than as a positioning
+argument. The organizing insight is that counsel screening a technical expert
+works from a stable and publicly documented checklist — the two closest
+comparables that publish attorney-facing selection guides, Barr Group and
+Sidespin Group, name the same criteria: hands-on depth in the exact technology
+at issue, real experience with the kind of evidence in question, a testimony
+record that has held up, genuine independence, and the ability to make the
+technology legible to a non-technical audience. Four of those five were
+unclaimed anywhere on this property.
+
+So this variant does not argue a category. It answers the checklist in order,
+labels the sections as the screening questions they answer, and puts the rates
+on the page. The wager is that for a partner with a deadline, a site that lets
+them rule an expert in or out without a call is worth more than a site that
+makes the strongest possible claim. Its failure mode is the opposite of the
+AI-lead variant's: where that one risked being too narrow to be retained, this
+one risks reading as a vendor questionnaire with no point of view.
+
+AI and machine learning stays one area of four, in third position — present as
+depth, never as the gate on the other three. The fractional-CPO disciplines
+stay part of the cross-functional read rather than standalone service lines.
+No product-side landing pages, no second category claim.
+
+**What the market scan added (2026-08-19).** AI disclosure became a standing
+vetting question for retained experts this month: prompt logs are discoverable
+work product and are being subpoenaed, and directories have begun tracking
+disclosure as its own screening axis. That is a live hazard for a practice
+whose category claim is the analysis of AI systems, and it is an independent
+argument against leading with AI regardless of which variant wins. It is also
+the strongest available evidence for the reproducibility pillar: an opinion the
+other side can re-run is an opinion nobody has to take on faith. The
+`Did AI write this report?` answer added to the shared base is the direct
+response, and this variant treats it as a first-class screening question rather
+than as an objection buried at the bottom of the fees page.
 
 ## Target Audience
 

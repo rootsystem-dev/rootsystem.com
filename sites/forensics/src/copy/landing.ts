@@ -16,45 +16,49 @@ import { landingSchema, type Landing } from './schema'
  */
 const copy: Landing = landingSchema.parse({
   meta: {
-    title: 'Root System — AI & Machine-Learning Dispute Analysis | Expert Witness',
+    title:
+      'Software, Data and AI Expert Witness — Vet Us First | Root System Forensics',
     description:
-      'Reproducible AI/ML expert analysis for litigation — every opinion is a query or hard experimental data the other side can re-run and verify. Delivered by engineers who build these systems every day.',
+      'Technical expert analysis of software, source code, data and machine-learning systems. The things counsel screens an expert on — hands-on depth, evidence experience, independence, and whether we can explain it to a jury — are answered on the page, with published rates.',
   },
 
   routes: {
     method: {
-      title: 'Method — reproducible AI/ML analysis | Root System Forensics',
-      heading: 'How an AI/ML opinion holds up under cross',
+      title:
+        'Method — how to check a technical expert’s work | Root System Forensics',
+      heading: 'How to check our work',
       description:
-        'How an AI/ML opinion is made to hold up: findings stated as a query and its output, conceded uncertainty, and depth in machine-generated evidence — plus the bench of engineering and product experts behind it, set against what academics, economic consultancies and forensics vendors each leave out.',
+        'What a technical opinion has to survive, and how ours is built to survive it: findings stated as a query and its output, uncertainty conceded in the report rather than found on cross, depth where the record was written by a machine — plus the bench behind it and what the alternatives each leave out.',
     },
     matters: {
       title:
-        'Representative matter — refuting a mass-copying claim | Root System Forensics',
-      heading: 'A representative matter',
+        'Matters we take — software, source code, data, AI | Root System Forensics',
+      heading: 'The matters we take',
       description:
-        'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy on like media, showed the distribution’s shape was the discriminator, and impeached the declaration against his own earlier filing.',
+        'The four kinds of technical dispute we claim hands-on depth in — software and source code, data and systems evidence, AI and machine learning, software failure — and a representative matter showing what that depth produced when an opposing expert misread a timestamp distribution.',
     },
     engagements: {
-      title: 'Engagements and fees | Root System Forensics',
+      title:
+        'Engagements, rates, conflicts and objections | Root System Forensics',
       heading: 'Engagements and fees',
       description:
-        'Four ways to engage — opposing-expert rebuttal, affirmative analysis and testimony, non-testifying consulting, and early-case assessment — with a $2,500 fixed-fee assessment that credits toward a full engagement.',
+        'Published rates, a conflict screen run before anything else, and straight answers to what counsel actually asks — testimony record, AI disclosure, independence, and cost — with a $2,500 fixed-scope assessment credited toward a full engagement.',
     },
   },
 
   hero: {
-    eyebrow: 'AI & Machine-Learning Dispute Analysis',
-    headline: 'Our experts don\'t speculate — they empirically validate.',
+    eyebrow: 'Expert witness and technical analysis',
+    headline:
+      'Everything you screen an expert on is already on this page.',
     subhead:
-      'Technical analysis of what an AI or machine-learning system actually did — how it was built, what data it used, whether it performed as claimed. Every opinion is stated as an experiment the other side can run themselves and check.',
+      'We take disputes that turn on software and source code, on data and systems evidence, on machine learning, and on software that failed. What you would ask on a screening call — what we have actually built, what evidence we have actually read, what we will concede, what it costs — is answered below rather than held for the call.',
     proof:
       'A genuine bulk copy of 9,000 files smears its access timestamps across hundreds of seconds. The opposing exhibit clustered thousands of files into a single second — a batch process, not a human copy. Same data; the shape tells the truth.',
     cta: 'Scope a case',
   },
 
   positioning: {
-    body: 'When a matter turns on what an AI/ML system, its training data, or an algorithm actually did, most experts can offer one half of what you need: academics who study models but don’t ship them, economic consultancies who read AI through an economics lens and concede the black box, or digital-forensics vendors who recover bytes but don’t interpret model behavior. Root System is a practice of engineers and product leaders who build these systems, and who run the reproducible experiments that make an opinion hold up under cross-examination.',
+    body: 'Counsel vetting a technical expert screens on the same handful of things: hands-on depth in the exact technology at issue, real experience reading the kind of evidence the case turns on, independence that will survive cross, and whether the expert can make any of it legible to people who do not build software. Most expert sites make you place a call to find out. We have put the answers on the page — including the rates — because a partner with a deadline should be able to rule us in or out before spending an hour on the phone. Ruling us out quickly is a good outcome too.',
   },
 
   // Base scaffolding, added 2026-08-11 with the practiceAreas schema block.
@@ -63,10 +67,10 @@ const copy: Landing = landingSchema.parse({
   // that each positioning variant replaces wholesale. Examples are matter
   // types, not a claim that matters of that type have been handled.
   practiceAreas: {
-    label: 'What we take',
-    heading: 'Four kinds of technical dispute',
+    label: 'Screening question one',
+    heading: 'The technology we can claim hands-on depth in',
     intro:
-      'Matters that turn on what a system, a codebase, or a dataset actually did. AI and machine learning is one of the four, not the gate on the other three.',
+      'The first thing counsel screens on is whether an expert has actually worked in the technology the case turns on. These are the four kinds of dispute where we can answer that honestly, and every way of engaging us applies to all four. Outside them we will say so and, where we can, point you to someone who does.',
     areas: [
       {
         name: 'Software and source code',
@@ -115,36 +119,42 @@ const copy: Landing = landingSchema.parse({
     ],
   },
 
+  pillarsHeading: 'The rest of the screening questions, answered',
+
+  // The five substantive claims are unchanged from the base -- each was earned
+  // in a real matter and none is dropped here. What changes is what they are
+  // presented as answering: each title now names the screening criterion it
+  // satisfies, in the order counsel tends to ask.
   pillars: [
     {
-      title: 'Reproducible, not assertive.',
+      title: 'We build this software for a living.',
       summary:
-        'Every finding is a query and its output, re-runnable by the other side.',
-      body: 'Findings are a query plus its output — re-runnable by opposing counsel. Not "trust me."',
+        'Argued by the people who ship these systems, not by people who only study them.',
+      body: 'The expert across the table is usually an academic or a forensics vendor. Neither has run the behavior at production scale. This bench architects, ships, and operates the kinds of systems these disputes are about, which is why the analysis starts from how the thing actually works rather than from a checklist.',
     },
     {
-      title: 'Even-handed.',
-      summary:
-        'We concede what is genuinely uncertain. That is what survives cross.',
-      body: 'We concede what’s genuinely uncertain and interrogate the evidence with the same rigor a courtroom demands. It’s what separates an expert from a hired gun — and what survives cross.',
-    },
-    {
-      title: 'Depth in machine-generated evidence.',
+      title: 'We have read this kind of evidence before.',
       summary:
         'Timestamp shape, model variability, file-system semantics — where a forensics checklist stops.',
-      body: 'Timestamp shape, output variability controlled by fixing model temperature, file-system semantics, artifacts that only appear at scale — where a forensics checklist stops, the real question starts.',
+      body: 'Timestamp shape, output variability controlled by fixing model temperature, file-system semantics, artifacts that only appear at scale — where a forensics checklist stops, the real question starts. This is the specific competence a technical matter turns on, and it is not the same competence as collecting the evidence.',
     },
     {
-      title: 'Cross-document rigor.',
+      title: 'You can re-run every finding.',
+      summary:
+        'Every finding is a query and its output, re-runnable by the other side.',
+      body: 'Findings are a query plus its output — re-runnable by opposing counsel. Not "trust me." It is also the answer to the question being asked of every expert this year: an opinion you can re-run is an opinion no one has to take on faith about how it was produced.',
+    },
+    {
+      title: 'We concede what we cannot prove.',
+      summary:
+        'We concede what is genuinely uncertain. That is what survives cross.',
+      body: 'We concede what’s genuinely uncertain and interrogate the evidence with the same rigor a courtroom demands. It’s what separates an expert from a hired gun — and what survives cross. Independence you can see in the report beats independence asserted in a bio.',
+    },
+    {
+      title: 'We read their filings against each other.',
       summary:
         'We diff an opponent’s own successive filings for dropped caveats and silent overstatements.',
       body: 'We diff an opponent’s own successive filings for dropped caveats and silent overstatements. A declaration that quietly strengthens between filings is impeachable on its own record — and almost nobody looks.',
-    },
-    {
-      title: 'Built by builders.',
-      summary:
-        'Argued by the people who ship these systems, not by people who only study them.',
-      body: 'Disputes over what AI/ML systems did, argued by the people who ship them. The expert across the table is usually an academic or a forensics vendor; neither has reproduced the behavior at production scale.',
     },
   ],
 
@@ -205,8 +215,8 @@ const copy: Landing = landingSchema.parse({
   },
 
   services: {
-    label: 'How we work',
-    intro: 'Four modes, one on-ramp — and a conflict screen before any of them.',
+    label: 'Screening question two',
+    intro: 'How you can bring us in — all four ways available on all four kinds of matter, and a conflict screen before any of them.',
     modes: [
       {
         title: 'Opposing-expert rebuttal.',
@@ -301,7 +311,7 @@ const copy: Landing = landingSchema.parse({
   },
 
   contrast: {
-    label: 'Unlike the alternatives',
+    label: 'Who else you might reasonably retain',
     rows: [
       {
         who: 'Academic experts',
@@ -371,8 +381,8 @@ const copy: Landing = landingSchema.parse({
   ],
 
   closing: {
-    headline: 'Have a matter that turns on what a model or machine did?',
-    body: 'Start with a fixed-fee assessment. You’ll get a reproducible read on the claim and what a full engagement would test — before you commit.',
+    headline: 'Screened us in? Here is the next step.',
+    body: 'Start with the $2,500 fixed-scope assessment. You will get a written read on the claim and what a full engagement would test — before you commit to one. If we are the wrong fit, we will say so on that call rather than after the retainer.',
     button: 'Scope a case',
   },
 

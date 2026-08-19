@@ -49,16 +49,16 @@ const copy: Landing = landingSchema.parse({
   hero: {
     eyebrow: 'Expert witness and technical analysis',
     headline:
-      'Everything you screen an expert on is already on this page.',
+      'The questions you screen an expert on — answered here, including the one we fail.',
     subhead:
-      'We take disputes that turn on software and source code, on data and systems evidence, on machine learning, and on software that failed. What you would ask on a screening call — what we have actually built, what evidence we have actually read, what we will concede, what it costs — is answered below rather than held for the call.',
+      'We take disputes that turn on software and source code, on data and systems evidence, on machine learning, and on software that failed. What you would ask on a screening call — what we have actually built, what evidence we have actually read, how long we have testified, what we will concede, what it costs — is answered below rather than held for the call.',
     proof:
       'A genuine bulk copy of 9,000 files smears its access timestamps across hundreds of seconds. The opposing exhibit clustered thousands of files into a single second — a batch process, not a human copy. Same data; the shape tells the truth.',
     cta: 'Scope a case',
   },
 
   positioning: {
-    body: 'Counsel vetting a technical expert screens on the same handful of things: hands-on depth in the exact technology at issue, real experience reading the kind of evidence the case turns on, independence that will survive cross, and whether the expert can make any of it legible to people who do not build software. Most expert sites make you place a call to find out. We have put the answers on the page — including the rates — because a partner with a deadline should be able to rule us in or out before spending an hour on the phone. Ruling us out quickly is a good outcome too.',
+    body: 'Counsel vetting a technical expert screens on the same five things: hands-on depth in the exact technology at issue, real experience reading the kind of evidence the case turns on, a testimony record, independence you can check in the report rather than take on faith, and whether the expert can make any of it legible to people who do not build software. We answer four of those well. On the fifth — the testimony record — we are short, we say so on the fees page, and we do not dress it up. Most expert sites make you place a call to learn any of this. Ours puts it on the page, rates included, because a partner with a deadline should be able to rule us in or out before spending an hour on the phone. Ruling us out quickly is a good outcome too.',
   },
 
   // Base scaffolding, added 2026-08-11 with the practiceAreas schema block.

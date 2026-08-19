@@ -49,7 +49,7 @@ const copy: Landing = landingSchema.parse({
   hero: {
     eyebrow: 'Expert witness and technical analysis',
     headline:
-      'The questions you screen an expert on — answered here, including the one we fail.',
+      'We analyze what a system did — and answer your screening questions before you call.',
     subhead:
       'We take disputes that turn on software and source code, on data and systems evidence, on machine learning, and on software that failed. What you would ask on a screening call — what we have actually built, what evidence we have actually read, how long we have testified, what we will concede, what it costs — is answered below rather than held for the call.',
     proof:
@@ -58,7 +58,7 @@ const copy: Landing = landingSchema.parse({
   },
 
   positioning: {
-    body: 'Counsel vetting a technical expert screens on the same five things: hands-on depth in the exact technology at issue, real experience reading the kind of evidence the case turns on, a testimony record, independence you can check in the report rather than take on faith, and whether the expert can make any of it legible to people who do not build software. We answer four of those well. On the fifth — the testimony record — we are short, we say so on the fees page, and we do not dress it up. Most expert sites make you place a call to learn any of this. Ours puts it on the page, rates included, because a partner with a deadline should be able to rule us in or out before spending an hour on the phone. Ruling us out quickly is a good outcome too.',
+    body: 'Counsel vetting a technical expert screens on the same five things: hands-on depth in the exact technology at issue, real experience reading the kind of evidence the case turns on, a testimony record, independence you can check in the report rather than take on faith, and whether the expert can make any of it legible to people who do not build software. Four of those are answered below, each with what it rests on. On the fifth, the testimony record, we are short — we say so on the fees page and we do not dress it up. One boundary worth knowing before you call: we analyze evidence, we do not acquire it. Imaging, preservation, and chain of custody stay with a digital-forensics vendor, and we work alongside the one you retain. None of the comparable practices we know of publishes its rates. Ours are on the page, because a partner with a deadline should be able to rule us in or out without spending an hour on the phone. Ruling us out quickly is a good outcome too.',
   },
 
   // Base scaffolding, added 2026-08-11 with the practiceAreas schema block.
@@ -68,7 +68,7 @@ const copy: Landing = landingSchema.parse({
   // types, not a claim that matters of that type have been handled.
   practiceAreas: {
     label: 'Screening question one',
-    heading: 'The technology we can claim hands-on depth in',
+    heading: 'Hands-on depth in software, source code, data, and machine learning',
     intro:
       'The first thing counsel screens on is whether an expert has actually worked in the technology the case turns on. These are the four kinds of dispute where we can answer that honestly, and every way of engaging us applies to all four. Outside them we will say so and, where we can, point you to someone who does.',
     areas: [
@@ -151,7 +151,7 @@ const copy: Landing = landingSchema.parse({
       body: 'We concede what’s genuinely uncertain and interrogate the evidence with the same rigor a courtroom demands. It’s what separates an expert from a hired gun — and what survives cross. Independence you can see in the report beats independence asserted in a bio.',
     },
     {
-      title: 'We read their filings against each other.',
+      title: 'We check a declaration against its own earlier versions.',
       summary:
         'We diff an opponent’s own successive filings for dropped caveats and silent overstatements.',
       body: 'We diff an opponent’s own successive filings for dropped caveats and silent overstatements. A declaration that quietly strengthens between filings is impeachable on its own record — and almost nobody looks.',

@@ -76,6 +76,13 @@ export const landingSchema = z.object({
       .min(3),
   }),
 
+  // The heading above the pillars. Optional with the long-standing default, so
+  // a positioning variant can reframe what the five pillars are answering
+  // without a schema change and without touching the variants that don't.
+  // Added 2026-08-19 for the vetting-first variant, which needs this section to
+  // read as the answer to a screening checklist rather than as a method claim.
+  pillarsHeading: z.string().default('How the work holds up'),
+
   // The five pillars. Each was earned in a real matter; the copy deck is
   // explicit that these are not aspirational claims.
   //

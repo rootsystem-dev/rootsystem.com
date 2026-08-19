@@ -52,21 +52,44 @@ the bench. Copy revision is agreed and pending.
 | Tier | Price | What it is |
 |---|---|---|
 | AI-Dispute Assessment | $2,500 flat, up to 10 hours | Fixed-scope reproducible-experiment analysis plus a written assessment of the claim and its strength. Credited against a full engagement. |
-| Full Engagement | $400/hr plus retainer | Live matter through analysis, expert report, and testimony. Expedited turnaround and deposition/trial testimony billed at a premium; large or long-running matters eligible for volume rates. |
+| Full Engagement | $450/hr plus retainer | Live matter through analysis, expert report, and testimony. Expedited turnaround and deposition/trial testimony billed at a premium; large or long-running matters eligible for volume rates. |
 
 Rate modifiers, published on `/engagements` as of 2026-08-09. They apply to the
 hours they cover, not to the whole engagement.
 
 | When | Adjustment | Rate |
 |---|---|---|
-| Expedited turnaround | +50% | $600/hr |
-| Deposition and trial testimony | +25% | $500/hr |
+| Expedited turnaround | +50% | $675/hr |
+| Deposition and trial testimony | +25% | $563/hr |
 
 **They do not stack — the higher rate governs those hours** (Rob, 2026-08-09,
 closing the open item in the rate card).
 
 Publishing pricing at all is a deliberate divergence: the competitive scan found
 none of the four closest comparables publishes rates.
+
+**Rate benchmark (2026-08-19).** The base moved from $400 to $450 against the
+ExpertPages 2026 survey, which puts the all-specialty average expert hourly fee
+at $465, up from $451 in 2024, with a reported range from under $200 to over
+$1,500 and engineering and finance experts typically $300–600. Because this
+practice publishes its rates and the comparables do not, a below-average number
+is a public signal rather than a negotiating position, and raising a published
+rate later is harder than starting at market and conceding privately — which is
+what the held-back volume adjustment already exists to do. $450 sits inside the
+engineering band without claiming a premium the testimony record cannot yet
+carry; the ladder toward $700 still runs off accrued testimony.
+
+Note the arithmetic: +25% of $450 is $562.50, published as $563. If a rounder
+card is wanted, a $440 base yields exactly $660 and $550 at the same
+percentages. Open item for Rob.
+
+**Assessment benchmark (2026-08-19).** The same survey reports 74% of experts
+require a minimum fee to accept an engagement, and 40% of those set it between
+$2,500 and $4,999. The $2,500 assessment therefore sits on the modal
+minimum-fee floor and does not read as distinctive on the number alone. The
+differentiator is the fixed scope and the written deliverable, and the copy now
+states that against what the market does with the same figure rather than
+leaving the reader to infer it.
 
 **Held back deliberately — do not put these in public copy.**
 
@@ -314,7 +337,7 @@ answer in public.
 **Anti-persona [INFERRED]:** counsel who wants a predetermined conclusion (the
 even-handedness pillar actively repels them, by design); matters needing
 conventional digital forensics — imaging, recovery, chain of custody — with no
-AI/ML question; and matters too small to carry a $400/hr expert.
+AI/ML question; and matters too small to carry a $450/hr expert.
 
 ## Switching Dynamics
 

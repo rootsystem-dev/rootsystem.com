@@ -167,8 +167,14 @@ const copy: Landing = landingSchema.parse({
   bench: {
     label: 'The bench',
     heading: 'A dozen experts, assembled per matter',
+    // The closing sentence answers a selection criterion attorneys publish and
+    // this practice had left unclaimed: whether an expert can teach the
+    // technology to a non-technical jury. It is not an aspiration -- explaining
+    // technical systems to non-technical decision-makers is what the product
+    // half of this bench does for a living, which is why the claim sits here
+    // rather than in the pillars.
     intro:
-      'A dispute over what a system did rarely stays inside one discipline. It touches how the system was architected, what data it collected, how the product presented itself to users, and what the metrics were defined to mean. A single expert covers one of those.',
+      'A dispute over what a system did rarely stays inside one discipline. It touches how the system was architected, what data it collected, how the product presented itself to users, and what the metrics were defined to mean. A single expert covers one of those. And the same people spend their working lives making technical systems legible to decision-makers who do not build them, which is the other half of what a technical opinion has to do in a courtroom.',
     groups: [
       {
         name: 'Technology leadership',
@@ -236,11 +242,17 @@ const copy: Landing = landingSchema.parse({
         price: '$2,500 flat (up to 10 hours)',
         summary:
           'A written read on the claim and its strength. Credited against a full engagement if the matter proceeds.',
-        body: 'A fixed-fee, fixed-scope read: a reproducible-experiment analysis and a written assessment of the claim and its strength. Predictable cost, defined deliverable. If the matter proceeds to a full engagement, the assessment fee is credited.',
+        // The contrast sentence is deliberate. The 2026 ExpertPages survey puts
+        // 74% of experts behind a minimum fee to accept an engagement, 40% of
+        // those between $2,500 and $4,999 -- so $2,500 alone reads to counsel as
+        // an ordinary retainer minimum rather than as a distinct product. The
+        // differentiator was always the fixed scope and the written deliverable;
+        // it just was not stated against what the market does with that number.
+        body: 'A fixed-fee, fixed-scope read: a reproducible-experiment analysis and a written assessment of the claim and its strength. Most experts set a minimum fee to open a file — this is not that. It is a defined piece of work with a written deliverable, capped at ten hours, and credited in full against a full engagement if the matter proceeds.',
       },
       {
         name: 'Full Engagement',
-        price: '$400/hr',
+        price: '$450/hr',
         summary:
           'Retainer plus hourly, through analysis, expert report, and testimony.',
         body: 'Retainer plus hourly for a live matter through analysis, expert report, and testimony. The base rate moves for the kind of hours involved — the adjustments are below rather than described as "a premium."',
@@ -253,12 +265,12 @@ const copy: Landing = landingSchema.parse({
         {
           when: 'Expedited turnaround',
           adjustment: '+50%',
-          rate: '$600/hr',
+          rate: '$675/hr',
         },
         {
           when: 'Deposition and trial testimony',
           adjustment: '+25%',
-          rate: '$500/hr',
+          rate: '$563/hr',
         },
       ],
       // Deliberately not listed: the volume adjustment for large or long-horizon
@@ -324,6 +336,22 @@ const copy: Landing = landingSchema.parse({
       question: 'Your testimony record is short.',
       answer:
         'It is, and we don’t dress it up. A reproducible opinion doesn’t rest on tenure: every finding is a query the other side can re-run, so it’s defensible on its own terms rather than on reputation. Under Daubert, a first-principles analysis anyone can replicate is more durable than a veteran’s say-so.',
+    },
+    // Added 2026-08-19. AI disclosure became a standing vetting question for
+    // retained experts this month: prompt logs are being subpoenaed as
+    // discoverable work product, and directories now track disclosure as its
+    // own screening axis. This practice is unusually exposed to the question
+    // because its category claim is the analysis of AI systems, and a reader
+    // skimming fast can collapse "analyzes AI" into "uses AI to write reports."
+    //
+    // The answer deliberately does not claim we never use software tools --
+    // that is a claim that would have to survive cross-examination and is not
+    // literally true of any modern analytical practice. It claims disclosure
+    // plus reproducibility, which is defensible on the record.
+    {
+      question: 'Did AI write this report?',
+      answer:
+        'No — and you should ask that of every expert you retain. Prompt logs are discoverable work product, so an opinion a model assembled is an opinion opposing counsel can pull the transcript of. Ours is the opposite kind of document: the finding is a query and its output, handed over so the other side can run it and check. We use analytical software the way any technical expert does, and the report says which tools produced which result.',
     },
     {
       question: 'Why not a big-name firm or lab?',

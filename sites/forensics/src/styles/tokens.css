@@ -99,12 +99,7 @@
      broken alignment. In rem, every measure-constrained block wraps at the
      same place regardless of type size. */
   --measure: 34rem;
-  --page-max: 72rem;
-  /* The label column. Wide enough for two lines of the uppercase mono eyebrow
-     at the longest label on the property ("Who else you might reasonably
-     retain"), narrow enough that the content column keeps the full measure at
-     the 72rem container. */
-  --label-col: 12rem;
+  --page-max: 58rem;
   --gutter: 1.75rem;
 }
 

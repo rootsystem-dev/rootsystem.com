@@ -6,6 +6,10 @@ fnox = "latest"
 # their own wrangler.jsonc; CI uses the same binary so local and CI deploys
 # cannot drift.
 wrangler = "latest"
+# scripts/frontend-compare.py runs under `uv run --script`, which resolves its
+# own dependencies from the PEP 723 header. Declared here so the script works
+# from a fresh checkout rather than relying on a developer's global install.
+uv = "latest"
 
 # `_.fnox-env` below is provided by a plugin, and mise resolves plugin names
 # only against configs it can see. Declaring it here rather than relying on a

@@ -32,7 +32,23 @@ h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
 h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
 h3 { font-size: 1.0625rem; }
 
-p { margin: 0 0 1.25rem; }
+/* 1.75rem, not 1.25rem. The line box is 16px x 1.65 = 26.4px, so a 20px gap put
+   less space between two paragraphs than between two lines of one -- splitting a
+   block into paragraphs bought almost nothing. 28px clears the line box, which
+   is the threshold where the break actually reads as a break. 1.5rem was tried
+   first and measured at 24px, still under it.
+
+   text-wrap: pretty costs nothing and removes the single-word last lines that
+   long prose blocks produce at any measure. */
+p {
+  margin: 0 0 1.75rem;
+  text-wrap: pretty;
+}
+
+li,
+dd {
+  text-wrap: pretty;
+}
 
 a {
   color: var(--accent);
@@ -89,6 +105,85 @@ section {
 @media (min-width: 48em) {
   section {
     padding-block: 4.5rem;
+  }
+}
+
+/*
+ * Two-column sections from 64em: the eyebrow sits in a label column on the
+ * left, everything else in a content column beside it.
+ *
+ * The property was running two competing widths. Grids and tables filled the
+ * 72rem container while every prose block sat in a 38rem ribbon pinned to its
+ * left edge, so paragraphs read as orphaned inside a frame the tables had
+ * already established. Moving the eyebrow into its own column does three
+ * things at once: it gives the content column one consistent left edge on every
+ * section, whether or not that section has an eyebrow; it puts the label where
+ * a reader scanning for a section actually looks; and it makes the space to the
+ * right of the prose the deliberate outside margin of a short line rather than
+ * leftover container.
+ *
+ * Wide artifacts -- the card grids, the discipline lists, the comparison table
+ * -- break back out across both columns. Constraining them to the content
+ * column would have re-resolved their auto-fit tracks from three columns to
+ * two, which the comments on those grids record as a deliberate choice.
+ */
+@media (min-width: 64em) {
+  section.wrap,
+  .hero,
+  .page-head {
+    display: grid;
+    grid-template-columns: var(--label-col) minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+  }
+
+  section.wrap > *,
+  .hero > *,
+  .page-head > * {
+    grid-column: 2;
+  }
+
+  /* Row 1 explicitly: the label aligns with the top of the heading beside it
+     rather than flowing after whatever precedes it in source order. */
+  section.wrap > .eyebrow,
+  .hero > .eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 0;
+  }
+
+  /* An anchor is a grid item like any other, and a stretched one becomes a
+     full-bleed bar across the content column. */
+  .cta {
+    justify-self: start;
+  }
+
+  /*
+   * The card grids stay in the content column rather than breaking out across
+   * both. Spanning them was tried first and produced two competing left edges
+   * on one section -- heading indented, cards flush against the label column --
+   * which reads as a misalignment rather than as a deliberate break-out.
+   *
+   * Keeping them in the content column costs them width, so their auto-fit
+   * minimums are restated here for the narrower container. Each component's own
+   * comment justifies its track count against the 72rem container: three
+   * columns for the four practice areas so the trailing one is not mistaken for
+   * a footnote, three for the five pillars so they land 3 + 2 rather than
+   * stranding a fifth, two for the four modes. Those counts are what these
+   * minimums preserve; the numbers changed because the container did.
+   */
+  section.wrap > .areas,
+  section.wrap > .pillars,
+  section.wrap > .groups {
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  }
+
+  section.wrap > .modes {
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  section.wrap > .tiers {
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   }
 }
 

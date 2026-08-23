@@ -449,13 +449,18 @@ its output.
 
 **Personality:** rigorous, even-handed, concrete, practitioner, unshowy.
 
-**Voice caveat carried in the code:** the hero and closing blocks were
-transcribed from the GTM copy deck as scaffolding pending a rewrite in Rob's
-voice. The schema has a build-time publish gate (`assertPublishable`) that fails
-a production build while either block is marked draft. Both currently read
-`draft: false`, but that state is stale — the rewrite is in progress and the
-draft flags are being restored. Treat the hero and closing lines in this document
-as provisional.
+**Voice, as of variant E (2026-08-22):** the own-voice rewrite of the hero and
+closing is done, so `draft: false` on both blocks is now accurate rather than
+stale. The publish gate (`assertPublishable`) still fails a production build if
+either is set back to `draft: true`.
+
+E also settled the register. Two shapes are in play and the split is deliberate:
+short second-person declaratives wherever a single sentence has to land (hero,
+pillar titles, the representative matter, the objections), and an evidence-first
+structural form wherever the copy is enumerable (the proof block, positioning,
+the practice-area and engagement headings, the fees line). Write new copy into
+whichever of the two the surrounding block is already using; do not average
+them.
 
 ## Proof Points
 
@@ -468,7 +473,10 @@ matter · anonymized."
 **Testimonials:** none. The closest thing to a result claim on the site is the
 pull quote from the representative matter:
 
-> "The matter settled."
+> "Same data. The shape tells the truth."
+
+That line states the finding rather than an outcome, deliberately: the previous
+version was "The matter settled," and settlement is not attributable to the work.
 
 **Value themes:**
 
@@ -565,6 +573,7 @@ crawling.
 
 *Newest first. One line per revision: what changed and why.*
 
+- v7 (2026-08-22) — Variant E, the sentence-shape pass: D's positioning is unchanged, but the copy was rewritten against two concepts (adversary-voiced "Cross", evidence-first "Exhibit") and chosen element by element — 12 Cross, 11 Exhibit, 2 unchanged. Recorded the resulting two-register rule under Brand Voice, corrected the stale draft-flag caveat, and fixed the Proof Points pull quote, which had been superseded since D. The hero proof block and positioning are now structured fields rather than single strings.
 - v6 (2026-08-09) — Pricing decisions (Rob): modifiers do not stack, higher rate governs; the volume discount comes off the published list and moves to conversation against an internal bar. Response commitment softened from 24 hours to one business day, with the notification now copying a named recipient. Legal review of the conflict questionnaire and NDA runs in parallel rather than gating the copy.
 - v5 (2026-08-09) — Folded in the GTM workspace: the real target list (four demand veins, named firms, docket-sourced) replaces the inferred audience; the rate card's modifiers, and the internal terms that stay unpublished; the conflict-and-confidentiality rule as its own section; and the published 24-hour response commitment with the notification-routing risk attached. Downgraded open question 1 from "no research" to "market research yes, buyer research no."
 - v4 (2026-08-09) — Scope decision (Rob): stay on product and technology with AI/ML as the lead pillar, showing the bench's breadth as depth behind the lead rather than as separate practice areas. Closed the broaden-or-narrow open question; the bench belongs on `/method`.

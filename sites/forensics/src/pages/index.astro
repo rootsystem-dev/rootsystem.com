@@ -36,7 +36,16 @@ const scopeHref = '/scope'
     <p class="eyebrow">{copy.hero.eyebrow}</p>
     <h1>{copy.hero.headline}</h1>
     <p class="subhead measure">{copy.hero.subhead}</p>
-    <p class="proof measure">{copy.hero.proof}</p>
+    <dl class="proof measure">
+      {
+        copy.hero.proof.map((step) => (
+          <div>
+            <dt>{step.label}</dt>
+            <dd>{step.text}</dd>
+          </div>
+        ))
+      }
+    </dl>
     <a class="cta" href={scopeHref}>{copy.hero.cta} &rarr;</a>
   </header>
 

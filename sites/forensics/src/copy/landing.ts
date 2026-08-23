@@ -1,14 +1,34 @@
 import { landingSchema, type Landing } from './schema'
 
 /**
- * Forensics landing copy, transcribed from the GTM copy deck
- * (Forensics-Expert-Witness-GTM/landing-copy.md, draft-v1 2026-07-17).
+ * Forensics landing copy — variant E, 2026-08-22.
  *
- * The deck is explicit that the hero and closing were scaffolding pending a
- * rewrite in Rob's voice, and that the rewrite gates publication. Both blocks
- * are draftable and neither currently sets `draft: true`, so the publish gate
- * in assertPublishable is open. Set it back to true on either block to close
- * the gate again. Everything else is transcribed as written.
+ * E is a merge, not a new argument. The vetting-first positioning decided on
+ * 2026-08-19 (variant D) is unchanged; what changed is sentence shape. Two
+ * rewrite concepts were put element by element against D and chosen between:
+ *
+ *   "Cross"   — the argument from the adversary's side of the table. Short
+ *               declaratives, second person. Won the hero, the pillars heading,
+ *               pillars 1, 2 and 4, the representative matter, the testimony
+ *               objection, and the closing headline.
+ *   "Exhibit" — evidence first, claim second, shaped like the deliverable. Won
+ *               the proof block, positioning, the practice-areas and engagement
+ *               headings, pillars 3 and 5, the assessment line, and the closing
+ *               body.
+ *
+ * Both calls to action stayed as they were: "Scope a case" is the conversion
+ * term the masthead and the marketing glossary already use.
+ *
+ * No claim in here is new. Every number, concession and finding is the one D
+ * carried; the standing constraints in docs/forensics-positioning-decision.md
+ * all hold — no testimony-volume claim, analysis never acquisition, no
+ * characterization of a named comparable.
+ *
+ * The hero and closing were scaffolding from the GTM copy deck
+ * (Forensics-Expert-Witness-GTM/landing-copy.md, draft-v1 2026-07-17) pending a
+ * rewrite in Rob's voice. This is that rewrite, so the draftable flags stay
+ * false. Set either back to `draft: true` to close the publish gate in
+ * assertPublishable again.
  *
  * Deliberately NOT included here: the service one-pager, referral one-pager,
  * and directory bio from the deck. Those are print and outreach collateral,
@@ -47,18 +67,57 @@ const copy: Landing = landingSchema.parse({
   },
 
   hero: {
-    eyebrow: 'Expert witness and technical analysis',
-    headline:
-      'We analyze what a system did — and answer your screening questions before you call.',
+    eyebrow: 'Software, source code, data and AI · expert witness',
+    headline: 'Vet us the way they will.',
     subhead:
-      'We take disputes that turn on software and source code, on data and systems evidence, on machine learning, and on software that failed. What you would ask on a screening call — what we have actually built, what evidence we have actually read, how long we have testified, what we will concede, what it costs — is answered below rather than held for the call.',
-    proof:
-      'A genuine bulk copy of 9,000 files smears its access timestamps across hundreds of seconds. The opposing exhibit clustered thousands of files into a single second — a batch process, not a human copy. Same data; the shape tells the truth.',
+      'Counsel screens an expert on five things: hands-on depth, experience with the evidence, a testimony record, independence, and whether a jury will follow. Four are answered on this page, each with what it rests on. The fifth is thin and we say so. Rates are published. Rule us out in ten minutes if we are wrong for the matter.',
+    // The same finding as before, stated as the four moves it actually was.
+    // Nothing here is new: the numbers, the concession, and the discriminator
+    // are the ones the matter produced.
+    proof: [
+      {
+        label: 'Claim',
+        text: 'Tens of thousands of files “accessed in rapid succession.”',
+      },
+      { label: 'Test', text: 'Measure a real bulk copy on like media.' },
+      {
+        label: 'Result',
+        text: 'A genuine copy smears across hundreds of seconds. The exhibit clustered thousands into a handful.',
+      },
+      { label: 'Conceded', text: 'Copying is not timestamp-silent.' },
+    ],
     cta: 'Scope a case',
   },
 
   positioning: {
-    body: 'Counsel vetting a technical expert screens on the same five things: hands-on depth in the exact technology at issue, real experience reading the kind of evidence the case turns on, a testimony record, independence you can check in the report rather than take on faith, and whether the expert can make any of it legible to people who do not build software. Four of those are answered below, each with what it rests on. On the fifth, the testimony record, we are short — we say so on the fees page and we do not dress it up. One boundary worth knowing before you call: we analyze evidence, we do not acquire it. Imaging, preservation, and chain of custody stay with a digital-forensics vendor, and we work alongside the one you retain. None of the comparable practices we know of publishes its rates. Ours are on the page, because a partner with a deadline should be able to rule us in or out without spending an hour on the phone. Ruling us out quickly is a good outcome too.',
+    lead: 'Five things you are screening for, and where each is answered on this page.',
+    criteria: [
+      {
+        name: 'Hands-on depth',
+        where: 'the four practice areas above, and the matter types each covers.',
+      },
+      {
+        name: 'Evidence experience',
+        where: 'the representative matter below, and the finding it turned on.',
+      },
+      {
+        name: 'Independence',
+        where: 'the concession inside that matter: copying is not timestamp-silent.',
+      },
+      {
+        name: 'Jury legibility',
+        where:
+          'the bench, whose working life is making technical systems legible to people who do not build them.',
+      },
+      {
+        name: 'Testimony record',
+        where: 'thin. Stated on the fees page rather than buried.',
+      },
+    ],
+    body: [
+      'We analyze evidence; we do not acquire it. Imaging, preservation and chain of custody stay with your digital-forensics vendor, and we work alongside the one you retain.',
+      'Rates are published because a partner with a deadline should be able to rule us out without a phone call. Ruling us out fast is a good outcome too.',
+    ],
   },
 
   // Base scaffolding, added 2026-08-11 with the practiceAreas schema block.
@@ -67,10 +126,10 @@ const copy: Landing = landingSchema.parse({
   // that each positioning variant replaces wholesale. Examples are matter
   // types, not a claim that matters of that type have been handled.
   practiceAreas: {
-    label: 'Screening question one',
-    heading: 'Hands-on depth in software, source code, data, and machine learning',
+    label: 'Depth — the first criterion',
+    heading: 'Four kinds of dispute, and what we have built in each',
     intro:
-      'The first thing counsel screens on is whether an expert has actually worked in the technology the case turns on. These are the four kinds of dispute where we can answer that honestly, and every way of engaging us applies to all four. Outside them we will say so and, where we can, point you to someone who does.',
+      'Counsel screens first for hands-on depth in the technology at issue. Four areas, each with the matter types it covers. All four engagement modes apply to every one. Outside them, we say so.',
     areas: [
       {
         name: 'Software and source code',
@@ -119,7 +178,7 @@ const copy: Landing = landingSchema.parse({
     ],
   },
 
-  pillarsHeading: 'The rest of the screening questions, answered',
+  pillarsHeading: 'Built for the cross-examination',
 
   // The five substantive claims are unchanged from the base -- each was earned
   // in a real matter and none is dropped here. What changes is what they are
@@ -127,43 +186,42 @@ const copy: Landing = landingSchema.parse({
   // satisfies, in the order counsel tends to ask.
   pillars: [
     {
-      title: 'We build this software for a living.',
+      title: 'We build the systems in dispute.',
       summary:
-        'Argued by the people who ship these systems, not by people who only study them.',
+        'The bench ships and operates these systems. The analysis starts from how the thing works.',
       body: 'The expert across the table is usually an academic or a forensics vendor. Neither has run the behavior at production scale. This bench architects, ships, and operates the kinds of systems these disputes are about, which is why the analysis starts from how the thing actually works rather than from a checklist.',
     },
     {
-      title: 'We have read this kind of evidence before.',
+      title: 'We have read this evidence before.',
       summary:
-        'Timestamp shape, model variability, file-system semantics — where a forensics checklist stops.',
+        'Timestamp shape, model variance, file-system semantics. Where a checklist stops, the question starts.',
       body: 'Timestamp shape, output variability controlled by fixing model temperature, file-system semantics, artifacts that only appear at scale — where a forensics checklist stops, the real question starts. This is the specific competence a technical matter turns on, and it is not the same competence as collecting the evidence.',
     },
     {
-      title: 'You can re-run every finding.',
+      title: 'We ship findings as a query and its output.',
       summary:
-        'Every finding is a query and its output, re-runnable by the other side.',
+        'Query in, output out, handed to the other side to run.',
       body: 'Findings are a query plus its output — re-runnable by opposing counsel. Not "trust me." It is also the answer to the question being asked of every expert this year: an opinion you can re-run is an opinion no one has to take on faith about how it was produced.',
     },
     {
-      title: 'We concede what we cannot prove.',
+      title: 'We concede in the report, not on the stand.',
       summary:
-        'We concede what is genuinely uncertain. That is what survives cross.',
+        'The uncertainty is written down before anyone asks for it.',
       body: 'We concede what’s genuinely uncertain and interrogate the evidence with the same rigor a courtroom demands. It’s what separates an expert from a hired gun — and what survives cross. Independence you can see in the report beats independence asserted in a bio.',
     },
     {
-      title: 'We check a declaration against its own earlier versions.',
+      title: 'Their earlier declaration is on the record too.',
       summary:
-        'We diff an opponent’s own successive filings for dropped caveats and silent overstatements.',
+        'Successive filings diffed for dropped caveats and silent overstatements. Almost nobody looks.',
       body: 'We diff an opponent’s own successive filings for dropped caveats and silent overstatements. A declaration that quietly strengthens between filings is impeachable on its own record — and almost nobody looks.',
     },
   ],
 
   caseStudy: {
     label: 'Representative matter · anonymized',
-    headline:
-      'A mass-copying claim, refuted with an experiment the other side could re-run.',
+    headline: 'He said mass copying. The distribution said batch process.',
     summary:
-      'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy: a genuine one smears across hundreds of seconds, while his exhibit clustered thousands of files into a handful — the signature of a batch process. His own earlier declaration carried the caveats the later one dropped.',
+      'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy. A genuine one smears across hundreds of seconds; his exhibit stacked thousands into a handful — a batch process. Then his own earlier declaration turned up, carrying the caveats the later one had dropped.',
     body: [
       'An opposing digital-forensics expert filed a declaration asserting that tens of thousands of files had been "accessed in rapid succession" — evidence, he said, of mass copying. We did not argue the unfalsifiable "a copy leaves no trace." We characterized the file system’s actual timestamp policy, then measured a real bulk copy on like media. A genuine sequential copy smears its access timestamps across hundreds of seconds; the opposing exhibit clustered thousands of files into a handful of seconds — the signature of an automatic batch process, not a human copy. The distribution’s shape was the discriminator, and we conceded openly what was fair: copying is not timestamp-silent.',
       'Then we impeached the expert on his own record. His earlier declaration, on the same numbers, had carried qualifiers — that grouped accesses "can be caused by copying, searching, and other automated processes." The later federal declaration dropped them while the numbers stayed identical.',
@@ -215,8 +273,9 @@ const copy: Landing = landingSchema.parse({
   },
 
   services: {
-    label: 'Screening question two',
-    intro: 'How you can bring us in — all four ways available on all four kinds of matter, and a conflict screen before any of them.',
+    label: 'Engagement modes',
+    intro:
+      'Four ways to engage, available on all four practice areas. Conflicts are screened before anything else.',
     modes: [
       {
         title: 'Opposing-expert rebuttal.',
@@ -251,7 +310,7 @@ const copy: Landing = landingSchema.parse({
         name: 'AI-Dispute Assessment',
         price: '$2,500 flat (up to 10 hours)',
         summary:
-          'A written read on the claim and its strength. Credited against a full engagement if the matter proceeds.',
+          'Fixed scope, ten hours, one written deliverable. Credited in full if the matter proceeds.',
         // The contrast sentence is deliberate. The 2026 ExpertPages survey puts
         // 74% of experts behind a minimum fee to accept an engagement, 40% of
         // those between $2,500 and $4,999 -- so $2,500 alone reads to counsel as
@@ -345,7 +404,7 @@ const copy: Landing = landingSchema.parse({
     {
       question: 'Your testimony record is short.',
       answer:
-        'It is, and we don’t dress it up. A reproducible opinion doesn’t rest on tenure: every finding is a query the other side can re-run, so it’s defensible on its own terms rather than on reputation. Under Daubert, a first-principles analysis anyone can replicate is more durable than a veteran’s say-so.',
+        'It is, and we do not dress it up. Tenure is not what makes an opinion hold — reproducibility is. Every finding we file is a query the other side can run themselves, so it stands on its own terms rather than on reputation. Under Daubert, an analysis anyone can replicate is harder to attack than a veteran’s say-so.',
     },
     // Added 2026-08-19. AI disclosure became a standing vetting question for
     // retained experts this month: prompt logs are being subpoenaed as
@@ -381,8 +440,8 @@ const copy: Landing = landingSchema.parse({
   ],
 
   closing: {
-    headline: 'Screened us in? Here is the next step.',
-    body: 'Start with the $2,500 fixed-scope assessment. You will get a written read on the claim and what a full engagement would test — before you commit to one. If we are the wrong fit, we will say so on that call rather than after the retainer.',
+    headline: 'Screened us in? Start here.',
+    body: 'A fixed-scope read: a reproducible-experiment analysis and a written assessment of the claim and its strength, capped at ten hours and credited in full if the matter proceeds. If the claim is weak, that is what the read will say.',
     button: 'Scope a case',
   },
 

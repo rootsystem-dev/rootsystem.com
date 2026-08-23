@@ -41,12 +41,39 @@ export const landingSchema = z.object({
     headline: z.string(),
     subhead: z.string(),
     // The "query motif" proof block -- a concrete finding, stated plainly.
-    proof: z.string(),
+    //
+    // Structured rather than one string as of variant E (2026-08-22). The block
+    // was always four moves -- the claim, the test, the result, the concession
+    // -- run together in prose, which left the reader to find the shape. Naming
+    // each step is the same argument the property makes everywhere else: state
+    // the method, then the finding. `label` is deliberately short; the markup
+    // sets it in caps, so writing it capitalised here would double up.
+    //
+    // Minimum of two steps rather than one: a proof block with a single row is
+    // a sentence in a box, which is the thing this change exists to stop.
+    proof: z
+      .array(z.object({ label: z.string(), text: z.string() }))
+      .min(2),
     cta: z.string(),
   }),
 
+  // The positioning block.
+  //
+  // Restructured for variant E (2026-08-22) from a single paragraph into a lead
+  // line, the five screening criteria as an index, and the closing prose. The
+  // paragraph form buried the criteria mid-sentence, where a scanning reader
+  // never found the one that mattered to them.
+  //
+  // `where` answers "where on this page is that answered" rather than restating
+  // the claim -- the block is a table of contents for the vetting argument, not
+  // a second version of it. The list is not fixed at five: the criteria come
+  // from what comparable practices publish, and that set can move.
   positioning: z.object({
-    body: z.string(),
+    lead: z.string(),
+    criteria: z
+      .array(z.object({ name: z.string(), where: z.string() }))
+      .min(1),
+    body: z.array(z.string()).min(1),
   }),
 
   // The practice areas -- the kinds of matter this practice takes.

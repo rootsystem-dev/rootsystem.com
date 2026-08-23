@@ -73,6 +73,49 @@ still the best case against the current direction.
 - The five pillars keep every substantive claim and body; each title names the criterion
   it satisfies.
 
+## Variant E — the sentence-shape pass (2026-08-22)
+
+D's positioning was kept and D's messaging was not reopened. The complaint was that the
+copy explained the argument rather than landing it, so two rewrite concepts were written
+against the same positioning and compared element by element:
+
+- **Cross** — the argument from the adversary's side of the table. Short declaratives,
+  second person, the reader's exposure as the subject.
+- **Exhibit** — evidence first, claim second. Copy shaped like the deliverable: claim,
+  test, result, conceded.
+
+Rob decided all 25 compared elements. Cross took 12, Exhibit 11, D 2. The split is not a
+tie: Cross won wherever a single sentence has to land, and Exhibit won wherever the copy is
+enumerable — a list, a labelled block, a set of four areas, a price with terms.
+
+Three edits were made on top of the picks:
+
+1. Positioning takes Exhibit's index structure with Cross's second person, so the hero and
+   the block beneath it do not change grammatical person mid-scroll.
+2. Pillar 3 was normalised to a we-subject ("We ship findings as a query and its output"),
+   because three of the five pillars are we-led and a mixed subject inside one ordered list
+   is the most visible inconsistency available. Pillar 5 keeps its they-subject: it is about
+   the opponent's filing, so the subject is correct.
+3. The pillars heading was truncated to "Built for the cross-examination". The dropped half
+   — "not the brochure" — put a marketing word in the one document whose argument is that it
+   is not marketing.
+
+Two clauses were restored into the positioning block that Exhibit's compressed version had
+dropped, both carried by D and by Cross: "and we work alongside the one you retain" (a
+capability boundary, not a flourish — it says the practice complements a digital-forensics
+vendor rather than replacing one) and "Ruling us out fast is a good outcome too."
+
+### What changed in the code
+
+- `hero.proof` is now an array of `{label, text}` — the four moves the block always was,
+  named. Needs the schema, `index.astro`, and the `.proof` rule in `base.css`.
+- `positioning` is now `{lead, criteria[], body[]}` and renders as a description list.
+  Needs the schema and `Positioning.astro`.
+- Everything else is a string swap in `landing.ts`.
+
+Both calls to action stayed "Scope a case" — the term the masthead, the closing block and
+the marketing glossary already share.
+
 ## Standing constraints on this copy
 
 These govern any future edit and are not negotiable without Rob's involvement.

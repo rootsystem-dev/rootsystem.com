@@ -114,7 +114,14 @@ section {
 .cta:hover { background: var(--accent-2); }
 
 /* The proof/query motif: a finding presented as something re-runnable rather
-   than something asserted. Monospaced on purpose. */
+   than something asserted. Monospaced on purpose.
+ *
+ * A description list as of variant E. The block was always four moves -- claim,
+ * test, result, concession -- and naming them is the same argument the rest of
+ * the property makes: show the method, then the finding. The term column is
+ * fixed rather than auto so the four answers align on one left edge, which is
+ * what makes it read as an exhibit rather than as four sentences.
+ */
 .proof {
   font-family: var(--font-mono);
   font-size: 0.9375rem;
@@ -123,6 +130,31 @@ section {
   border-left: 3px solid var(--accent);
   padding: 1.25rem 1.5rem;
   margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.proof > div {
+  display: grid;
+  gap: 0 1.25rem;
+}
+
+@media (min-width: 34em) {
+  .proof > div {
+    grid-template-columns: 6rem 1fr;
+  }
+}
+
+.proof dt {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8125rem;
+  color: var(--accent);
+}
+
+.proof dd {
+  margin: 0;
 }
 
 .draft-notice {

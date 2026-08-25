@@ -99,6 +99,10 @@
      broken alignment. In rem, every measure-constrained block wraps at the
      same place regardless of type size. */
   --measure: 34rem;
+  /* Display type needs more width than prose to hold the same words. The
+     spoke headings measured 647-663px at a 1440px viewport against the
+     595px prose measure, so they wrapped; 40rem is 700px here. */
+  --measure-display: 40rem;
   --page-max: 58rem;
   --gutter: 1.75rem;
 }

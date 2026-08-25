@@ -101,6 +101,7 @@ strong { color: var(--ink); }
 }
 
 .measure { max-width: var(--measure); }
+.measure-display { max-width: var(--measure-display); }
 
 section {
   /* padding-block, so this rule states only the axis it owns and can never

@@ -77,12 +77,12 @@ const copy: Landing = landingSchema.parse({
     proof: [
       {
         label: 'Claim',
-        text: 'Tens of thousands of files “accessed in rapid succession.”',
+        text: 'Tens of thousands of files "accessed in rapid succession."',
       },
-      { label: 'Test', text: 'Measure a real bulk copy on like media.' },
+      { label: 'Test', text: 'Measure a real bulk copy on comparable media.' },
       {
         label: 'Result',
-        text: 'A genuine copy smears across hundreds of seconds. The exhibit clustered thousands into a handful.',
+        text: 'A genuine copy smears across hundreds of seconds. The exhibit clustered tens of thousands into a handful.',
       },
       { label: 'Conceded', text: 'Copying is not timestamp-silent.' },
     ],
@@ -219,12 +219,13 @@ const copy: Landing = landingSchema.parse({
 
   caseStudy: {
     label: 'Representative matter · anonymized',
-    headline: 'He said mass copying. The distribution said batch process.',
+    headline: 'The opposing expert said mass copying. The distribution said batch process.',
     summary:
-      'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy. A genuine one smears across hundreds of seconds; his exhibit stacked thousands into a handful — a batch process. Then his own earlier declaration turned up, carrying the caveats the later one had dropped.',
+      'An opposing expert read clustered access timestamps as proof of mass copying. We measured a real bulk copy. A genuine one smears across hundreds of seconds; his exhibit stacked tens of thousands into a handful — a batch process. Then his own earlier declaration turned up, carrying the caveats the later one had dropped.',
     body: [
-      'An opposing digital-forensics expert filed a declaration asserting that tens of thousands of files had been "accessed in rapid succession" — evidence, he said, of mass copying. We did not argue the unfalsifiable "a copy leaves no trace." We characterized the file system’s actual timestamp policy, then measured a real bulk copy on like media. A genuine sequential copy smears its access timestamps across hundreds of seconds; the opposing exhibit clustered thousands of files into a handful of seconds — the signature of an automatic batch process, not a human copy. The distribution’s shape was the discriminator, and we conceded openly what was fair: copying is not timestamp-silent.',
-      'Then we impeached the expert on his own record. His earlier declaration, on the same numbers, had carried qualifiers — that grouped accesses "can be caused by copying, searching, and other automated processes." The later federal declaration dropped them while the numbers stayed identical.',
+      'An opposing digital-forensics expert filed a declaration asserting that tens of thousands of files had been "accessed in rapid succession." That, he said, was mass copying. We characterized the file system’s actual timestamp policy, then measured a real bulk copy on comparable media.',
+      'A genuine sequential copy smears its access timestamps across hundreds of seconds; the opposing exhibit clustered tens of thousands of files into a handful of seconds — the signature of an automatic batch indexing process, not a human copying files. The data distribution’s shape was the discriminator, and we conceded openly what was fair: copying is not timestamp-silent.',
+      'Then we impeached the expert on his own record. His earlier state-court declaration, on the same numbers, had carried qualifiers: that grouped accesses "can be caused by copying, searching, and other automated processes." The later federal declaration dropped them while the numbers stayed identical.',
     ],
     // The pull quote states the finding rather than the outcome. "The matter
     // settled" was the previous line; settlement is not attributable to the

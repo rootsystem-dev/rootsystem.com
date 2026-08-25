@@ -42,6 +42,21 @@ const { form = 'full' } = Astro.props
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
     list-style: none;
     padding: 0;
+    counter-reset: pillar;
+  }
+
+  /* Numbered, matching the process steps on /engagements. These five are
+     parallel claims rather than an ordered sequence, so the count is a label
+     rather than an order -- Rob's call, on the grounds that the two card
+     sections should not differ in this. */
+  .pillars li::before {
+    counter-increment: pillar;
+    content: counter(pillar);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
   }
 
   /* Outlined, where the pricing tiers are filled. Two card treatments, and the

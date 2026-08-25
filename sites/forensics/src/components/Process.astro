@@ -40,17 +40,20 @@ import copy from '../copy/landing'
   }
 
   .steps li {
-    border-top: 1px solid var(--line);
-    padding-top: 1.25rem;
-    margin-bottom: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .steps li:last-child {
     margin-bottom: 0;
   }
 
-  /* Numbered like the pillars, in mono, so the sequence reads as a sequence
-     rather than as three unrelated assurances. */
+  /* Numbered, in mono, so the sequence reads as a sequence rather than as
+     three unrelated assurances. The pillars dropped their numerals because
+     they are parallel claims; these three are ordered, and the reader needs
+     to know the conflict screen comes before the NDA. */
   .steps li::before {
     counter-increment: step;
     content: counter(step);

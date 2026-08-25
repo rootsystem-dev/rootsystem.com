@@ -42,17 +42,23 @@ const { form = 'full' } = Astro.props
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
     list-style: none;
     padding: 0;
-    counter-reset: pillar;
   }
 
-  .pillars li::before {
-    counter-increment: pillar;
-    content: counter(pillar);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 0.5rem;
+  /* Outlined, where the pricing tiers are filled. Two card treatments, and the
+     difference is what the card is for: a tier is a thing you buy and sits on
+     a panel, a pillar is a claim and sits in an outline. */
+  .pillars li {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  /* Five cards in a two-column grid leave the fifth alone on its own row. With
+     no border that read as flow; with one it reads as a card that failed to
+     find a neighbour. Spanning it is the deliberate version of the same shape.
+     In a single-column grid this resolves to the full width either way. */
+  .pillars > li:last-child {
+    grid-column: 1 / -1;
   }
 
   .pillars p {

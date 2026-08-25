@@ -194,20 +194,20 @@ const copy: Landing = landingSchema.parse({
     {
       title: 'We have read this evidence before.',
       summary:
-        'Timestamp shape, model variance, file-system semantics. Where a checklist stops, the question starts.',
-      body: 'Timestamp shape, output variability controlled by fixing model temperature, file-system semantics, artifacts that only appear at scale — where a forensics checklist stops, the real question starts. This is the specific competence a technical matter turns on, and it is not the same competence as collecting the evidence.',
+        'Timestamp shape, model variance, file-system semantics. A checklist does not reach any of them.',
+      body: 'Timestamp shape, output variability controlled by fixing model temperature, file-system semantics, artifacts that only appear at scale. A forensics checklist does not reach any of them. This is the specific competence a technical matter turns on, and it is not the same competence as collecting the evidence.',
     },
     {
       title: 'We ship findings as a query and its output.',
       summary:
         'Query in, output out, handed to the other side to run.',
-      body: 'Findings are a query plus its output — re-runnable by opposing counsel. Not “trust me.” It is also the answer to the question being asked of every expert this year: an opinion you can re-run is an opinion no one has to take on faith about how it was produced.',
+      body: 'Findings are a query plus its output, re-runnable by opposing counsel. Not “trust me.” It is also the answer to the question being asked of every expert this year: an opinion you can re-run is an opinion no one has to take on faith about how it was produced.',
     },
     {
       title: 'We concede in the report, not on the stand.',
       summary:
         'The uncertainty is written down before anyone asks for it.',
-      body: 'We concede what’s genuinely uncertain and interrogate the evidence with the same rigor a courtroom demands. It’s what separates an expert from a hired gun — and what survives cross. Independence you can see in the report beats independence asserted in a bio.',
+      body: 'We concede what’s genuinely uncertain and interrogate the evidence with the same rigor a courtroom demands. It’s what separates an expert from a hired gun, and what survives cross. Independence you can see in the report beats independence asserted in a bio.',
     },
     {
       title: 'Their earlier declaration is on the record too.',

@@ -11,11 +11,19 @@
  * A description list rather than a bulleted one because each row genuinely is a
  * term and its answer. It also gives the criterion name its own element, so the
  * type change needs no span.
+ *
+ * The eyebrow and heading were added 2026-08-26. The section had neither, so it
+ * began on a body-type lead line while the sections either side of it opened on
+ * an eyebrow and an h2. The eyebrow names the count because the page opens one
+ * earlier -- the practice areas are labelled "the first criterion" -- and this
+ * is where the set is resolved.
  */
 import copy from '../copy/landing'
 ---
 
 <section class="wrap">
+  <p class="eyebrow">{copy.positioning.label}</p>
+  <h2 class="measure">{copy.positioning.heading}</h2>
   <p class="lead measure">{copy.positioning.lead}</p>
 
   <dl class="criteria measure">

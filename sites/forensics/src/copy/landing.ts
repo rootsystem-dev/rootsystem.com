@@ -90,6 +90,8 @@ const copy: Landing = landingSchema.parse({
   },
 
   positioning: {
+    label: 'The screen \u2014 all five',
+    heading: 'What counsel checks, and where we answer it',
     lead: 'Five things you are screening for, and where each is answered on this page.',
     criteria: [
       {
@@ -275,8 +277,13 @@ const copy: Landing = landingSchema.parse({
 
   services: {
     label: 'Engagement modes',
+    // Not "Four ways to engage": this heading lands directly under the practice
+    // areas' "Four kinds of dispute", and two consecutive headings opening on
+    // the same numeral read as one repeated line. The cross-product is the
+    // claim anyway -- four modes against any of the four areas.
+    heading: 'The same four modes, whichever kind it is',
     intro:
-      'Four ways to engage, available on all four practice areas. Conflicts are screened before anything else.',
+      'Available on all four practice areas. Conflicts are screened before anything else.',
     modes: [
       {
         title: 'Opposing-expert rebuttal.',

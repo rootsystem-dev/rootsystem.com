@@ -68,7 +68,15 @@ export const landingSchema = z.object({
   // the claim -- the block is a table of contents for the vetting argument, not
   // a second version of it. The list is not fixed at five: the criteria come
   // from what comparable practices publish, and that set can move.
+  //
+  // `label` and `heading` were added 2026-08-26. The block opened straight on
+  // `lead`, so the section started with no eyebrow and no heading while every
+  // section around it had both. The eyebrow also closes a count the page opens
+  // elsewhere: the practice areas are labelled "the first criterion" and
+  // nothing until here says how many there are or resolves the set.
   positioning: z.object({
+    label: z.string(),
+    heading: z.string(),
     lead: z.string(),
     criteria: z
       .array(z.object({ name: z.string(), where: z.string() }))
@@ -155,8 +163,15 @@ export const landingSchema = z.object({
     staffing: z.string(),
   }),
 
+  // The engagement modes.
+  //
+  // `heading` was added 2026-08-26. Root rendered `intro` through the section's
+  // h2, which put a two-sentence body line at display size; the section now
+  // carries the same label/heading/intro triple the practice areas do, and
+  // `intro` is back to being a paragraph.
   services: z.object({
     label: z.string(),
+    heading: z.string(),
     intro: z.string(),
     // `summary` is the root page's one-clause form, `body` the spoke's. Same
     // adjacency rule as the pillars: both live on one object so drift shows up

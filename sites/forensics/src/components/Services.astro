@@ -6,6 +6,10 @@
  * Summary listed bare titles until 2026-08-09. "Consulting (non-testifying)."
  * and nothing else is a label rather than an argument, and root has to stand on
  * its own for a referral reader who never clicks through to /engagements.
+ *
+ * `intro` rendered through the h2 until 2026-08-26, which set a two-sentence
+ * body line at display size and to the display measure. The section now carries
+ * the label/heading/intro triple the practice areas already had.
  */
 import copy from '../copy/landing'
 
@@ -18,7 +22,8 @@ const { form = 'full' } = Astro.props
 
 <section class="wrap" id="engagements">
   <p class="eyebrow">{copy.services.label}</p>
-  <h2>{copy.services.intro}</h2>
+  <h2 class="measure">{copy.services.heading}</h2>
+  <p class="measure intro">{copy.services.intro}</p>
   {
     form === 'summary' ? (
       <ul class="mode-list measure">
@@ -43,6 +48,12 @@ const { form = 'full' } = Astro.props
 </section>
 
 <style>
+  /* Same treatment the practice areas give their intro, so the two sections
+     read as one pattern rather than two. */
+  .intro {
+    color: var(--body);
+  }
+
   .modes {
     display: grid;
     gap: 1.5rem;

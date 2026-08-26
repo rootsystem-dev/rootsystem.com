@@ -247,25 +247,46 @@ const copy: Landing = landingSchema.parse({
     intro:
       'A dispute over what a system did rarely stays inside one discipline. It touches how the system was architected, what data it collected, how the product presented itself to users, and what the metrics were defined to mean. A single expert covers one of those. And the same people spend their working lives making technical systems legible to decision-makers who do not build them, which is the other half of what a technical opinion has to do in a courtroom.',
     groups: [
+      // Both columns were widened 2026-08-26. The old entries named fields;
+      // these name what the bench has actually done in them, which is what a
+      // reader deciding whether the practice reaches their matter needs.
+      //
+      // Two constraints held the wording. "Research" was trimmed to two
+      // appearances across the twelve -- the block renders as two adjacent
+      // columns of short lines, and five identical tails made the columns stop
+      // reading as distinct competences. And "commercial software
+      // architecture" rather than "software design": the neighbouring entries
+      // already carry "defensive design", "UX design" and "monetization
+      // design", so "software design" reads as the drawing kind. "Commercial"
+      // covers SaaS and packaged alike and points at the pillar's contrast --
+      // the expert across the table is usually an academic.
       {
         name: 'Technology leadership',
         disciplines: [
-          'Computer science',
+          'Computer science and commercial software architecture',
           'Machine-learning architecture',
-          'Experimentation and research',
-          'Information security',
-          'Distributed systems',
+          'Technical experimentation and research',
+          'Security, threat modeling and defensive design',
+          'Distributed systems, performance and resilience engineering',
+          'Data engineering, scaling and observability',
         ],
       },
       {
         name: 'Product leadership',
+        // Order is unchanged from the base -- only the wording moved.
+        //
+        // "Product usage analytics and experimentation" keeps the word
+        // analytics on purpose: `intro` above argues a dispute turns on "what
+        // the metrics were defined to mean", and `provenance` below rests on
+        // experimentation being the outcome of the consulting work. Both ties
+        // run through this one entry.
         disciplines: [
-          'Usability and user experience',
-          'Product strategy',
-          'User research',
-          'Product analytics and experimentation',
-          'Product operations and delivery',
-          'Growth and monetization',
+          'Usability research and UX design',
+          'Product definition and market fit',
+          'Market and user-needs research',
+          'Product usage analytics and experimentation',
+          'Operational strategy and support-organization design',
+          'Business-model strategy and monetization design',
         ],
       },
     ],

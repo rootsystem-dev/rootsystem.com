@@ -78,8 +78,18 @@ export const landingSchema = z.object({
     label: z.string(),
     heading: z.string(),
     lead: z.string(),
+    // `link` is optional and only one row carries it. Four criteria are
+    // answered on this page and point at a section of it; the testimony record
+    // is answered on the fees page, and a row that says so without a way to get
+    // there sends the reader most likely to care about it off hunting.
     criteria: z
-      .array(z.object({ name: z.string(), where: z.string() }))
+      .array(
+        z.object({
+          name: z.string(),
+          where: z.string(),
+          link: z.object({ text: z.string(), href: z.string() }).optional(),
+        }),
+      )
       .min(1),
     body: z.array(z.string()).min(1),
   }),

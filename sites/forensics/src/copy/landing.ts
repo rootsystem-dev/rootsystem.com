@@ -70,7 +70,7 @@ const copy: Landing = landingSchema.parse({
     eyebrow: 'Software, source code, data and AI · expert witness',
     headline: 'Vet us the way they will.',
     subhead:
-      'Counsel screens an expert on five things: hands-on depth, experience with the evidence, a testimony record, independence, and whether a jury will follow. Four are answered on this page, each with what it rests on. The fifth is thin and we say so. Rates are published. Rule us out in ten minutes if we are wrong for the matter.',
+      'Counsel screens an expert on five things: hands-on depth, experience with the evidence, a testimony record, independence, and whether a jury will follow. Four are answered on this page, each with what it rests on. The fifth is short and we say so. Rates are published. Rule us out in ten minutes if we are wrong for the matter.',
     // The same finding as before, stated as the four moves it actually was.
     // Nothing here is new: the numbers, the concession, and the discriminator
     // are the ones the matter produced.
@@ -111,9 +111,17 @@ const copy: Landing = landingSchema.parse({
         where:
           'the bench, whose working life is making technical systems legible to people who do not build them.',
       },
+      // "Short", not "thin", and the same word the objection on the fees page
+      // uses. A thin record is close to a term of art -- it is what a judge
+      // says about evidence that will not support a finding -- and using it
+      // about ourselves concedes more than the fact does.
       {
         name: 'Testimony record',
-        where: 'thin. Stated on the fees page rather than buried.',
+        where: 'short. Not buried:',
+        link: {
+          text: 'answered on the fees page',
+          href: '/engagements/#objections',
+        },
       },
     ],
     body: [

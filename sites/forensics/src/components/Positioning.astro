@@ -31,7 +31,15 @@ import copy from '../copy/landing'
       copy.positioning.criteria.map((criterion) => (
         <div>
           <dt>{criterion.name}</dt>
-          <dd>{criterion.where}</dd>
+          <dd>
+            {criterion.where}
+            {criterion.link && (
+              <>
+                {' '}
+                <a href={criterion.link.href}>{criterion.link.text}</a>.
+              </>
+            )}
+          </dd>
         </div>
       ))
     }

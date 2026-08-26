@@ -267,7 +267,13 @@ const copy: Landing = landingSchema.parse({
           'Machine-learning architecture',
           'Technical experimentation and research',
           'Security, threat modeling and defensive design',
-          'Distributed systems, performance and resilience engineering',
+          // Measured, not guessed: with "engineering" this was the only
+          // two-line entry in the column apart from the first, and dropping
+          // that one word takes it to one line while all three terms survive.
+          // Every sibling here is engineering, so the word is implied -- it
+          // stays on the entry below because data engineering is that
+          // discipline's actual name.
+          'Distributed systems, performance and resilience',
           'Data engineering, scaling and observability',
         ],
       },

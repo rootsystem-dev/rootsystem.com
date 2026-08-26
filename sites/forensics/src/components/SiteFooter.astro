@@ -1,0 +1,25 @@
+---
+/**
+ * Shared footer. Rendered once by Layout.astro, after </main>, so it is a
+ * contentinfo landmark on every route rather than a generic element nested
+ * inside main.
+ */
+import copy from '../copy/landing'
+---
+
+<footer class="wrap">
+  <p>
+    {copy.contact.footer} ·{' '}
+    <a href={`mailto:${copy.contact.email}`}>{copy.contact.email}</a>
+  </p>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+</style>

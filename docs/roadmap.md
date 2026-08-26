@@ -49,28 +49,24 @@ waiting only on a real inbound rather than on the mechanism.
 
 ## Track 2 — forensics case flow
 
-`forensics.rootsystem.com` does not resolve. Launch is blocked on an information
-architecture decision, recorded as open in
-`docs/forensics-ia-open-problem.md`: the content sits on one page in sequence
-with no structure organizing it. The copy and the visual direction are both
-settled (decision D11, commit `0ed72da`); the structure is not.
+`forensics.rootsystem.com` does not resolve. The information architecture
+question tracked as open in `docs/forensics-ia-open-problem.md` is settled,
+per `docs/superpowers/specs/2026-08-08-forensics-ia-design.md`: a root page
+plus three spoke routes, `/method`, `/matters`, and `/engagements`, each a
+full-length treatment of a section the root only summarizes. The copy and the
+visual direction were already settled (decision D11, commit `0ed72da`).
 
-Directions raised in that doc, none chosen: split the pillars into routes;
-progressive disclosure on one page; something else.
+That structure has shipped, including the forensics-specific OG card.
+`robots.txt` deliberately stays open — nothing about the IA decision changed
+the case for blocking crawlers.
 
-Sequence once the structure is chosen: re-lay the existing copy into it (the copy
-is not being rewritten), own-voice hero and closing, tagline selection from the
-three candidates in `sites/forensics/src/copy/landing.ts`, a forensics-specific
-OG card, then the hostname — DNS record, Worker route, and a decision on
-`robots.txt`, which currently allows crawling.
+What is left in this track is the hostname: the DNS record and Worker route
+for `forensics.rootsystem.com`. Both are deliberately unrouted until there is
+something worth routing to; now that the site is built, that is the remaining
+work.
 
 Expert-witness directory listings and the side brand are downstream of a live
 hostname and are mostly not code.
-
-Open questions:
-
-- Which IA direction.
-- Whether `robots.txt` should disallow until the structure lands.
 
 ## Track 3 — legacy decommission, parallel and low effort
 

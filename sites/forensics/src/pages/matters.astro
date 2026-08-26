@@ -1,0 +1,57 @@
+---
+/**
+ * The matters spoke: the kinds of matter this practice takes, then the
+ * representative matter at full length.
+ *
+ * PracticeAreas was added here 2026-08-11 rather than to /engagements. The
+ * distinction the IA rests on is that /engagements answers what you can buy and
+ * what it costs, while this page answers what kind of dispute this practice is
+ * for -- which is the question a reader who bounced off an AI/ML-led hero is
+ * actually asking.
+ */
+import Layout from '../layouts/Layout.astro'
+import copy from '../copy/landing'
+import PracticeAreas from '../components/PracticeAreas.astro'
+import CaseStudy from '../components/CaseStudy.astro'
+---
+
+<Layout title={copy.routes.matters.title} description={copy.routes.matters.description}>
+  <header class="wrap page-head">
+    <h1 class="measure-display">{copy.routes.matters.heading}</h1>
+  </header>
+
+  <PracticeAreas form="full" />
+  <CaseStudy form="full" />
+
+  <section class="wrap closing">
+    <h2 class="measure">{copy.closing.headline}</h2>
+    <a class="cta" href="/scope">{copy.closing.button} &rarr;</a>
+    <p class="back"><a href="/">Back to the overview</a></p>
+  </section>
+</Layout>
+
+<style>
+  /* padding-block, not the `padding: 4rem 0 1rem` shorthand: this element also
+     carries .wrap, and the shorthand's implicit 0 for the inline axis beat
+     .wrap's padding-left on specificity (Astro scopes this rule to 0,2,0), so
+     the heading hung 28px left of every section below it. */
+  .page-head {
+    padding-block: 2.5rem 0.5rem;
+  }
+
+  @media (min-width: 48em) {
+    .page-head {
+      padding-block: 4rem 1rem;
+    }
+  }
+
+  .closing {
+    padding-bottom: 5rem;
+  }
+
+  .back {
+    margin: 2rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+</style>

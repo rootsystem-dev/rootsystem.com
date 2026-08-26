@@ -1,0 +1,93 @@
+---
+/**
+ * The practice areas -- what kinds of matter this practice takes.
+ *
+ * Sits high on the root page by design. A paralegal reviewing the site read an
+ * AI/ML-led hero as an AI/ML-only practice and named the matters it would turn
+ * away; the fix is to answer "what do you actually do" above the fold rather
+ * than to argue methodology first.
+ *
+ * `form` selects which field renders, not which layout, matching Pillars and
+ * Services: 'summary' reads `summary`, 'full' reads `body` and adds the
+ * example matter types.
+ */
+import copy from '../copy/landing'
+
+interface Props {
+  form?: 'summary' | 'full'
+}
+
+const { form = 'full' } = Astro.props
+---
+
+<section class="wrap" id="practice-areas">
+  <p class="eyebrow">{copy.practiceAreas.label}</p>
+  <h2 class="measure">{copy.practiceAreas.heading}</h2>
+  <p class="measure intro">{copy.practiceAreas.intro}</p>
+  <ul class="areas">
+    {
+      copy.practiceAreas.areas.map((area) => (
+        <li>
+          <h3>{area.name}</h3>
+          <p>{form === 'summary' ? area.summary : area.body}</p>
+          {form === 'full' && (
+            <ul class="examples">
+              {area.examples.map((example) => (
+                <li>{example}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+  <slot />
+</section>
+
+<style>
+  .intro {
+    color: var(--body);
+  }
+
+  .areas {
+    display: grid;
+    gap: 2rem;
+    /* 20rem matches the pillars grid: at the 72rem container it resolves to
+       three columns, so four areas land 3 + 1. That orphan is deliberate here
+       -- the array order is the emphasis, so the lead area reads first and the
+       trailing one is not mistaken for a footnote at two columns. min() keeps
+       the track from exceeding a narrow viewport and reintroducing overflow. */
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    list-style: none;
+    /* padding-inline, not `padding: 0`. This list is inside .wrap and a
+       shorthand here would zero an axis it does not own -- the same class of
+       bug that pulled the hero 28px left of the sections below it. */
+    padding-inline: 0;
+    margin-block: 2rem 0;
+  }
+
+  .areas > li > p {
+    margin-bottom: 0;
+  }
+
+  .examples {
+    list-style: none;
+    padding-inline: 0;
+    margin-block: 0.75rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .examples li {
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .examples li::before {
+    content: '·';
+    position: absolute;
+    left: 0.25rem;
+    color: var(--accent);
+  }
+</style>

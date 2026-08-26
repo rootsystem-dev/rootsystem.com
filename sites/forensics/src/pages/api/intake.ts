@@ -129,6 +129,7 @@ async function notify(submission: {
       apiKey: env.RESEND_API_KEY,
       from: env.NOTIFY_FROM,
       to: env.NOTIFY_TO,
+      cc: env.NOTIFY_CC,
     },
     {
       subject: `[forensics] Case intake — ${submission.name}`,

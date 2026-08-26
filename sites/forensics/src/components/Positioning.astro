@@ -1,0 +1,99 @@
+---
+/**
+ * The positioning block. Root only.
+ *
+ * Renders as an index rather than as a paragraph, as of variant E: a lead line,
+ * the screening criteria with where each is answered, then the closing prose.
+ * The paragraph form carried the same five criteria inside one sentence, where
+ * a reader scanning for the criterion that matters to them had to read all of
+ * it to find any of it.
+ *
+ * A description list rather than a bulleted one because each row genuinely is a
+ * term and its answer. It also gives the criterion name its own element, so the
+ * type change needs no span.
+ *
+ * The eyebrow and heading were added 2026-08-26. The section had neither, so it
+ * began on a body-type lead line while the sections either side of it opened on
+ * an eyebrow and an h2. The eyebrow names the count because the page opens one
+ * earlier -- the practice areas are labelled "the first criterion" -- and this
+ * is where the set is resolved.
+ */
+import copy from '../copy/landing'
+---
+
+<section class="wrap">
+  <p class="eyebrow">{copy.positioning.label}</p>
+  <h2 class="measure">{copy.positioning.heading}</h2>
+  <p class="lead measure">{copy.positioning.lead}</p>
+
+  <dl class="criteria measure">
+    {
+      copy.positioning.criteria.map((criterion) => (
+        <div>
+          <dt>{criterion.name}</dt>
+          <dd>
+            {criterion.where}
+            {criterion.link && (
+              <>
+                {' '}
+                <a href={criterion.link.href}>{criterion.link.text}</a>.
+              </>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="measure notes">
+    {copy.positioning.body.map((para) => <p>{para}</p>)}
+  </div>
+</section>
+
+<style>
+  .lead {
+    font-size: 1.0625rem;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .criteria {
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Single column below 40em. The criterion name and its answer read as one
+     line on a phone, and a 9rem term column there would leave the answer
+     wrapping in a strip too narrow to scan. */
+  .criteria > div {
+    display: grid;
+    gap: 0.125rem;
+  }
+
+  @media (min-width: 40em) {
+    .criteria > div {
+      grid-template-columns: 10rem 1fr;
+      gap: 1.25rem;
+    }
+  }
+
+  .criteria dt {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .criteria dd {
+    margin: 0;
+  }
+
+  .notes p {
+    margin: 0 0 1rem;
+  }
+
+  .notes p:last-child {
+    margin-bottom: 0;
+  }
+</style>

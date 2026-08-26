@@ -20,7 +20,11 @@
   // mailbox to maintain.
   "vars": {
     "NOTIFY_FROM": "Root System forms <forms@send.rootsystem.com>",
-    "NOTIFY_TO": "contact@rootsystem.com"
+    "NOTIFY_TO": "contact@rootsystem.com",
+    // Copied on every case intake. The property publishes a one-business-day
+    // reply commitment, and contact@ is a shared mailbox -- the commitment has
+    // to land somewhere a person who can answer it will see it.
+    "NOTIFY_CC": "rob@rootsystem.com"
   },
   "d1_databases": [
     {

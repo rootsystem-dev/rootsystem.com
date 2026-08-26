@@ -1,0 +1,92 @@
+---
+/**
+ * The four engagement modes. 'summary' pairs each title with its one-clause
+ * short form; 'full' carries the complete description.
+ *
+ * Summary listed bare titles until 2026-08-09. "Consulting (non-testifying)."
+ * and nothing else is a label rather than an argument, and root has to stand on
+ * its own for a referral reader who never clicks through to /engagements.
+ *
+ * `intro` rendered through the h2 until 2026-08-26, which set a two-sentence
+ * body line at display size and to the display measure. The section now carries
+ * the label/heading/intro triple the practice areas already had.
+ */
+import copy from '../copy/landing'
+
+interface Props {
+  form?: 'summary' | 'full'
+}
+
+const { form = 'full' } = Astro.props
+---
+
+<section class="wrap" id="engagements">
+  <p class="eyebrow">{copy.services.label}</p>
+  <h2 class="measure">{copy.services.heading}</h2>
+  <p class="measure intro">{copy.services.intro}</p>
+  {
+    form === 'summary' ? (
+      <ul class="mode-list measure">
+        {copy.services.modes.map((mode) => (
+          <li>
+            <strong>{mode.title}</strong> {mode.summary}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="modes">
+        {copy.services.modes.map((mode) => (
+          <article>
+            <h3>{mode.title}</h3>
+            <p>{mode.body}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+  <slot />
+</section>
+
+<style>
+  /* Same treatment the practice areas give their intro, so the two sections
+     read as one pattern rather than two. */
+  .intro {
+    color: var(--body);
+  }
+
+  .modes {
+    display: grid;
+    gap: 1.5rem;
+    /* 24rem resolves to two columns at the 72rem container, so the four modes
+       land 2 + 2. At 17rem it resolved to three and stranded the fourth alone
+       on its own row — the same orphan the pillars grid had. min() keeps the
+       track from exceeding a narrow viewport and reintroducing overflow. */
+    grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr));
+  }
+
+  .modes p {
+    margin-bottom: 0;
+  }
+
+  .mode-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .mode-list li {
+    font-family: var(--font-heading);
+    color: var(--ink);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .mode-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0.25rem;
+    color: var(--accent);
+  }
+</style>

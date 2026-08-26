@@ -1,6 +1,16 @@
 /* Element defaults. No framework; the mockups were hand-written CSS and port
    directly. */
 
+/* The rem base for the whole property. Every measure, page width, gutter and
+   type size on the page is a rem length, so this one value scales the design
+   as a unit without changing a single proportion between its parts.
+
+   A percentage, not a px value, so it multiplies the reader's own browser
+   default rather than replacing it. 109.375% is 17.5px against a stock 16px. */
+html {
+  font-size: 109.375%;
+}
+
 *,
 *::before,
 *::after {
@@ -13,7 +23,7 @@ body {
   color: var(--body);
   color-scheme: var(--scheme);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
@@ -32,7 +42,23 @@ h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
 h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
 h3 { font-size: 1.0625rem; }
 
-p { margin: 0 0 1.25rem; }
+/* 1.75rem, not 1.25rem. The line box is 16px x 1.65 = 26.4px, so a 20px gap put
+   less space between two paragraphs than between two lines of one -- splitting a
+   block into paragraphs bought almost nothing. 28px clears the line box, which
+   is the threshold where the break actually reads as a break. 1.5rem was tried
+   first and measured at 24px, still under it.
+
+   text-wrap: pretty costs nothing and removes the single-word last lines that
+   long prose blocks produce at any measure. */
+p {
+  margin: 0 0 1.75rem;
+  text-wrap: pretty;
+}
+
+li,
+dd {
+  text-wrap: pretty;
+}
 
 a {
   color: var(--accent);
@@ -55,18 +81,57 @@ strong { color: var(--ink); }
   outline-offset: 3px;
 }
 
+/*
+ * Longhand, deliberately — not `padding: 0 var(--gutter)`.
+ *
+ * Every section element carries both `section` and `.wrap`. The shorthand's
+ * implicit `0` for top and bottom beat `section { padding: 4.5rem 0 }` on
+ * specificity (`.wrap` is 0,1,0; `section` is 0,0,1), which silently collapsed
+ * the vertical rhythm of every section on the property. The hero escaped it
+ * only because Astro scopes `.hero` to 0,2,0.
+ *
+ * Setting only the two axes this rule is responsible for leaves the block
+ * padding to whichever element rule owns it.
+ */
 .wrap {
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: 0 24px;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
 
 .measure { max-width: var(--measure); }
+.measure-display { max-width: var(--measure-display); }
 
 section {
-  padding: 4.5rem 0;
+  /* padding-block, so this rule states only the axis it owns and can never
+     clobber the inline padding `.wrap` sets on the same element.
+
+     Mobile-first: 3rem below 48em, where 4.5rem is a third of the viewport
+     height and pushes the next argument off screen. */
+  padding-block: 3rem;
   border-top: 1px solid var(--line);
 }
+
+@media (min-width: 48em) {
+  section {
+    padding-block: 4.5rem;
+  }
+}
+
+/*
+ * One column, deliberately.
+ *
+ * The prototype put the eyebrow in a label column beside the content. That was
+ * rejected: it read as a blog sidebar. The same diagnosis it was answering --
+ * a 72rem frame around 34rem prose, so text floated mid-frame -- is answered
+ * here by narrowing the frame instead, so the frame and the content share one
+ * left edge and one right edge with no leftover container between them.
+ *
+ * Card grids and the comparison table therefore resolve their auto-fit tracks
+ * against the narrower container. They lose a column at this width; that is the
+ * trade being tested, not an oversight.
+ */
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -90,7 +155,14 @@ section {
 .cta:hover { background: var(--accent-2); }
 
 /* The proof/query motif: a finding presented as something re-runnable rather
-   than something asserted. Monospaced on purpose. */
+   than something asserted. Monospaced on purpose.
+ *
+ * A description list as of variant E. The block was always four moves -- claim,
+ * test, result, concession -- and naming them is the same argument the rest of
+ * the property makes: show the method, then the finding. The term column is
+ * fixed rather than auto so the four answers align on one left edge, which is
+ * what makes it read as an exhibit rather than as four sentences.
+ */
 .proof {
   font-family: var(--font-mono);
   font-size: 0.9375rem;
@@ -99,6 +171,31 @@ section {
   border-left: 3px solid var(--accent);
   padding: 1.25rem 1.5rem;
   margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.proof > div {
+  display: grid;
+  gap: 0 1.25rem;
+}
+
+@media (min-width: 34em) {
+  .proof > div {
+    grid-template-columns: 6rem 1fr;
+  }
+}
+
+.proof dt {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8125rem;
+  color: var(--accent);
+}
+
+.proof dd {
+  margin: 0;
 }
 
 .draft-notice {
@@ -108,4 +205,25 @@ section {
   font-size: 0.8125rem;
   text-align: center;
   padding: 0.5rem 1rem;
+}
+
+/* Skip link. Off-screen until focused, then pinned to the top-left. base.css
+   already styles :focus-visible, but there was no skip target until the
+   masthead existed. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 6px 0;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.skip-link:focus {
+  left: 0;
+  color: var(--bg);
 }

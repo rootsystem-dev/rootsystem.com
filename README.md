@@ -64,6 +64,17 @@ yarn dev:forensics    # takes the next free port if www is already running
 Other workspace scripts: `yarn build`, `yarn check` (Astro's typecheck), and the
 `:www` / `:forensics` variants of each.
 
+To judge a visual change, build the versions side by side rather than deploying a
+preview per branch:
+
+```bash
+scripts/frontend-compare.py up forensics working rob/some-branch
+```
+
+`working` means the current tree, so uncommitted changes compare against a
+branch. The same script takes screenshots and reports measured type and spacing
+per element — see `docs/frontend-compare.md`.
+
 With an empty `RESEND_API_KEY` a local submission is stored and not emailed,
 which is the intended local behaviour rather than a misconfiguration.
 
@@ -139,4 +150,6 @@ production traffic immediately. Prefer the pull request.
 | `docs/apex-cutover-runbook.md` | executed record of the Netlify → Cloudflare cutover |
 | `docs/teardown-order.md` | decommission order for Netlify, Vercel and Sanity |
 | `docs/forensics-ia-open-problem.md` | why the forensics property has not launched |
+| `docs/forensics-positioning-decision.md` | why the forensics copy says what it says |
+| `docs/frontend-compare.md` | comparing front-end builds locally, with screenshots and measurements |
 | `docs/superpowers/specs/` | design specs, newest last |

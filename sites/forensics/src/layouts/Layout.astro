@@ -16,19 +16,28 @@
  */
 import '../styles/tokens.css'
 import '../styles/base.css'
+import Masthead from '../components/Masthead.astro'
+import SiteFooter from '../components/SiteFooter.astro'
+import copy from '../copy/landing'
+import { assertPublishable } from '../copy/schema'
+
+// Enforced here rather than per page: with five routes, a gate that only one
+// route runs is not a gate -- a spoke could ship draft copy through a green
+// build.
+assertPublishable(copy)
+
+const hasDraftCopy = copy.hero.draft || copy.closing.draft
 
 const DESIGN_DIRECTION: 'a' | 'b' = 'a'
 
 interface Props {
   title: string
   description: string
-  /** True when any copy on the page is still scaffolding. */
-  hasDraftCopy?: boolean
 }
 
-const { title, description, hasDraftCopy = false } = Astro.props
+const { title, description } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
-const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
+const ogImage = new URL('/images/forensics-card.png', Astro.site)
 ---
 
 <html lang="en" data-direction={DESIGN_DIRECTION}>
@@ -51,9 +60,11 @@ const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Root System Forensics" />
     <meta property="og:locale" content="en_US" />
-    <!-- Shares the main brand card for now. `summary_large_image` was already
-         declared here with no image at all, which unfurls as a bare link; a
-         forensics-specific card is worth commissioning. -->
+    <!-- One property-level card rather than one per route. Source SVG lives at
+         docs/Brand/Social/rootsystem-forensics-social.svg; regenerate with
+         scripts/render-og-card.sh after editing it. Per-route generated cards
+         are the natural later improvement -- deferred because the build
+         dependency is not worth it for five pages. -->
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1440" />
     <meta property="og:image:height" content="640" />
@@ -66,6 +77,7 @@ const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     {
       hasDraftCopy && (
         <p class="draft-notice">
@@ -74,6 +86,10 @@ const ogImage = new URL('/images/rootsystem-card.png', Astro.site)
         </p>
       )
     }
-    <slot />
+    <Masthead />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
   </body>
 </html>

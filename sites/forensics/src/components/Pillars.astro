@@ -1,0 +1,67 @@
+---
+/**
+ * The five pillars.
+ *
+ * `form` selects which field renders, not which layout: 'summary' and 'full'
+ * are the same markup reading `summary` or `body`. One component with a field
+ * switch is therefore honest here rather than two components behind a flag.
+ */
+import copy from '../copy/landing'
+
+interface Props {
+  form?: 'summary' | 'full'
+}
+
+const { form = 'full' } = Astro.props
+---
+
+<section class="wrap" id="method">
+  <h2>{copy.pillarsHeading}</h2>
+  <ol class="pillars">
+    {
+      copy.pillars.map((pillar) => (
+        <li>
+          <h3>{pillar.title}</h3>
+          <p>{form === 'summary' ? pillar.summary : pillar.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+  <slot />
+</section>
+
+<style>
+  .pillars {
+    display: grid;
+    gap: 2rem;
+    /* 20rem, not 15rem: at the 72rem container this resolves to three columns,
+       so the five pillars land 3 + 2. At 15rem it resolved to four and left the
+       fifth stranded alone on its own row, which reads as a mistake rather
+       than a layout. min() keeps the track from exceeding a narrow viewport
+       and reintroducing overflow. */
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    list-style: none;
+    padding: 0;
+  }
+
+  /* Outlined, where the pricing tiers are filled. Two card treatments, and the
+     difference is what the card is for: a tier is a thing you buy and sits on
+     a panel, a pillar is a claim and sits in an outline. */
+  .pillars li {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  /* Five cards in a two-column grid leave the fifth alone on its own row. With
+     no border that read as flow; with one it reads as a card that failed to
+     find a neighbour. Spanning it is the deliberate version of the same shape.
+     In a single-column grid this resolves to the full width either way. */
+  .pillars > li:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .pillars p {
+    margin-bottom: 0;
+  }
+</style>

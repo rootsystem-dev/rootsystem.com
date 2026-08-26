@@ -1,157 +1,95 @@
 ---
 /**
- * The forensics landing page.
+ * The forensics root page.
  *
- * Section order follows landing-copy.md sections 1-10. All text comes from
- * src/copy/landing.ts; nothing is hardcoded here, so the own-voice rewrite
- * never requires touching markup.
+ * Composition plus the hero. Section copy lives in src/copy/landing; the
+ * expansion-link labels and the hero's own styles are here, because they are
+ * chrome for this page rather than argument copy shared with the spokes.
+ *
+ * Section order changed 2026-08-11. What we take (PracticeAreas) and how you
+ * engage (Services) now sit directly under the hero, ahead of the positioning
+ * argument and the pillars. A paralegal reviewing the site read the AI/ML-led
+ * opening as an AI/ML-only practice and named the matters it would turn away,
+ * and asked separately for the four modes to land near the first thing the eye
+ * reads. Both notes are answered by lifting the concrete blocks above the
+ * argument rather than by softening the argument.
+ *
+ * The note lives here rather than as a JSX comment beside the components: a
+ * JSX comment inside an Astro template is fragile enough near conditional
+ * branches that the convention in this codebase is to keep prose in frontmatter.
  */
 import Layout from '../layouts/Layout.astro'
 import copy from '../copy/landing'
-import { assertPublishable } from '../copy/schema'
+import Positioning from '../components/Positioning.astro'
+import PracticeAreas from '../components/PracticeAreas.astro'
+import Pillars from '../components/Pillars.astro'
+import CaseStudy from '../components/CaseStudy.astro'
+import Services from '../components/Services.astro'
+import Pricing from '../components/Pricing.astro'
+import ExpandLink from '../components/ExpandLink.astro'
 
-// Fails the production build while hero or closing are still scaffolding.
-assertPublishable(copy)
-
-const hasDraftCopy = copy.hero.draft || copy.closing.draft
-
-// Both calls to action route to the intake form rather than a mailto. A form
-// captures the engagement type and timing that a blank email does not, and the
-// submission lands in D1 for triage. The footer keeps a direct address for
-// anyone who would rather just write.
 const scopeHref = '/scope'
 ---
 
-<Layout
-  title={copy.meta.title}
-  description={copy.meta.description}
-  hasDraftCopy={hasDraftCopy}
->
+<Layout title={copy.meta.title} description={copy.meta.description}>
   <header class="wrap hero">
     <p class="eyebrow">{copy.hero.eyebrow}</p>
     <h1>{copy.hero.headline}</h1>
     <p class="subhead measure">{copy.hero.subhead}</p>
-    <p class="proof measure">{copy.hero.proof}</p>
-    <a class="cta" href={scopeHref}>{copy.hero.cta} &rarr;</a>
-  </header>
-
-  <section class="wrap">
-    <p class="positioning measure">{copy.positioning.body}</p>
-  </section>
-
-  <section class="wrap">
-    <h2>How the work holds up</h2>
-    <ol class="pillars">
+    <dl class="proof measure">
       {
-        copy.pillars.map((pillar) => (
-          <li>
-            <h3>{pillar.title}</h3>
-            <p>{pillar.body}</p>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
-
-  <section class="wrap">
-    <p class="eyebrow">{copy.caseStudy.label}</p>
-    <h2 class="measure">{copy.caseStudy.headline}</h2>
-    <div class="measure">
-      {copy.caseStudy.body.map((para) => <p>{para}</p>)}
-      <p class="pull">{copy.caseStudy.pullQuote}</p>
-    </div>
-  </section>
-
-  <section class="wrap">
-    <p class="eyebrow">{copy.services.label}</p>
-    <h2>{copy.services.intro}</h2>
-    <div class="modes">
-      {
-        copy.services.modes.map((mode) => (
-          <article>
-            <h3>{mode.title}</h3>
-            <p>{mode.body}</p>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="wrap">
-    {/* Rendered as a heading, not a styled paragraph: these section labels are
-        the only heading the pricing and contrast sections have, and omitting
-        them leaves a hole in the document outline for screen readers. */}
-    <h2 class="eyebrow">{copy.pricing.label}</h2>
-    <div class="tiers">
-      {
-        copy.pricing.tiers.map((tier) => (
-          <article>
-            <h3>{tier.name}</h3>
-            <p class="price">{tier.price}</p>
-            <p>{tier.body}</p>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="wrap">
-    <h2 class="eyebrow">{copy.contrast.label}</h2>
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">What they do well</th>
-            <th scope="col">Where they leave the gap</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            copy.contrast.rows.map((row) => (
-              <tr class={row.isUs ? 'us' : undefined}>
-                <th scope="row">{row.who}</th>
-                <td>{row.strength}</td>
-                <td>{row.gap}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="wrap">
-    <h2>Objections, answered</h2>
-    <dl class="faq measure">
-      {
-        copy.faq.map((item) => (
+        copy.hero.proof.map((step) => (
           <div>
-            <dt>{item.question}</dt>
-            <dd>{item.answer}</dd>
+            <dt>{step.label}</dt>
+            <dd>{step.text}</dd>
           </div>
         ))
       }
     </dl>
-  </section>
+    <a class="cta" href={scopeHref}>{copy.hero.cta} &rarr;</a>
+  </header>
+
+  <PracticeAreas form="summary">
+    <ExpandLink href="/matters/" label="The matters we take" />
+  </PracticeAreas>
+
+  <Services form="summary">
+    <ExpandLink href="/engagements/" label="How we work" />
+  </Services>
+
+  <Positioning />
+
+  <Pillars form="summary">
+    <ExpandLink href="/method/" label="The full method" />
+  </Pillars>
+
+  <CaseStudy form="summary">
+    <ExpandLink href="/matters/" label="Read the matter" />
+  </CaseStudy>
+
+  <Pricing form="summary">
+    <ExpandLink href="/engagements/" label="Fees and objections" />
+  </Pricing>
 
   <section class="wrap closing">
     <h2 class="measure">{copy.closing.headline}</h2>
     <p class="measure">{copy.closing.body}</p>
     <a class="cta" href={scopeHref}>{copy.closing.button} &rarr;</a>
   </section>
-
-  <footer class="wrap">
-    <p>
-      {copy.contact.footer} ·{' '}
-      <a href={`mailto:${copy.contact.email}`}>{copy.contact.email}</a>
-    </p>
-  </footer>
 </Layout>
 
 <style>
+  /* padding-block, not the `padding: 5rem 0 4rem` shorthand. The hero also
+     carries .wrap, and the shorthand's implicit 0 for the inline axis won on
+     specificity, pulling the hero 28px left of the sections below it. */
   .hero {
-    padding: 5rem 24px 4rem;
+    padding-block: 3rem 2.5rem;
+  }
+
+  @media (min-width: 48em) {
+    .hero {
+      padding-block: 5rem 4rem;
+    }
   }
 
   .subhead {
@@ -159,131 +97,7 @@ const scopeHref = '/scope'
     color: var(--body);
   }
 
-  .positioning {
-    font-size: 1.0625rem;
-  }
-
-  .pillars {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    list-style: none;
-    padding: 0;
-    counter-reset: pillar;
-  }
-
-  .pillars li::before {
-    counter-increment: pillar;
-    content: counter(pillar);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  .pillars p,
-  .modes p,
-  .tiers p {
-    margin-bottom: 0;
-  }
-
-  .pull {
-    font-family: var(--font-serif);
-    font-size: 1.375rem;
-    font-style: italic;
-    color: var(--ink);
-    border-left: 3px solid var(--accent);
-    padding-left: 1.25rem;
-    margin-top: 2rem;
-  }
-
-  .modes,
-  .tiers {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  }
-
-  .tiers article {
-    background: var(--fill);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 1.75rem;
-  }
-
-  .price {
-    font-family: var(--font-mono);
-    color: var(--accent);
-    font-size: 1.0625rem;
-    margin-bottom: 0.75rem;
-  }
-
-  /* Wide content scrolls inside its own container so the page body never
-     scrolls horizontally on narrow viewports. */
-  .table-scroll {
-    overflow-x: auto;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 40rem;
-    font-size: 0.9375rem;
-  }
-
-  th,
-  td {
-    text-align: left;
-    vertical-align: top;
-    padding: 0.875rem 1rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  thead th {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    font-weight: 400;
-  }
-
-  tbody th {
-    color: var(--ink);
-    white-space: nowrap;
-  }
-
-  tr.us {
-    background: var(--fill);
-  }
-
-  tr.us th,
-  tr.us td {
-    font-weight: 600;
-    color: var(--ink);
-  }
-
-  .faq dt {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    color: var(--ink);
-    margin-top: 1.75rem;
-  }
-
-  .faq dd {
-    margin: 0.5rem 0 0;
-  }
-
   .closing {
     padding-bottom: 5rem;
-  }
-
-  footer {
-    border-top: 1px solid var(--line);
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-    color: var(--muted);
-    font-size: 0.875rem;
   }
 </style>

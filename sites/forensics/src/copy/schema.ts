@@ -25,49 +25,219 @@ export const landingSchema = z.object({
     description: z.string(),
   }),
 
+  // Per-route metadata. Distinct titles are the whole search argument for the
+  // hub-and-spoke structure, so they are validated rather than left optional.
+  // `title` is the <title> tag and carries the brand suffix; `heading` is the
+  // on-page <h1>, which every spoke needs for its document outline and which
+  // a page composed only of section components would otherwise lack.
+  routes: z.object({
+    method: z.object({ title: z.string(), heading: z.string(), description: z.string() }),
+    matters: z.object({ title: z.string(), heading: z.string(), description: z.string() }),
+    engagements: z.object({ title: z.string(), heading: z.string(), description: z.string() }),
+  }),
+
   hero: draftable({
     eyebrow: z.string(),
     headline: z.string(),
     subhead: z.string(),
     // The "query motif" proof block -- a concrete finding, stated plainly.
-    proof: z.string(),
+    //
+    // Structured rather than one string as of variant E (2026-08-22). The block
+    // was always four moves -- the claim, the test, the result, the concession
+    // -- run together in prose, which left the reader to find the shape. Naming
+    // each step is the same argument the property makes everywhere else: state
+    // the method, then the finding. `label` is deliberately short; the markup
+    // sets it in caps, so writing it capitalised here would double up.
+    //
+    // Minimum of two steps rather than one: a proof block with a single row is
+    // a sentence in a box, which is the thing this change exists to stop.
+    proof: z
+      .array(z.object({ label: z.string(), text: z.string() }))
+      .min(2),
     cta: z.string(),
   }),
 
+  // The positioning block.
+  //
+  // Restructured for variant E (2026-08-22) from a single paragraph into a lead
+  // line, the five screening criteria as an index, and the closing prose. The
+  // paragraph form buried the criteria mid-sentence, where a scanning reader
+  // never found the one that mattered to them.
+  //
+  // `where` answers "where on this page is that answered" rather than restating
+  // the claim -- the block is a table of contents for the vetting argument, not
+  // a second version of it. The list is not fixed at five: the criteria come
+  // from what comparable practices publish, and that set can move.
+  //
+  // `label` and `heading` were added 2026-08-26. The block opened straight on
+  // `lead`, so the section started with no eyebrow and no heading while every
+  // section around it had both. The eyebrow also closes a count the page opens
+  // elsewhere: the practice areas are labelled "the first criterion" and
+  // nothing until here says how many there are or resolves the set.
   positioning: z.object({
-    body: z.string(),
+    label: z.string(),
+    heading: z.string(),
+    lead: z.string(),
+    // `link` is optional and only one row carries it. Four criteria are
+    // answered on this page and point at a section of it; the testimony record
+    // is answered on the fees page, and a row that says so without a way to get
+    // there sends the reader most likely to care about it off hunting.
+    criteria: z
+      .array(
+        z.object({
+          name: z.string(),
+          where: z.string(),
+          link: z.object({ text: z.string(), href: z.string() }).optional(),
+        }),
+      )
+      .min(1),
+    body: z.array(z.string()).min(1),
   }),
+
+  // The practice areas -- the kinds of matter this practice takes.
+  //
+  // Added 2026-08-11 after a paralegal reviewing the site read an AI/ML-only
+  // hero as an AI/ML-only practice and flagged the matters it would turn away.
+  // AI/ML is one area among four rather than the whole category claim; the
+  // ordering of the array is the emphasis, so a variant re-ranks by reordering
+  // rather than by editing prose.
+  //
+  // `summary` is the root page's one-clause form and `body` the spoke's long
+  // form, the same adjacency rule the pillars and modes follow. `examples` are
+  // matter types, not claims of matters handled -- keep them generic.
+  practiceAreas: z.object({
+    label: z.string(),
+    heading: z.string(),
+    intro: z.string(),
+    areas: z
+      .array(
+        z.object({
+          name: z.string(),
+          summary: z.string(),
+          body: z.string(),
+          examples: z.array(z.string()).min(1),
+        }),
+      )
+      .min(3),
+  }),
+
+  // The heading above the pillars. Optional with the long-standing default, so
+  // a positioning variant can reframe what the five pillars are answering
+  // without a schema change and without touching the variants that don't.
+  // Added 2026-08-19 for the vetting-first variant, which needs this section to
+  // read as the answer to a screening checklist rather than as a method claim.
+  pillarsHeading: z.string().default('How the work holds up'),
 
   // The five pillars. Each was earned in a real matter; the copy deck is
   // explicit that these are not aspirational claims.
+  //
+  // `summary` is the root page's short form and `body` the spoke's long form.
+  // Both are required and live on the same object so drift between them is
+  // visible on adjacent lines rather than across two files.
   pillars: z
-    .array(z.object({ title: z.string(), body: z.string() }))
+    .array(
+      z.object({
+        title: z.string(),
+        summary: z.string(),
+        body: z.string(),
+      }),
+    )
     .length(5),
 
   caseStudy: z.object({
     label: z.string(),
     headline: z.string(),
+    // Root's short form. The full `body` paragraphs render on /matters.
+    summary: z.string(),
     body: z.array(z.string()).min(1),
     pullQuote: z.string(),
   }),
 
+  // The bench. Half the argument for this practice is that a dispute over what
+  // a system did crosses discipline boundaries, and a solo expert covers one of
+  // them. `groups` is validated as a list rather than fixed at two so a third
+  // discipline group does not require a schema change.
+  bench: z.object({
+    label: z.string(),
+    heading: z.string(),
+    intro: z.string(),
+    groups: z
+      .array(
+        z.object({
+          name: z.string(),
+          disciplines: z.array(z.string()).min(1),
+        }),
+      )
+      .min(1),
+    provenance: z.string(),
+    staffing: z.string(),
+  }),
+
+  // The engagement modes.
+  //
+  // `heading` was added 2026-08-26. Root rendered `intro` through the section's
+  // h2, which put a two-sentence body line at display size; the section now
+  // carries the same label/heading/intro triple the practice areas do, and
+  // `intro` is back to being a paragraph.
   services: z.object({
     label: z.string(),
+    heading: z.string(),
     intro: z.string(),
+    // `summary` is the root page's one-clause form, `body` the spoke's. Same
+    // adjacency rule as the pillars: both live on one object so drift shows up
+    // on neighbouring lines. Root rendered bare titles before this field
+    // existed, which told a referral reader who never clicks nothing at all.
     modes: z
-      .array(z.object({ title: z.string(), body: z.string() }))
+      .array(
+        z.object({ title: z.string(), summary: z.string(), body: z.string() }),
+      )
       .length(4),
   }),
 
   pricing: z.object({
     label: z.string(),
+    // `summary` carries the one line about each tier that root cannot afford to
+    // drop -- for the assessment that is the credit against a full engagement,
+    // which is the strongest risk reversal on the property and was previously
+    // absent from the page most readers never leave.
     tiers: z.array(
       z.object({
         name: z.string(),
         price: z.string(),
+        summary: z.string(),
         body: z.string(),
       }),
     ),
+    // The rate modifiers, published rather than described. "Billed at a
+    // premium" was the vaguest sentence on the property, sitting inside the one
+    // block whose differentiator is that the rates are public at all. Applies
+    // to the hours each covers, not to the whole engagement.
+    modifiers: z.object({
+      intro: z.string(),
+      rows: z
+        .array(
+          z.object({
+            when: z.string(),
+            adjustment: z.string(),
+            rate: z.string(),
+          }),
+        )
+        .min(1),
+      note: z.string(),
+    }),
+  }),
+
+  // How an engagement starts. The conflict screen is the first step and is
+  // stated in public rather than left to the post-submission fine print:
+  // Root System also builds AI systems for clients, and counsel evaluating an
+  // unfamiliar expert is entitled to see how that is handled before typing a
+  // matter into a form.
+  process: z.object({
+    label: z.string(),
+    heading: z.string(),
+    steps: z
+      .array(z.object({ name: z.string(), body: z.string() }))
+      .min(1),
   }),
 
   contrast: z.object({
@@ -94,6 +264,7 @@ export const landingSchema = z.object({
     // z.email() rather than the deprecated z.string().email() chain.
     email: z.email(),
     footer: z.string(),
+    responseTime: z.string(),
   }),
 })
 

@@ -70,7 +70,7 @@ const copy: Landing = landingSchema.parse({
     eyebrow: 'Software, source code, data and AI · expert witness',
     headline: 'Vet us the way they will.',
     subhead:
-      'Counsel screens an expert on five things: hands-on depth, experience with the evidence, a testimony record, independence, and whether a jury will follow. Four are answered on this page, each with what it rests on. The fifth is short and we say so. Rates are published. Rule us out in ten minutes if we are wrong for the matter.',
+      'Counsel screens an expert on five things: hands-on depth, experience with the evidence, a testimony record, independence, and whether a jury will follow. Four are answered on this page, each with what it rests on. The fifth is one deposition, and we say so. Rates are published. Rule us out in ten minutes if we are wrong for the matter.',
     // The same finding as before, stated as the four moves it actually was.
     // Nothing here is new: the numbers, the concession, and the discriminator
     // are the ones the matter produced.
@@ -111,13 +111,21 @@ const copy: Landing = landingSchema.parse({
         where:
           'the bench, whose working life is making technical systems legible to people who do not build them.',
       },
-      // "Short", not "thin", and the same word the objection on the fees page
-      // uses. A thin record is close to a term of art -- it is what a judge
-      // says about evidence that will not support a finding -- and using it
-      // about ourselves concedes more than the fact does.
+      // The count rather than an adjective, as of 2026-08-26. "Short" reads as
+      // probably-never to a partner screening, and the question being asked is
+      // a yes/no -- has this expert been cross-examined under oath. One answers
+      // it; zero to one is the largest step on that scale. It also filters
+      // harder than the adjective did, which is the stated intent of the page.
+      //
+      // What is deliberately absent: the opinion was not challenged, and that
+      // is not claimed here. Opinions go unchallenged for reasons that have
+      // nothing to do with quality, so it is a strength claim pointing at an
+      // absence -- the one kind of claim nothing else on this page makes.
+      // Reproducibility is the same argument stated as a method, and it is
+      // already in the objections on the fees page.
       {
         name: 'Testimony record',
-        where: 'short. Not buried:',
+        where: 'one deposition. Not buried:',
         link: {
           text: 'answered on the fees page',
           href: '/engagements/#objections',
@@ -447,7 +455,7 @@ const copy: Landing = landingSchema.parse({
     {
       question: 'Your testimony record is short.',
       answer:
-        'It is, and we do not dress it up. Tenure is not what makes an opinion hold — reproducibility is. Every finding we file is a query the other side can run themselves, so it stands on its own terms rather than on reputation. Under Daubert, an analysis anyone can replicate is harder to attack than a veteran’s say-so.',
+        'One deposition, no trial testimony yet, and we do not dress that up. Tenure is not what makes an opinion hold — reproducibility is. Every finding we file is a query the other side can run themselves, so it stands on its own terms rather than on reputation. Under Daubert, an analysis anyone can replicate is harder to attack than a veteran’s say-so.',
     },
     // Added 2026-08-19. AI disclosure became a standing vetting question for
     // retained experts this month: prompt logs are being subpoenaed as

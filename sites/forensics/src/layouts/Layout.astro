@@ -156,5 +156,25 @@ const organization = {
       <slot />
     </main>
     <SiteFooter />
+
+    {/*
+      Analytics. The dynamic import is the point: with no key configured this
+      script compiles to a falsy check and posthog-js is never fetched, so a
+      build without the secret ships the same script-free pages it always did.
+      With a key, the library arrives in its own chunk after the page is
+      readable, rather than in the critical path.
+
+      This is the second script on the whole property -- the first is the
+      Turnstile widget on /scope -- and the only one on the reading pages, so
+      it is worth keeping visible here rather than hiding in an integration.
+    */}
+    <script>
+      import { PUBLIC_POSTHOG_KEY, PUBLIC_POSTHOG_HOST } from 'astro:env/client'
+
+      if (PUBLIC_POSTHOG_KEY) {
+        const { startAnalytics } = await import('../lib/analytics')
+        startAnalytics(PUBLIC_POSTHOG_KEY, PUBLIC_POSTHOG_HOST)
+      }
+    </script>
   </body>
 </html>

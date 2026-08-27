@@ -17,4 +17,5 @@ CLOUDFLARE_API_TOKEN = { provider="onepass", value="op://Engineering/rs-cloudfla
 TURNSTILE_SECRET_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/credential" }
 TURNSTILE_SITE_KEY = { provider="onepass", value="op://Engineering/rs-cloudflare-dot-com-turnstile-secret/yg5rjudzx7yw7r4yvydwxcoqn4" }
 RESEND_API_KEY = { provider="onepass", value="op://Engineering/rs-resend-rs-dot-com-sending-api-key/credential"}
-
+PUBLIC_POSTHOG_HOST = { provider="onepass", value="op://Engineering/rs-dot-com-posthog-prod-api-key/PUBLIC_POSTHOG_HOST"}
+PUBLIC_POSTHOG_KEY = { provider="onepass", value="op://Engineering/rs-dot-com-posthog-prod-api-key/credential"}

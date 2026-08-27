@@ -79,10 +79,6 @@ jobs:
           YARN_ENABLE_HARDENED_MODE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         run: yarn install --immutable
 
-      - name: Build
-        if: matrix.changed == 'true'
-        run: yarn workspace ${{ matrix.workspace }} build
-
       # fnox's 1Password provider shells out to `op`. A runner has no 1Password
       # desktop app, so the service account token is the only credential path.
       # Installed via the official action rather than as a mise tool: a
@@ -91,6 +87,22 @@ jobs:
       - name: Install the 1Password CLI
         if: matrix.changed == 'true'
         uses: 1password/install-cli-action@v1
+
+      # Built under `fnox run`, which is why the 1Password CLI is installed
+      # above this step rather than below it as it once was. The forensics
+      # pages are prerendered, so PUBLIC_POSTHOG_KEY has to be present when the
+      # bundle is written -- a Worker secret would be too late. A build with no
+      # key still succeeds and simply ships no analytics; see the env schema in
+      # sites/forensics/astro.config.mjs.
+      #
+      # This makes every build depend on 1Password auth, which was not true
+      # before. Both sites are wrapped rather than only forensics: one step
+      # serves the matrix, and www ignores the extra variables.
+      - name: Build
+        if: matrix.changed == 'true'
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+        run: fnox run -- yarn workspace ${{ matrix.workspace }} build
 
       # Pull requests get a preview deployment; only primary publishes.
       - name: Deploy

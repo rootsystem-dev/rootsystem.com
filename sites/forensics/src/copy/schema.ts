@@ -260,6 +260,17 @@ export const landingSchema = z.object({
     button: z.string(),
   }),
 
+  // The 404 page. In the deck rather than inline in the page component,
+  // because every other string a reader can see is, and a page reached by a
+  // stale link is one of the few where the wording is doing real work: the
+  // reader arrived from someone else's citation and has to decide whether this
+  // practice still exists.
+  notFound: z.object({
+    title: z.string(),
+    heading: z.string(),
+    body: z.string(),
+  }),
+
   contact: z.object({
     // z.email() rather than the deprecated z.string().email() chain.
     email: z.email(),

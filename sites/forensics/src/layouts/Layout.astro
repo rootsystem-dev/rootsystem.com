@@ -38,6 +38,65 @@ interface Props {
 const { title, description } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const ogImage = new URL('/images/forensics-card.png', Astro.site)
+
+/*
+ * Structured data, home page only -- the same convention sites/www follows.
+ * Organization markup describes the property, not the page, so repeating it on
+ * five routes states one fact five times.
+ *
+ * `knowsAbout` is derived from the copy deck rather than written out here. The
+ * practice areas and the bench disciplines are the answer to "what is this
+ * practice competent in", and they already live in one place; a second hand-kept
+ * list would drift from the visible page the first time either is edited. This
+ * is the single highest-value field on the property for the queries that matter
+ * -- "[discipline] expert witness" -- and it costs nothing to keep true.
+ *
+ * `@type: Organization` rather than ProfessionalService. ProfessionalService
+ * inherits from LocalBusiness, which expects a postal address for rich results,
+ * and this practice has no public one to give.
+ *
+ * `makesOffer` carries the published rates. Publishing them at all is a
+ * deliberate divergence from every close comparable, so the markup should say
+ * so rather than leave a differentiator invisible to a crawler.
+ *
+ * Deliberately absent: `areaServed`. The page nowhere states which
+ * jurisdictions this practice takes, and inventing one in markup that the copy
+ * does not support is exactly the drift this block is built to avoid. It is a
+ * copy decision first; the field follows it.
+ */
+const isHome = Astro.url.pathname === '/'
+
+const knowsAbout = [
+  ...copy.practiceAreas.areas.map((area) => area.name),
+  ...copy.bench.groups.flatMap((group) => group.disciplines),
+]
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Root System Forensics',
+  url: 'https://forensics.rootsystem.com',
+  logo: new URL('/images/favicon/light/apple-touch-icon.png', Astro.site).href,
+  image: ogImage.href,
+  description: copy.meta.description,
+  email: copy.contact.email,
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Root System',
+    url: 'https://rootsystem.com',
+  },
+  knowsAbout,
+  makesOffer: copy.pricing.tiers.map((tier) => ({
+    '@type': 'Offer',
+    name: tier.name,
+    description: tier.summary,
+    priceSpecification: {
+      '@type': 'PriceSpecification',
+      price: tier.price,
+      priceCurrency: 'USD',
+    },
+  })),
+}
 ---
 
 <html lang="en" data-direction={DESIGN_DIRECTION}>
@@ -75,6 +134,12 @@ const ogImage = new URL('/images/forensics-card.png', Astro.site)
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {
+      isHome && (
+        <script type="application/ld+json" set:html={JSON.stringify(organization)} />
+      )
+    }
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

@@ -18,10 +18,30 @@
  *    collected set is auditable by reading this file. It also keeps element
  *    text and field names out of the payloads on the intake form.
  *
- * 3. Persistence is memory-only. No cookies, so no consent banner -- a consent
- *    wall on a page whose argument is "rule us out in ten minutes" costs more
- *    than the data is worth. The trade is real: a returning reader is a new
- *    reader here, so these numbers count visits, not people.
+ * 3. Persistence is sessionStorage. Still no cookies, so still no consent
+ *    banner -- a consent wall on a page whose argument is "rule us out in ten
+ *    minutes" costs more than the data is worth.
+ *
+ *    This was 'memory' for the first day and that was wrong. Memory
+ *    persistence issues a fresh identity on every page load, so root ->
+ *    engagements -> scope could not be observed at all: the first day of data
+ *    showed six visitors, six pageviews and six sessions, a 100% bounce rate
+ *    and a two-step pageview funnel that dropped 100% at step two. None of
+ *    that was behaviour; a multi-page journey was structurally incapable of
+ *    completing. Internal navigation was also being counted as external
+ *    referral traffic for the same reason.
+ *
+ *    sessionStorage stitches one visit across pages and clears when the tab
+ *    closes. What that costs is cross-visit identity, and therefore retention
+ *    -- which is close to meaningless for this practice anyway. An attorney
+ *    arrives when they have a matter; someone back three months later has a
+ *    new case, not a retained relationship. The journey inside one visit is
+ *    the thing worth seeing, and it is the thing that was broken.
+ *
+ *    PostHog's own `cookieless_mode: 'always'` was the other candidate. It was
+ *    not taken because it requires cookieless mode to be enabled in the
+ *    project settings first, and until it is, every cookieless event is
+ *    silently discarded -- total data loss gated on a dashboard toggle.
  *
  * The events exist to answer one question the ordinary metrics get backwards.
  * This page is built to disqualify: a partner who reads the published rates and
@@ -45,7 +65,7 @@ export function startAnalytics(key: string, host: string) {
     // See the header: none of these three are defaults worth inheriting.
     disable_session_recording: true,
     autocapture: false,
-    persistence: 'memory',
+    persistence: 'sessionStorage',
     // Pageviews are still wanted; only the automatic element capture is not.
     capture_pageview: true,
   })

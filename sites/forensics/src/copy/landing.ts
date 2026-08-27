@@ -67,10 +67,20 @@ const copy: Landing = landingSchema.parse({
   },
 
   hero: {
+    // The five criteria are listed in the same order the screening index
+    // below uses, and the short one is named rather than counted to.
+    //
+    // It read "the fifth is short" until 2026-08-26, when two attorneys
+    // reviewing the page said they could not tell what it referred to. They
+    // were right, and it was worse than ambiguous: in the hero's own list the
+    // testimony record was third, so "the fifth" pointed at jury legibility.
+    // The ordinal only worked against the index further down, which ordered
+    // the same five differently. Naming the criterion removes the counting
+    // entirely; matching the two orders removes the trap that produced it.
     eyebrow: 'Software, source code, data and AI · expert witness',
     headline: 'Vet us the way they will.',
     subhead:
-      'Counsel screens an expert on five things: hands-on depth, experience with the evidence, a testimony record, independence, and whether a jury will follow. Four are answered on this page, each with what it rests on. The fifth is short and we say so. Rates are published. Rule us out in ten minutes if we are wrong for the matter.',
+      'Counsel screens an expert on five things: hands-on depth, experience with the evidence, independence, whether a jury will follow, and a testimony record. The first four are answered on this page, each with what it rests on. The record is short, and we say so. Rates are published. Rule us out in ten minutes if we are wrong for the matter.',
     // The same finding as before, stated as the four moves it actually was.
     // Nothing here is new: the numbers, the concession, and the discriminator
     // are the ones the matter produced.

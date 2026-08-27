@@ -1,0 +1,89 @@
+---
+/**
+ * The expert index.
+ *
+ * One entry today. Built as a list anyway: the practice's positioning is a
+ * bench rather than a solo expert, and an index that could only ever hold one
+ * person would quietly argue the opposite of what the method page says.
+ *
+ * The intro does the same work in prose -- it names the dozen and points at the
+ * disciplines, so a reader arriving here from a profile link does not take the
+ * single entry for the whole practice.
+ */
+import Layout from '../../layouts/Layout.astro'
+import copy from '../../copy/landing'
+---
+
+<Layout
+  title={`${copy.expertsPage.heading} | Root System Forensics`}
+  description={copy.expertsPage.intro}
+>
+  <header class="wrap page-head">
+    <p class="eyebrow">{copy.expertsPage.label}</p>
+    <h1 class="measure-display">{copy.expertsPage.heading}</h1>
+    <p class="measure intro">{copy.expertsPage.intro}</p>
+  </header>
+
+  <section class="wrap">
+    <ul class="people">
+      {
+        copy.experts.map((expert) => (
+          <li>
+            <h2>
+              <a href={`/experts/${expert.slug}/`}>
+                {expert.name}, {expert.credential}
+              </a>
+            </h2>
+            <p class="role">{expert.role}</p>
+            <p class="measure">{expert.summary}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="back"><a href="/method/">The disciplines the rest of the bench covers</a></p>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    padding-block: 2.5rem 0.5rem;
+  }
+
+  @media (min-width: 48em) {
+    .page-head {
+      padding-block: 4rem 1rem;
+    }
+  }
+
+  .intro {
+    color: var(--body);
+  }
+
+  .people {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .people h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .role {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .back {
+    margin: 2rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    padding-bottom: 3rem;
+  }
+</style>

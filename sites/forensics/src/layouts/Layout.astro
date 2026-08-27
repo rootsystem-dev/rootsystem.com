@@ -135,6 +135,13 @@ const organization = {
 
     <link rel="sitemap" href="/sitemap-index.xml" />
 
+    {/* Per-route head content. The expert profiles use it for their Person
+        markup, which belongs on the profile and nowhere else. A page passing
+        nothing renders nothing -- but note that content addressed to a slot
+        that does not exist is dropped silently, which is how the first version
+        of the profile markup went missing. */}
+    <slot name="head" />
+
     {
       isHome && (
         <script type="application/ld+json" set:html={JSON.stringify(organization)} />

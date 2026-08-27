@@ -12,6 +12,14 @@ import copy from '../copy/landing'
     {copy.contact.footer} ·{' '}
     <a href={`mailto:${copy.contact.email}`}>{copy.contact.email}</a>
   </p>
+  {/* The footer line already ends on a name. Before the profiles existed it
+      was the only place on the property that named anyone, and it went
+      nowhere. */}
+  <p>
+    <a href={`/experts/${copy.experts[0].slug}/`}>
+      {copy.experts[0].name} — credentials and background
+    </a>
+  </p>
 </footer>
 
 <style>

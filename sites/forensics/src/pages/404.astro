@@ -1,0 +1,81 @@
+---
+/**
+ * Not found.
+ *
+ * Astro emits this as dist/client/404.html, which is what the Worker's
+ * `not_found_handling: "404-page"` serves. Without this file that setting has
+ * nothing to point at, and the reader got the framework's own purple
+ * placeholder -- an unbranded page at the moment someone is deciding whether
+ * this practice is real.
+ *
+ * The routes are listed rather than linked from a single "go home": a reader
+ * who arrived here followed a citation to something specific, and the fastest
+ * repair is to show them the whole property at once. The list is the same
+ * three spokes the masthead carries, plus the intake route the masthead
+ * carries as its call to action.
+ */
+import Layout from '../layouts/Layout.astro'
+import copy from '../copy/landing'
+
+const routes = [
+  { href: '/', label: 'The practice', note: 'What we take, and what the vetting rests on.' },
+  { href: '/method/', label: 'Method', note: 'How an opinion is built to survive cross.' },
+  { href: '/matters/', label: 'Matters', note: 'The four kinds of dispute, and a representative one.' },
+  { href: '/engagements/', label: 'Engagements', note: 'Published rates, conflicts, and objections answered.' },
+  { href: '/scope', label: 'Scope a case', note: 'Conflicts screened before anything else.' },
+]
+---
+
+<Layout title={copy.notFound.title} description={copy.notFound.body}>
+  <section class="wrap">
+    <p class="eyebrow">404</p>
+    <h1 class="measure-display">{copy.notFound.heading}</h1>
+    <p class="measure">{copy.notFound.body}</p>
+
+    <ul class="routes measure">
+      {
+        routes.map((route) => (
+          <li>
+            <a href={route.href}>{route.label}</a>
+            <span>{route.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .routes {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* The label and its note on one line from 40em, stacked below it. Same
+     breakpoint and the same reasoning as the positioning criteria: a 9rem term
+     column on a phone leaves the note wrapping in a strip too narrow to scan. */
+  .routes li {
+    display: grid;
+    gap: 0.125rem;
+  }
+
+  @media (min-width: 40em) {
+    .routes li {
+      grid-template-columns: 11rem 1fr;
+      gap: 1rem;
+      align-items: baseline;
+    }
+  }
+
+  .routes a {
+    font-family: var(--font-heading);
+    color: var(--ink);
+  }
+
+  .routes span {
+    color: var(--body);
+  }
+</style>

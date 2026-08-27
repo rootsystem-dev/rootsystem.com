@@ -496,6 +496,12 @@ const copy: Landing = landingSchema.parse({
     button: 'Scope a case',
   },
 
+  notFound: {
+    title: 'Page not found | Root System Forensics',
+    heading: 'That page is not here',
+    body: 'The link may be stale, or the page may have moved since it was cited. Everything on this property is one click away below.',
+  },
+
   contact: {
     email: 'partners@rootsystem.com',
     footer:

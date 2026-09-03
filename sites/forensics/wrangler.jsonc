@@ -18,7 +18,28 @@
   "assets": {
     "directory": "./dist/client",
     "binding": "ASSETS",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Without this, every browser navigation to a route that is not a built
+    // file 404s, and the Worker is never invoked at all.
+    //
+    // Cloudflare's asset router applies `not_found_handling` only to requests
+    // carrying `Sec-Fetch-Mode: navigate`. A request that misses the asset
+    // manifest is normally passed to the Worker -- but a *navigation* that
+    // misses is answered with 404.html instead. `/scope` and `/api/intake` are
+    // the only routes here that are rendered on demand, so they exist in no
+    // manifest, and a browser asking for either got the 404 page. A form POST
+    // is a navigation too, so intake was unreachable from a browser entirely.
+    //
+    // This was introduced with the 404 page itself. sites/www has the same
+    // `not_found_handling` and is unaffected only because it ships no 404.html
+    // for the router to serve, so its misses still fall through to the Worker.
+    // Nothing caught it because the property had no DNS record until it went
+    // live, and curl sends no Sec-Fetch-Mode -- every check passed.
+    //
+    // Listing routes rather than `true`: the Worker then runs only for the two
+    // paths that need it, and the other 40-odd static files keep being served
+    // by the asset router without invoking it.
+    "run_worker_first": ["/scope", "/scope/", "/api/*"]
   },
   "observability": { "enabled": true },
   "workers_dev": true,

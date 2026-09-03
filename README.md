@@ -93,14 +93,33 @@ One D1 database, `rootsystem-forms`, shared by both sites. `contact_submissions`
 takes the main site's contact form, `case_intake` takes the forensics
 case-scoping form.
 
+Migrations live in `db/migrations` and are applied in filename order. Both
+sites set `migrations_dir` to that one directory, so either works as the
+working directory.
+
 ```bash
 cd sites/www
-npx wrangler d1 execute rootsystem-forms --local  --file=../../db/migrations/0002_spam_and_delivery.sql
-npx wrangler d1 execute rootsystem-forms --remote --file=../../db/migrations/0002_spam_and_delivery.sql
+npx wrangler d1 migrations list  rootsystem-forms --remote
+npx wrangler d1 migrations apply rootsystem-forms --local
+npx wrangler d1 migrations apply rootsystem-forms --remote
 ```
 
-A fresh local database needs every migration in order. `--remote` writes to
-production.
+`--remote` writes to production.
+
+0001 through 0003 were applied by hand with `d1 execute --file=` before
+tracking existed, so wrangler had the schema but no record of it — and
+`migrations apply` would have re-run all three and died on 0002's duplicate
+column. `db/migrations-bootstrap.sql` fixed that by writing the three names
+into `d1_migrations`. It is not a migration, it is idempotent, and a database
+that has never seen it needs it once before `migrations apply` is safe:
+
+```bash
+npx wrangler d1 execute rootsystem-forms --remote --file=../../db/migrations-bootstrap.sql
+```
+
+A fresh local database needs the bootstrap too, or `migrations apply --local`
+will try to replay 0001 through 0003 onto an empty database — which is
+correct for an empty database, so bootstrap only what already has the schema.
 
 `0001_init.sql` carries a confidentiality note about `case_intake`: it receives
 free-text descriptions of live matters. Read it before adding columns or

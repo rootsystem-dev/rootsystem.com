@@ -34,11 +34,17 @@ jobs:
           filters: |
             www:
               - 'sites/www/**'
+              # Both sites render the shared privacy policy, so an edit that
+              # touches only this directory still has to rebuild both.
+              - 'legal/**'
               - 'package.json'
               - 'yarn.lock'
               - '.github/workflows/deploy.yml'
             forensics:
               - 'sites/forensics/**'
+              # Both sites render the shared privacy policy, so an edit that
+              # touches only this directory still has to rebuild both.
+              - 'legal/**'
               - 'package.json'
               - 'yarn.lock'
               - '.github/workflows/deploy.yml'
@@ -144,6 +150,15 @@ jobs:
         env:
           YARN_ENABLE_HARDENED_MODE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         run: yarn install --immutable
+
+      # fnox resolves every secret through the 1Password CLI. Without this the
+      # resolver falls back to individual `op` calls, finds no binary, and
+      # returns nothing -- wrangler then fails on a missing CLOUDFLARE_API_TOKEN
+      # rather than on anything that names the real cause. The site job has the
+      # same step; this one was missing it, and `deploy --dry-run` on a pull
+      # request never authenticates, so CI could not catch it before merge.
+      - name: Install the 1Password CLI
+        uses: 1password/install-cli-action@v1
 
       - name: Deploy
         working-directory: workers/retention

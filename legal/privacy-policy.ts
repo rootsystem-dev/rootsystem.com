@@ -37,6 +37,12 @@
  * standing assumption about how intake is worked, and the commitment below
  * depends on it.
  *
+ * The contact-enquiry clause lost its exception for the same reason. It read
+ * "unless they relate to a live matter or engagement", which nothing in this
+ * database can evaluate either. Both deletions are now unconditional, which is
+ * the only shape a commitment can take when the system making it cannot tell
+ * the exception apart from the rule.
+ *
  * The conflict record names the domain of the address an enquiry arrives from.
  * It is derived at the endpoint and stored, not asked for on the form: `firm`
  * is optional free text, and a website field would be one more question on a
@@ -263,7 +269,7 @@ export const sections: Section[] = [
           {
             term: 'Contact enquiries',
             detail:
-              'Messages sent through the contact form on rootsystem.com are deleted twelve months after they were received, unless they relate to a live matter or engagement.',
+              'Messages sent through the contact form on rootsystem.com are deleted twelve months after they were received.',
           },
           {
             term: 'Submissions judged automated',

@@ -2,8 +2,9 @@
 node = "22"
 yarn = "latest"
 fnox = "latest"
-# Cloudflare deploy tooling. Both sites publish via `wrangler deploy` against
-# their own wrangler.jsonc; CI uses the same binary so local and CI deploys
+# Cloudflare deploy tooling. Both sites and the retention Worker publish via
+# `wrangler deploy` against their own wrangler.jsonc; CI uses the same binary
+# so local and CI deploys
 # cannot drift.
 wrangler = "latest"
 # scripts/frontend-compare.py runs under `uv run --script`, which resolves its

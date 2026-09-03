@@ -125,6 +125,32 @@ correct for an empty database, so bootstrap only what already has the schema.
 free-text descriptions of live matters. Read it before adding columns or
 exporting rows.
 
+## Retention
+
+`workers/retention` is a cron-only Worker that performs the deletions the
+privacy policy commits to: the free-text matter description at 90 days,
+contact enquiries and spam-judged intake rows at twelve months. It has no
+fetch handler, so the cron is the only way in.
+
+The 90-day purge blanks `case_intake.matter_summary` and never deletes the
+row. The conflict record lives in the same row and is kept for as long as the
+practice operates; a DELETE there would destroy what the conflict screen runs
+against.
+
+Every task writes a row to `retention_runs` even when it changed nothing, so a
+zero means the job ran and found nothing due and a missing row means it did not
+run. That table is the evidence that the policy is honored; read it for gaps in
+the dates.
+
+To exercise it locally, against a seeded local database rather than production:
+
+```bash
+cd workers/retention
+npx wrangler d1 migrations apply rootsystem-forms --local
+npx wrangler dev --test-scheduled
+curl http://localhost:8787/__scheduled
+```
+
 ## Secrets and configuration
 
 | Name | Mechanism | Notes |

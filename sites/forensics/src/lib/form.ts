@@ -40,8 +40,25 @@ export function looksLikeEmail(value: string): boolean {
  * is withheld. The response remains the same success redirect a person gets, so
  * the bot learns nothing and does not retry with the field left blank.
  */
+/**
+ * The honeypot field.
+ *
+ * Named `topic_ref` rather than `website`, and carrying the ignore attributes
+ * every major password manager honours, because on 2026-09-03 a real
+ * submission to the forensics form was classified as spam: 1Password filled a
+ * field labelled "Website" with the site's own URL. Password managers match on
+ * name, id and label text, and they ignore `autocomplete="off"`; `tabindex=-1`
+ * only stops keyboard focus. Any name containing website, url, address, phone,
+ * company, user or email is a target, so the field is named after nothing.
+ *
+ * `fax_number` is the name the common writeups suggest, on the grounds that
+ * fax is obsolete enough to be ignored. It was not taken: Chrome's address
+ * autofill has carried a fax field type, and phone and fax sit inside the
+ * address group that gets filled together. A name matching no heuristic at all
+ * is a stronger guarantee than one that is merely unfashionable.
+ */
 export function honeypotValue(form: FormData): string {
-  return field(form, 'website', 100)
+  return field(form, 'topic_ref', 100)
 }
 
 /** The input the Turnstile widget injects into the form it wraps. */

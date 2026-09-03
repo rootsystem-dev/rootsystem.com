@@ -43,7 +43,11 @@
     {
       "binding": "DB",
       "database_name": "rootsystem-forms",
-      "database_id": "218e6fe4-44bd-4d12-a630-9a2c17cc863d"
+      "database_id": "218e6fe4-44bd-4d12-a630-9a2c17cc863d",
+      // Both sites bind the same database and the migrations are shared, so
+      // both point at the one directory at the repo root. Wrangler defaults
+      // to ./migrations beside this file, which does not exist here.
+      "migrations_dir": "../../db/migrations"
     }
   ]
 }

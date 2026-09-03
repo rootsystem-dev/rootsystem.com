@@ -325,7 +325,7 @@ const copy: Landing = landingSchema.parse({
     provenance:
       'These are the fractional CTOs and CPOs who run Root System’s consulting practice, building product for companies that have not yet found a business model. That work makes experimentation and analytical data collection the outcome rather than a report at the end of one. The reproducible experiments filed in a matter come out of the same discipline, not a technique adopted for court.',
     staffing:
-      'Every matter is scoped directly rather than routed. Rob Jacques sets the strategic approach, assembles the team to meet it, stays with the work, and runs technical analysis as one of the experts. People are brought in against the approach, not assigned off a rota.',
+      'Every matter is scoped directly rather than routed. Robert Jacques sets the strategic approach, assembles the team to meet it, stays with the work, and runs technical analysis as one of the experts. People are brought in against the approach, not assigned off a rota.',
   },
 
   services: {
@@ -541,14 +541,14 @@ const copy: Landing = landingSchema.parse({
   // section at all, and it goes in when there is a list.
   experts: [
     {
-      slug: 'rob-jacques',
-      name: 'Rob Jacques',
+      slug: 'robert-jacques',
+      name: 'Robert Jacques',
       credential: 'BSEE',
       role: 'Principal',
       summary:
         'Twenty-five years building and operating the kinds of systems these disputes are about — semiconductor process engineering, commercial software, and the companies that ship it.',
       lede: [
-        'Rob Jacques runs the technical analysis in a matter and sets the approach the bench works to. What he brings to a dispute is not a reading of the literature: he has built, shipped and operated the kind of system in question, after five years in an environment where a measurement that could not be defended was worthless.',
+        'Robert Jacques runs the technical analysis in a matter and sets the approach the bench works to. What he brings to a dispute is not a reading of the literature: he has built, shipped and operated the kind of system in question, after five years in an environment where a measurement that could not be defended was worthless.',
       ],
       sections: [
         {
@@ -594,7 +594,7 @@ const copy: Landing = landingSchema.parse({
   contact: {
     email: 'partners@rootsystem.com',
     footer:
-      'Root System · Forensic & expert-witness services · Rob Jacques, principal',
+      'Root System · Forensic & expert-witness services · Robert Jacques, principal',
     // Published because counsel needs it before they decide to write, not
     // after. One business day rather than 24 hours: the promise has to survive
     // a Friday evening enquiry. It is a commitment, not a nicety -- the intake

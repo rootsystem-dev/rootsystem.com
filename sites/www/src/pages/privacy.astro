@@ -1,0 +1,164 @@
+---
+/**
+ * The privacy policy.
+ *
+ * Same document as the one on forensics.rootsystem.com, from the shared source
+ * in legal/privacy-policy.ts. Both properties are one controller writing into
+ * one database, so publishing two differently-worded policies would be
+ * describing the same processing twice and inviting them to drift.
+ *
+ * The rendering is this site's, not shared: `.page-title` and `.prose` are the
+ * furniture every other page here uses, and the document should look like it
+ * belongs to the site it is served from.
+ */
+import Base from '../layouts/Base.astro'
+import {
+  title,
+  description,
+  intro,
+  sections,
+} from '../../../../legal/privacy-policy'
+---
+
+<Base title={`${title} | Root System`} description={description}>
+  <h1 class="page-title">{title}</h1>
+
+  <div class="prose">
+    {
+      intro.map((block) =>
+        block.kind === 'p' ? <p>{block.text}</p> : null,
+      )
+    }
+
+    <nav class="index" aria-label="On this page">
+      <ul>
+        {
+          sections.map((section) => (
+            <li>
+              <a href={`#${section.id}`}>{section.heading}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {
+      sections.map((section) => (
+        <section id={section.id}>
+          <h2>{section.heading}</h2>
+          {section.blocks.map((block) => {
+            if (block.kind === 'p') return <p>{block.text}</p>
+            if (block.kind === 'ul')
+              return (
+                <ul>
+                  {block.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              )
+            if (block.kind === 'dl')
+              return (
+                <dl>
+                  {block.items.map((item) => (
+                    <div>
+                      <dt>{item.term}</dt>
+                      <dd>{item.detail}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )
+            return (
+              <figure>
+                <figcaption>{block.caption}</figcaption>
+                {/* Scrolls inside itself rather than widening the page. */}
+                <div class="scroller" tabindex="0" role="region" aria-label={block.caption}>
+                  <table>
+                    <thead>
+                      <tr>
+                        {block.head.map((cell) => (
+                          <th scope="col">{cell}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {block.rows.map((row) => (
+                        <tr>
+                          {row.map((cell, column) =>
+                            column === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>,
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </figure>
+            )
+          })}
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .index ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    gap: 0.375rem;
+    font-size: var(--text-xs);
+  }
+
+  dl {
+    display: grid;
+    gap: 1.25rem;
+    margin: 1rem 0;
+  }
+
+  dt {
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+  }
+
+  figure {
+    margin: 1.5rem 0 0;
+  }
+
+  figcaption {
+    color: var(--fg-muted);
+    font-size: var(--text-xs);
+    margin-bottom: 0.75rem;
+  }
+
+  .scroller {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    font-size: var(--text-xs);
+    min-width: 44rem;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--rule);
+    padding: 0.625rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  thead th {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg-muted);
+  }
+
+  tbody th {
+    font-weight: 600;
+  }
+</style>

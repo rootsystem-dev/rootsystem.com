@@ -52,6 +52,17 @@ export const POST: APIRoute = async ({ request }) => {
   const rawType = field(form, 'engagement_type', 40)
   const engagementType = isEngagementType(rawType) ? rawType : null
 
+  // The organization behind an enquiry, derived rather than asked for. `firm`
+  // is optional free text, so the address domain is the more reliable key --
+  // and asking for a website would be one more field on a form whose whole
+  // argument is that it is short. Lowercased so the same firm does not land
+  // under two spellings. Null when the address is malformed; a consumer
+  // mailbox still yields a domain, and the reader has to know that gmail.com
+  // is a mail provider rather than a firm. See db/migrations/0003.
+  const emailDomain = email.includes('@')
+    ? (email.split('@').pop() ?? '').trim().toLowerCase() || null
+    : null
+
   // Field validation is skipped for spam, so that a malformed bot submission
   // still leaves the row it is being stored for.
   if (!verdict.reason && (!name || !summary || !looksLikeEmail(email))) {
@@ -64,13 +75,15 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const result = await env.DB.prepare(
       `INSERT INTO case_intake
-         (name, email, firm, engagement_type, matter_summary, timing,
-          referral_source, cf_country, user_agent, status, spam_reason, spam_detail)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         (name, email, email_domain, firm, engagement_type, matter_summary,
+          timing, referral_source, cf_country, user_agent, status, spam_reason,
+          spam_detail)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
       .bind(
         name,
         email,
+        emailDomain,
         firm || null,
         engagementType,
         summary,

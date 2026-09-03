@@ -1,0 +1,226 @@
+---
+/**
+ * The privacy policy.
+ *
+ * The words come from legal/privacy-policy.ts, which both properties share;
+ * this file is only the forensics rendering of them. The rendering is
+ * duplicated in sites/www rather than extracted into a shared component on
+ * purpose: the two sites have different type scales, measures and rules, and
+ * a shared component would have to be styled through `:global` from both
+ * sides to look right in either. The content is the thing that must not
+ * diverge, and the content is the thing that is shared.
+ *
+ * Not in the copy deck. The deck is the marketing surface — strings that get
+ * argued over, A/B'd and rewritten — and a legal document that changes when
+ * the processing changes does not belong in the same file as a headline.
+ *
+ * No analytics events fire here beyond the ordinary pageview. Instrumenting
+ * the page where someone reads about being measured would be a poor joke.
+ */
+import Layout from '../layouts/Layout.astro'
+import {
+  title,
+  description,
+  effective,
+  intro,
+  sections,
+} from '../../../../legal/privacy-policy'
+
+const webPage = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: new URL('/privacy/', Astro.site).href,
+  dateModified: effective,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Root System Forensics',
+    url: 'https://forensics.rootsystem.com',
+  },
+}
+---
+
+<Layout
+  title={`${title} | Root System Forensics`}
+  description={description}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(webPage)} slot="head" />
+
+  <header class="wrap page-head">
+    <p class="eyebrow">Legal</p>
+    <h1 class="measure-display">{title}</h1>
+    {
+      intro.map((block) =>
+        block.kind === 'p' ? <p class="measure lede">{block.text}</p> : null,
+      )
+    }
+  </header>
+
+  <nav class="wrap index" aria-label="On this page">
+    <ul>
+      {
+        sections.map((section) => (
+          <li>
+            <a href={`#${section.id}`}>{section.heading}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  {
+    sections.map((section) => (
+      <section class="wrap doc" id={section.id}>
+        <h2 class="measure">{section.heading}</h2>
+        {section.blocks.map((block) => {
+          if (block.kind === 'p') return <p class="measure">{block.text}</p>
+          if (block.kind === 'ul')
+            return (
+              <ul class="measure">
+                {block.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )
+          if (block.kind === 'dl')
+            return (
+              <dl class="measure">
+                {block.items.map((item) => (
+                  <div>
+                    <dt>{item.term}</dt>
+                    <dd>{item.detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            )
+          return (
+            <figure class="table-figure">
+              <figcaption class="measure">{block.caption}</figcaption>
+              {/* Scrolls inside itself; five columns of prose cannot be made
+                  to fit a phone, and a horizontally scrolling page is worse
+                  than a horizontally scrolling table. */}
+              <div class="scroller" tabindex="0" role="region" aria-label={block.caption}>
+                <table>
+                  <thead>
+                    <tr>
+                      {block.head.map((cell) => (
+                        <th scope="col">{cell}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {block.rows.map((row) => (
+                      <tr>
+                        {row.map((cell, column) =>
+                          column === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>,
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </figure>
+          )
+        })}
+      </section>
+    ))
+  }
+</Layout>
+
+<style>
+  .page-head {
+    padding-block: 2.5rem 0.5rem;
+  }
+
+  @media (min-width: 48em) {
+    .page-head {
+      padding-block: 4rem 1rem;
+    }
+  }
+
+  .lede {
+    font-size: 1.0625rem;
+    color: var(--ink);
+  }
+
+  /* The section index. Monospaced and small, matching the term columns
+     elsewhere on the property, so it reads as apparatus rather than content. */
+  .index ul {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: grid;
+    gap: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .doc {
+    padding-top: 1.5rem;
+  }
+
+  .doc:last-of-type {
+    padding-bottom: 5rem;
+  }
+
+  .doc dl {
+    display: grid;
+    gap: 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .doc dt {
+    font-weight: 600;
+  }
+
+  .doc dd {
+    margin: 0.25rem 0 0;
+  }
+
+  .doc ul {
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .table-figure {
+    margin: 1.5rem 0 0;
+  }
+
+  .table-figure figcaption {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .scroller {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    min-width: 44rem;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--line);
+    padding: 0.625rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  thead th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  tbody th {
+    font-weight: 600;
+  }
+</style>

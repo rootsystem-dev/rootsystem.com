@@ -25,6 +25,7 @@ jobs:
     outputs:
       www: ${{ steps.filter.outputs.www }}
       forensics: ${{ steps.filter.outputs.forensics }}
+      retention: ${{ steps.filter.outputs.retention }}
     steps:
       - uses: actions/checkout@v5
       - uses: dorny/paths-filter@v3
@@ -40,6 +41,9 @@ jobs:
               - 'sites/forensics/**'
               - 'package.json'
               - 'yarn.lock'
+              - '.github/workflows/deploy.yml'
+            retention:
+              - 'workers/retention/**'
               - '.github/workflows/deploy.yml'
 
   deploy:
@@ -116,3 +120,36 @@ jobs:
         # deliberately: it is either `deploy` or `versions upload`.
         run: |
           fnox run -- sh -c 'wrangler $DEPLOY_CMD'
+
+  # The retention job, deployed on its own rather than through the site matrix.
+  # It is not a site: there is nothing to build, no workspace to name, and the
+  # matrix's working directory and build step do not apply to it.
+  #
+  # A pull request gets a dry run rather than a version upload. Uploading a
+  # version of a cron-only Worker produces nothing anyone can look at, and the
+  # thing actually worth catching before merge is a config or bundling error,
+  # which --dry-run catches. Only primary deploys, and deploying is what
+  # registers the cron trigger.
+  deploy-retention:
+    needs: changes
+    if: needs.changes.outputs.retention == 'true'
+    name: deploy (retention)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: jdx/mise-action@v3
+
+      - name: Install
+        env:
+          YARN_ENABLE_HARDENED_MODE: ${{ github.event_name == 'pull_request' && '1' || '0' }}
+        run: yarn install --immutable
+
+      - name: Deploy
+        working-directory: workers/retention
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          DEPLOY_ARGS: ${{ github.ref == 'refs/heads/primary' && 'deploy' || 'deploy --dry-run' }}
+        # Word-split deliberately, the same way the site deploy is.
+        run: |
+          fnox run -- sh -c 'wrangler $DEPLOY_ARGS'

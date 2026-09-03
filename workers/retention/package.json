@@ -1,0 +1,12 @@
+{
+    "name": "@rootsystem/retention",
+    "version": "3.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "deploy": "wrangler deploy"
+    },
+    "devDependencies": {
+        "@cloudflare/workers-types": "^4.20250109.0"
+    }
+}

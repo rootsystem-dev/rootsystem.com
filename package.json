@@ -6,7 +6,8 @@
   "private": true,
   "packageManager": "yarn@4.18.0",
   "workspaces": [
-    "sites/*"
+    "sites/*",
+        "workers/*"
   ],
   "scripts": {
     "dev:www": "yarn workspace @rootsystem/www dev",

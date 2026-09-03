@@ -1,0 +1,23 @@
+{
+  // The retention job. A separate Worker from the two sites, deliberately:
+  // this one deletes data, and a fault in it must not be able to take down a
+  // request path. It also has no fetch handler at all, so it has no surface
+  // anyone can reach from the internet -- the only way in is the cron.
+  "name": "rootsystem-retention",
+  "compatibility_date": "2026-07-29",
+  "main": "src/index.ts",
+  "observability": { "enabled": true },
+  // No workers_dev subdomain. Nothing should be able to invoke this over HTTP.
+  "workers_dev": false,
+  // Daily, well outside US business hours, so a long-running purge never
+  // competes with a form submission for the same rows.
+  "triggers": { "crons": ["17 9 * * *"] },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rootsystem-forms",
+      "database_id": "218e6fe4-44bd-4d12-a630-9a2c17cc863d",
+      "migrations_dir": "../../db/migrations"
+    }
+  ]
+}

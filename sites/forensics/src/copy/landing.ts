@@ -325,7 +325,7 @@ const copy: Landing = landingSchema.parse({
     provenance:
       'These are the fractional CTOs and CPOs who run Root System’s consulting practice, building product for companies that have not yet found a business model. That work makes experimentation and analytical data collection the outcome rather than a report at the end of one. The reproducible experiments filed in a matter come out of the same discipline, not a technique adopted for court.',
     staffing:
-      'Every matter is scoped directly rather than routed. Rob Jacques sets the strategic approach, assembles the team to meet it, stays with the work, and runs technical analysis as one of the experts. People are brought in against the approach, not assigned off a rota.',
+      'Every matter is scoped directly rather than routed. Robert Jacques sets the strategic approach, assembles the team to meet it, stays with the work, and runs technical analysis as one of the experts. People are brought in against the approach, not assigned off a rota.',
   },
 
   services: {
@@ -506,6 +506,85 @@ const copy: Landing = landingSchema.parse({
     button: 'Scope a case',
   },
 
+  expertsPage: {
+    label: 'The bench',
+    heading: 'Who does the work',
+    intro:
+      'The bench is a dozen people across technology and product leadership. Profiles are published for the people who lead the analysis in a matter; the disciplines the rest of the bench covers are on the method page.',
+  },
+
+  // Written 2026-08-26 from the LinkedIn record, which is authoritative -- an
+  // older written profile in Rob's notes disagreed with it on two dates and
+  // was set aside rather than reconciled. Nothing here is a claim the record
+  // does not carry.
+  //
+  // Restructured 2026-09-03. Three decisions, all of them about who is
+  // reading.
+  //
+  // The record renders above the narrative. The reader is a retaining
+  // attorney checking whether a credential clears a bar, not someone reading
+  // a career, and the degree, the publication and the disciplines are the
+  // check. The prose that survives is the prose that explains where the
+  // method comes from; the rest of the employment history was cut because it
+  // connects to nothing this practice sells.
+  //
+  // Third person, matching every other string on the property. A profile in
+  // first person reads as a personal site, and what is being sold is a
+  // practice.
+  //
+  // Deliberately absent: any claim about AI and machine learning, and any
+  // testimony history. The documented record supports software, data and
+  // systems, and the research depth in machine learning belongs to other
+  // people on the bench -- saying nothing is defensible where an overclaim
+  // would not survive the first cross-examination. Testimony is held open
+  // rather than overlooked: a section with one entry reads thinner than no
+  // section at all, and it goes in when there is a list.
+  experts: [
+    {
+      slug: 'robert-jacques',
+      name: 'Robert Jacques',
+      credential: 'BSEE',
+      role: 'Principal',
+      summary:
+        'Twenty-five years building and operating the kinds of systems these disputes are about — semiconductor process engineering, commercial software, and the companies that ship it.',
+      lede: [
+        'Robert Jacques runs the technical analysis in a matter and, where a matter needs more than one expert, sets the approach the bench works to. What he brings to a dispute is not a reading of the literature: he has built, shipped and operated the kind of system in question, in a wafer fab and then in a software company he ran, where a measurement that could not be defended was worthless.',
+      ],
+      sections: [
+        {
+          heading: 'Where the method comes from',
+          body: [
+            'He started at Intel in Albuquerque in 2001, in defect metrology, process integration and yield, in what was then the first 300mm wafer fab in the United States. The work was Pentium 4 process integration: finding out why a measured signal moved, whether the movement was real, and what it cost in yield. Five years of it.',
+            'The publication above came out of that work, with Process Metrix/Insitec, SEMATECH and Sandia National Laboratories. The sensor used a scanned beam to widen the detection volume and an autocorrelation algorithm to cut false counts, and the paper demonstrated that what it measured correlated with wafer-level defects and with the yield impact that followed.',
+            'That is the same argument we make in a technical dispute now, twenty-six years later. Separate the true detections from the false ones, characterize what the measurement actually says, and show that the shape of the distribution corresponds to something real. The opposing expert in our representative matter read clustered timestamps as mass copying; the discriminator was the shape of the distribution, which is the first thing metrology work teaches you to check.',
+          ],
+        },
+        {
+          heading: 'Building and running commercial software',
+          body: [
+            'From 2014 he led product at CodeScience — conception, business case, design and implementation of commercial AppExchange products — and in 2017 started theCodery, incorporated the following year. He ran it as CEO to thirty-five people and $5.5M in annual revenue before closing it in 2022. Carrying the payroll, the delivery risk and the technical decisions of a software company teaches you the conditions a system was actually built under: the deadlines, the staffing and the commercial pressure behind the code now in dispute. The same bar applied there as in the fab — a result that could not be defended was not worth reporting.',
+            'He is now managing partner at Root System, which builds product and technology for companies that have not yet found a business model, with recent operating roles as fractional CTO at Tot Squad and CTO at Discourse Engine. That consulting practice is where the reproducible experiment comes from. A flattering result that does not replicate is worthless to a founder betting a company on it, and worthless in a deposition.',
+          ],
+        },
+      ],
+      education: [
+        {
+          institution: 'Clarkson University',
+          detail: 'BSc, Electrical Engineering, 2001',
+        },
+      ],
+      affiliations: ['IEEE, 2000–2009'],
+      publications: [
+        {
+          title:
+            'Evaluation of the ‘HiVol’ above-wafer in-situ particle monitoring sensor',
+          where: 'IEEE/SEMI Advanced Semiconductor Manufacturing Conference, 2000',
+          note: 'With Process Metrix/Insitec Measurement Systems, SEMATECH and Sandia National Laboratories.',
+        },
+      ],
+    },
+  ],
+
   notFound: {
     title: 'Page not found | Root System Forensics',
     heading: 'That page is not here',
@@ -515,7 +594,7 @@ const copy: Landing = landingSchema.parse({
   contact: {
     email: 'partners@rootsystem.com',
     footer:
-      'Root System · Forensic & expert-witness services · Rob Jacques, principal',
+      'Root System · Forensic & expert-witness services · Robert Jacques, principal',
     // Published because counsel needs it before they decide to write, not
     // after. One business day rather than 24 hours: the promise has to survive
     // a Friday evening enquiry. It is a commitment, not a nicety -- the intake

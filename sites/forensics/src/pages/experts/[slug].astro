@@ -1,0 +1,222 @@
+---
+/**
+ * An individual expert profile.
+ *
+ * This is the page a retaining attorney asked for and could not find: the
+ * bench block lists disciplines rather than people, on purpose, so before this
+ * route the property named nobody outside a footer line.
+ *
+ * Person JSON-LD is emitted here and nowhere else. It is the only structured
+ * data on the property that carries E-E-A-T signals -- `alumniOf`, `knowsAbout`
+ * and a `worksFor` pointing at the Organization markup on the root page -- and
+ * a profile is the only page entitled to make them.
+ *
+ * `knowsAbout` is derived from the practice areas rather than hand-written,
+ * the same rule the Organization markup follows: one edit to the deck, and
+ * both stay true to the visible page. The visible "Practice areas" row reads
+ * from the same array, so the markup and the page cannot disagree.
+ *
+ * The record -- degree, practice areas, affiliations, publications -- renders
+ * above the narrative rather than below it. The reader is a retaining
+ * attorney checking whether a credential clears a bar; the career prose is
+ * what they read second, if the first check passes.
+ */
+import Layout from '../../layouts/Layout.astro'
+import copy from '../../copy/landing'
+
+export function getStaticPaths() {
+  return copy.experts.map((expert) => ({
+    params: { slug: expert.slug },
+    props: { expert },
+  }))
+}
+
+const { expert } = Astro.props
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: expert.name,
+  honorificSuffix: expert.credential,
+  jobTitle: expert.role,
+  description: expert.summary,
+  url: new URL(`/experts/${expert.slug}/`, Astro.site).href,
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Root System Forensics',
+    url: 'https://forensics.rootsystem.com',
+  },
+  alumniOf: expert.education.map((entry) => ({
+    '@type': 'EducationalOrganization',
+    name: entry.institution,
+  })),
+  knowsAbout: copy.practiceAreas.areas.map((area) => area.name),
+  ...(expert.publications.length && {
+    subjectOf: expert.publications.map((publication) => ({
+      '@type': 'ScholarlyArticle',
+      name: publication.title,
+      publisher: publication.where,
+    })),
+  }),
+}
+---
+
+<Layout
+  title={`${expert.name}, ${expert.credential} — ${expert.role} | Root System Forensics`}
+  description={expert.summary}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(person)} slot="head" />
+
+  <header class="wrap page-head">
+    <p class="eyebrow">{expert.role}</p>
+    <h1 class="measure-display">{expert.name}, {expert.credential}</h1>
+    {expert.lede.map((para) => <p class="measure lede">{para}</p>)}
+  </header>
+
+  <section class="wrap record">
+    <h2 class="measure">The record</h2>
+    <dl class="measure">
+      <div>
+        <dt>Education</dt>
+        <dd>
+          <ul>
+            {expert.education.map((entry) => (
+              <li>
+                {entry.institution} — {entry.detail}
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+      <div>
+        <dt>Practice areas</dt>
+        <dd>
+          <ul>
+            {copy.practiceAreas.areas.map((area) => <li>{area.name}</li>)}
+          </ul>
+        </dd>
+      </div>
+      {
+        expert.affiliations.length > 0 && (
+          <div>
+            <dt>Affiliations</dt>
+            <dd>
+              <ul>
+                {expert.affiliations.map((entry) => (
+                  <li>{entry}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        )
+      }
+      {
+        expert.publications.length > 0 && (
+          <div>
+            <dt>Publications</dt>
+            <dd>
+              <ul>
+                {expert.publications.map((publication) => (
+                  <li>
+                    <cite>{publication.title}</cite>. {publication.where}.{' '}
+                    {publication.note}
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        )
+      }
+    </dl>
+  </section>
+
+  {
+    expert.sections.map((section) => (
+      <section class="wrap">
+        <h2 class="measure">{section.heading}</h2>
+        {section.body.map((para) => (
+          <p class="measure">{para}</p>
+        ))}
+      </section>
+    ))
+  }
+
+  <section class="wrap closing">
+    <h2 class="measure">{copy.closing.headline}</h2>
+    <a class="cta" href="/scope">{copy.closing.button} &rarr;</a>
+    <p class="back"><a href="/experts/">The rest of the bench</a></p>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    padding-block: 2.5rem 0.5rem;
+  }
+
+  @media (min-width: 48em) {
+    .page-head {
+      padding-block: 4rem 1rem;
+    }
+  }
+
+  .lede {
+    font-size: 1.0625rem;
+    color: var(--ink);
+  }
+
+  /* Sits directly under the lede, so it carries its own separation from the
+     header rather than inheriting the spacing of a mid-page section. */
+  .record {
+    padding-top: 1.5rem;
+  }
+
+  .record dl {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0;
+  }
+
+  /* The term column matches the screening index on the root page: single
+     column below 40em, a 9rem term beside its answer above it. */
+  .record dl > div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  @media (min-width: 40em) {
+    .record dl > div {
+      grid-template-columns: 9rem 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .record dt {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  .record dd {
+    margin: 0;
+  }
+
+  .record ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .closing {
+    padding-bottom: 5rem;
+  }
+
+  .back {
+    margin: 2rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+</style>

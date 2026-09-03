@@ -40,6 +40,17 @@ import copy from '../copy/landing'
   <div class="measure notes">
     <p>{copy.bench.provenance}</p>
     <p>{copy.bench.staffing}</p>
+    {/* The staffing paragraph names the person who sets the approach, and
+        until the profiles existed a reader had no way to check who that was.
+        A separate line rather than a link inside the sentence: the paragraph
+        is one string in the copy deck, and splitting it to linkify a name
+        would put markup decisions into the copy. */}
+    <p class="profile-link">
+      <a href={`/experts/${copy.experts[0].slug}/`}>
+        {copy.experts[0].name}, {copy.experts[0].credential} — background and
+        publications
+      </a>
+    </p>
   </div>
 </section>
 
@@ -56,6 +67,11 @@ import copy from '../copy/landing'
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
     gap: 2rem;
     margin-top: 2.5rem;
+  }
+
+  .profile-link {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
   }
 
   .groups h3 {

@@ -260,6 +260,64 @@ export const landingSchema = z.object({
     button: z.string(),
   }),
 
+  // The expert profiles.
+  //
+  // Added 2026-08-26 after an attorney reviewing the property said the
+  // credentials mattered most and could not find them: the bench block lists
+  // disciplines rather than people, deliberately, and no page named anyone.
+  // The comment in Bench.astro anticipated this -- individual profiles were
+  // "the later move if a niche justifies them" -- and a retaining attorney
+  // asking for them is that justification.
+  //
+  // An array with one entry rather than a single object, because the practice
+  // is a bench and the positioning depends on it. A structure that can only
+  // hold one person would quietly argue the opposite of what the bench block
+  // says, and adding the second profile has to be copy rather than a rewrite.
+  //
+  // `entries` inside a section are strings rather than a richer shape on
+  // purpose: a career is prose here, not a table of dates. The dates that
+  // matter are in the prose where they can be qualified, because "founded in
+  // 2017, incorporated in 2018" is the kind of precision a CV column cannot
+  // carry and a cross-examination will ask for.
+  experts: z
+    .array(
+      z.object({
+        slug: z.string(),
+        name: z.string(),
+        // Post-nominal or degree abbreviation. Shown beside the name.
+        credential: z.string(),
+        role: z.string(),
+        // One sentence, used on the index and as the page description.
+        summary: z.string(),
+        lede: z.array(z.string()).min(1),
+        sections: z
+          .array(
+            z.object({
+              heading: z.string(),
+              body: z.array(z.string()).min(1),
+            }),
+          )
+          .min(1),
+        // Split rather than one string: `alumniOf` in the Person markup has
+        // to name the institution alone, and "BSEE, Clarkson University, 2001"
+        // is not the name of an organization.
+        education: z
+          .array(z.object({ institution: z.string(), detail: z.string() }))
+          .min(1),
+        affiliations: z.array(z.string()),
+        publications: z.array(
+          z.object({ title: z.string(), where: z.string(), note: z.string() }),
+        ),
+      }),
+    )
+    .min(1),
+
+  expertsPage: z.object({
+    label: z.string(),
+    heading: z.string(),
+    intro: z.string(),
+  }),
+
   // The 404 page. In the deck rather than inline in the page component,
   // because every other string a reader can see is, and a page reached by a
   // stale link is one of the few where the wording is doing real work: the

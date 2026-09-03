@@ -46,13 +46,24 @@ export const POST: APIRoute = async ({ request }) => {
   const email = field(form, 'email', LIMITS.email)
   const message = field(form, 'message', LIMITS.message)
 
-  // Field validation is skipped for spam. Rejecting a bot for a malformed email
-  // address would discard the row, and the row is the reason for storing it.
-  if (!verdict.reason && (!name || !message || !looksLikeEmail(email))) {
+  // Only a failed Turnstile holds a submission back. A honeypot hit on its own
+  // is recorded and still delivered: the assumption that a person never fills a
+  // hidden field was disproved on 2026-09-03 by a password manager, and the
+  // failure was silent -- the row was stored with status 'held' and nobody was
+  // told an enquiry had arrived. Turnstile is the real bot gate; the honeypot
+  // is now a signal on a delivered message rather than a verdict that buries
+  // one.
+  const heldForSpam = verdict.reason?.includes('turnstile') ?? false
+
+  // Validation is skipped only for a submission being stored purely as
+  // evidence. Rejecting a bot for a malformed email address would discard the
+  // row, and the row is the reason for storing it. A honeypot-flagged row is
+  // delivered, so it still has to be a usable enquiry.
+  if (!heldForSpam && (!name || !message || !looksLikeEmail(email))) {
     return redirectTo('/contact?error=invalid')
   }
 
-  const status = verdict.reason ? 'held' : 'pending'
+  const status = heldForSpam ? 'held' : 'pending'
 
   let rowId: number | null = null
   try {
@@ -74,18 +85,11 @@ export const POST: APIRoute = async ({ request }) => {
     return redirectTo('/contact?error=server')
   }
 
-  if (verdict.reason) {
-    // A person does not fill a hidden field, so a honeypot hit has effectively
-    // no false positives and gets the same success redirect as a real
-    // submission -- the bot learns nothing. Turnstile does produce false
-    // positives, so a person who failed the challenge is told to retry rather
-    // than thanked for a message that will never be read.
-    return verdict.reason.includes('turnstile')
-      ? redirectTo('/contact?error=captcha')
-      : redirectTo('/contact?sent=1')
-  }
+  // Turnstile produces false positives, so a person who failed the challenge is
+  // told to retry rather than thanked for a message that will never be read.
+  if (heldForSpam) return redirectTo('/contact?error=captcha')
 
-  await notify({ rowId, name, email, message, country })
+  await notify({ rowId, name, email, message, country, flagDetail: verdict.detail })
 
   return redirectTo('/contact?sent=1')
 }
@@ -103,6 +107,8 @@ async function notify(submission: {
   email: string
   message: string
   country: string | null
+  /** Set when a spam check fired on a submission we are delivering anyway. */
+  flagDetail: string | null
 }): Promise<void> {
   const outcome = await sendNotification(
     {
@@ -111,13 +117,15 @@ async function notify(submission: {
       to: env.NOTIFY_TO,
     },
     {
-      subject: `[rootsystem.com] Contact — ${submission.name}`,
+      // The flag leads the subject so a filter can act on it.
+      subject: `${submission.flagDetail ? '[flagged] ' : ''}[rootsystem.com] Contact — ${submission.name}`,
       replyTo: submission.email,
       text: formatBody([
         ['Name', submission.name],
         ['Email', submission.email],
         ['Country', submission.country],
         ['Row', submission.rowId ? String(submission.rowId) : null],
+        ['Spam check', submission.flagDetail],
         ['', ''],
         ['Message', `\n${submission.message}`],
       ]),

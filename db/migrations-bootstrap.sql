@@ -17,8 +17,10 @@
 -- that is what wrangler inserts after running a file. Both have to match
 -- exactly or wrangler will not recognize its own bookkeeping.
 --
--- Idempotent: `name` is UNIQUE and the inserts are OR IGNORE, so re-running
--- this changes nothing. `applied_at` will say when the bootstrap ran rather
+-- Idempotent, and safe on a database at any point in the sequence: `name` is
+-- UNIQUE, the inserts are OR IGNORE, and each is guarded on the schema its
+-- migration creates. Running it on an empty database records nothing, which is
+-- correct -- `migrations apply` should then run all four. `applied_at` will say when the bootstrap ran rather
 -- than when each migration actually ran, which is the one thing it cannot
 -- reconstruct.
 --
@@ -32,7 +34,29 @@ CREATE TABLE IF NOT EXISTS "d1_migrations"(
 	applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-INSERT OR IGNORE INTO d1_migrations (name) VALUES
-  ('0001_init.sql'),
-  ('0002_spam_and_delivery.sql'),
-  ('0003_email_domain.sql');
+-- Each row is recorded only if the schema that migration creates is actually
+-- present. An unconditional list asserts rather than checks, and asserting is
+-- wrong: a database that had 0001 and 0002 but not 0003 would be told 0003 was
+-- applied, and `migrations apply` would then skip it forever. That happened on
+-- a local database on 2026-09-03, which is why these are guarded.
+--
+-- Each guard names something only its own migration creates.
+INSERT OR IGNORE INTO d1_migrations (name)
+  SELECT '0001_init.sql'
+   WHERE EXISTS (SELECT 1 FROM sqlite_master
+                  WHERE type = 'table' AND name = 'case_intake');
+
+INSERT OR IGNORE INTO d1_migrations (name)
+  SELECT '0002_spam_and_delivery.sql'
+   WHERE EXISTS (SELECT 1 FROM pragma_table_info('case_intake')
+                  WHERE name = 'spam_reason');
+
+INSERT OR IGNORE INTO d1_migrations (name)
+  SELECT '0003_email_domain.sql'
+   WHERE EXISTS (SELECT 1 FROM pragma_table_info('case_intake')
+                  WHERE name = 'email_domain');
+
+INSERT OR IGNORE INTO d1_migrations (name)
+  SELECT '0004_retention_runs.sql'
+   WHERE EXISTS (SELECT 1 FROM sqlite_master
+                  WHERE type = 'table' AND name = 'retention_runs');

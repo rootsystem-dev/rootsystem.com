@@ -65,11 +65,23 @@ export const POST: APIRoute = async ({ request }) => {
 
   // Field validation is skipped for spam, so that a malformed bot submission
   // still leaves the row it is being stored for.
-  if (!verdict.reason && (!name || !summary || !looksLikeEmail(email))) {
+  // Only a failed Turnstile holds a submission back. A honeypot hit on its own
+  // is recorded and still delivered: the assumption that a person never fills a
+  // hidden field was disproved on 2026-09-03 by a password manager, and the
+  // failure was silent -- the row was stored with status 'held' and nobody was
+  // told an enquiry had arrived. Turnstile is the real bot gate; the honeypot
+  // is now a signal on a delivered message rather than a verdict that buries
+  // one.
+  const heldForSpam = verdict.reason?.includes('turnstile') ?? false
+
+  // Validation is skipped only for a submission that is being stored purely as
+  // evidence. A honeypot-flagged row is still delivered, so it still has to be
+  // a usable enquiry.
+  if (!heldForSpam && (!name || !summary || !looksLikeEmail(email))) {
     return redirectTo('/scope?error=invalid')
   }
 
-  const status = verdict.reason ? 'held' : 'pending'
+  const status = heldForSpam ? 'held' : 'pending'
 
   let rowId: number | null = null
   try {
@@ -105,13 +117,14 @@ export const POST: APIRoute = async ({ request }) => {
     return redirectTo('/scope?error=server')
   }
 
-  if (verdict.reason) {
-    return verdict.reason.includes('turnstile')
-      ? redirectTo('/scope?error=captcha')
-      : redirectTo('/scope?sent=1')
-  }
+  // A person who failed the challenge is told to retry rather than thanked for
+  // a message that will never be read.
+  if (heldForSpam) return redirectTo('/scope?error=captcha')
 
-  await notify({ rowId, name, email, firm, engagementType, summary, timing, referral, country })
+  await notify({
+    rowId, name, email, firm, engagementType, summary, timing, referral, country,
+    flagDetail: verdict.detail,
+  })
 
   return redirectTo('/scope?sent=1')
 }
@@ -136,6 +149,8 @@ async function notify(submission: {
   timing: string
   referral: string
   country: string | null
+  /** Set when a spam check fired on a submission we are delivering anyway. */
+  flagDetail: string | null
 }): Promise<void> {
   const outcome = await sendNotification(
     {
@@ -145,7 +160,10 @@ async function notify(submission: {
       cc: env.NOTIFY_CC,
     },
     {
-      subject: `[forensics] Case intake — ${submission.name}`,
+      // The flag leads the subject so a filter can act on it, and the reason
+      // travels in the body so triage does not need the database to interpret
+      // it.
+      subject: `${submission.flagDetail ? '[flagged] ' : ''}[forensics] Case intake — ${submission.name}`,
       replyTo: submission.email,
       text: formatBody([
         ['Name', submission.name],
@@ -156,6 +174,7 @@ async function notify(submission: {
         ['Referral', submission.referral],
         ['Country', submission.country],
         ['Row', submission.rowId ? String(submission.rowId) : null],
+        ['Spam check', submission.flagDetail],
         ['', ''],
         ['Matter', `\n${submission.summary}`],
       ]),

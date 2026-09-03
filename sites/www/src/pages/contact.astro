@@ -74,8 +74,22 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY
           {/* Honeypot. Hidden from people, filled by bots. Not `type=hidden`,
               which bots skip -- it must look like a real field to a scraper. */}
           <div class="decoy" aria-hidden="true">
-            <label for="website">Website</label>
-            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+            <label for="topic_ref">Leave this field blank</label>
+            <input
+              id="topic_ref"
+              name="topic_ref"
+              type="text"
+              tabindex="-1"
+              aria-hidden="true"
+              {/* Browsers ignore the "off" value here. "new-password" is
+                  respected universally, because suppressing a suggestion while
+                  someone chooses a new password is the one case every vendor
+                  implements. The data attributes are belt to that brace. */}
+              autocomplete="new-password"
+              data-1p-ignore
+              data-lpignore="true"
+              data-form-type="other"
+            />
           </div>
 
           {/* Implicit rendering: the script finds this container and injects

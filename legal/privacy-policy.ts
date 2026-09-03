@@ -37,6 +37,14 @@
  * standing assumption about how intake is worked, and the commitment below
  * depends on it.
  *
+ * The conflict record names the domain of the address an enquiry arrives from.
+ * It is derived at the endpoint and stored, not asked for on the form: `firm`
+ * is optional free text, and a website field would be one more question on a
+ * form whose argument is that it is short. See db/migrations/0003. A consumer
+ * mailbox yields a domain that identifies a mail provider rather than a firm,
+ * which is why the policy says "the domain of the address you write from" and
+ * does not call it the firm's domain.
+ *
  * The block model is deliberately small -- a paragraph, a list, a definition
  * list, a table. A rich-text pipeline for one document that changes twice a
  * year would cost more than it returns.
@@ -159,7 +167,7 @@ export const sections: Section[] = [
       },
       {
         kind: 'p',
-        text: 'forensics.rootsystem.com stores one anonymous identifier in your browser’s sessionStorage, which your browser discards when you close the tab. Its only purpose is to join the pages of a single visit together so that we can see whether the site answers a question in the order it is written. It does not persist between visits and cannot identify you.',
+        text: 'forensics.rootsystem.com stores one anonymous identifier in your browser’s sessionStorage, which your browser discards when you close the tab. Its only purpose is to join the pages of a single visit together. It does not persist between visits and cannot identify you.',
       },
       {
         kind: 'p',
@@ -176,10 +184,10 @@ export const sections: Section[] = [
         kind: 'ul',
         items: [
           'To respond to your enquiry, and to reply within the response time the Sites publish.',
-          'To run a conflict check. A technical-analysis practice cannot take a matter without knowing who the parties are and what it has previously been approached about, so we check a new enquiry against our record of past enquiries and current engagements.',
+          'To run a conflict check, against our record of past enquiries and current engagements.',
           'To scope, price and deliver an engagement, and to administer it.',
           'To operate and secure the Sites, including detecting and blocking automated and abusive submissions.',
-          'To understand, in aggregate, how the forensics site is used and whether it answers the questions it is built to answer.',
+          'To understand, in aggregate, how the forensics site is used.',
           'To comply with law, and to establish, exercise or defend legal claims.',
         ],
       },
@@ -240,12 +248,12 @@ export const sections: Section[] = [
           {
             term: 'Case intake — the matter description',
             detail:
-              'We delete the free-text description of the matter 90 days after it is submitted. There is no exception to this: it is the most sensitive thing on the form and the part with the shortest useful life, and where a matter goes on to become an engagement, the engagement record is kept elsewhere rather than in the form the enquiry arrived on.',
+              'We delete the free-text description of the matter 90 days after it is submitted. There is no exception to this. Where a matter goes on to become an engagement, the matter record is held in a separate system, not in the one that receives the form.',
           },
           {
             term: 'Case intake — the conflict record',
             detail:
-              'We keep your name, email address, firm, the engagement type and the date for as long as we operate the practice. This is the record a conflict check runs against: a practice has to be able to say who has approached it, about which side, and when. Keeping it is what allows us to decline a matter we should decline.',
+              'We keep your name, email address, the domain of the address you write from, the firm name if you give one, the engagement type and the date for as long as we operate the practice, so that we can check conflicts against new matters.',
           },
           {
             term: 'Engaged matters',
@@ -279,10 +287,6 @@ export const sections: Section[] = [
       {
         kind: 'p',
         text: 'The Sites are served over HTTPS and submissions are transmitted encrypted. Stored submissions sit in a managed database with access limited to the people who operate the practice. We use technical, organizational and physical safeguards designed to protect personal information, but security risk is inherent in all internet and information technology and we cannot guarantee the security of your information.',
-      },
-      {
-        kind: 'p',
-        text: 'This is the second reason the intake form asks you not to send privileged material: no safeguard makes an unretained screening form the right channel for it.',
       },
     ],
   },
@@ -358,11 +362,11 @@ export const sections: Section[] = [
       },
       {
         kind: 'p',
-        text: `Making a request. Email ${privacyContact} with the request you want to make. We do not operate a request webform or a phone line; a shared mailbox that a person reads is a more reliable route than either.`,
+        text: `Making a request. Email ${privacyContact} with the request you want to make. We do not operate a request webform or a phone line.`,
       },
       {
         kind: 'p',
-        text: 'Verifying a request. Because almost everything we hold arrives through a form that carries an email address, we will ordinarily verify you by asking you to write from the address used to submit it, or by asking for detail that matches a record we hold. We will not ask for government identification unless we cannot verify a request any other way, and we will not use anything you send for verification for any other purpose.',
+        text: 'Verifying a request. We will ordinarily verify you by asking you to write from the email address used to submit the form, or by asking for detail that matches a record we hold. We will not ask for government identification unless we cannot verify a request any other way, and we will not use anything you send for verification for any other purpose.',
       },
       {
         kind: 'p',
@@ -381,7 +385,7 @@ export const sections: Section[] = [
         ],
         rows: [
           [
-            'Contact data: name, email address, firm or company',
+            'Contact data: name, email address, the domain of that address, firm or company',
             'Identifiers; professional or employment-related information',
             'Responding to enquiries; conflict checks; scoping and delivering an engagement; security',
             'Service providers (hosting and database, email delivery); professional advisers',
@@ -404,7 +408,7 @@ export const sections: Section[] = [
           [
             'Usage data from forensics.rootsystem.com: declared page and interaction events, session-scoped anonymous identifier',
             'Internet or other electronic network activity information',
-            'Measuring whether the site answers the questions it is built to answer',
+            'Measuring how the site is used',
             'Service provider (product analytics)',
             'None',
           ],

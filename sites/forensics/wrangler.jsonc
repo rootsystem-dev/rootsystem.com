@@ -1,4 +1,13 @@
 {
+  // Production route, attached 2026-09-03. A route rather than a custom domain,
+  // matching sites/www: the DNS record is a proxied placeholder pointing at
+  // RFC 5737 TEST-NET-1, so nothing can be served if the Worker is ever
+  // detached. The apex record points at a real Netlify address because the
+  // apex has a rollback origin; this property has none, and a placeholder that
+  // fails loudly is better than one that silently serves someone else.
+  "routes": [
+    { "pattern": "forensics.rootsystem.com/*", "zone_name": "rootsystem.com" }
+  ],
   // forensics.rootsystem.com — static assets plus the case-intake endpoint.
   // Shares the rootsystem-forms D1 database with sites/www; see
   // db/migrations/0001_init.sql for why one database with two tables.

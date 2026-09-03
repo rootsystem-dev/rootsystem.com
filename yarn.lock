@@ -538,6 +538,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cloudflare/workers-types@npm:^4.20250109.0":
+  version: 4.20260702.1
+  resolution: "@cloudflare/workers-types@npm:4.20260702.1"
+  checksum: 10c0/2dbd1d8d99285b49f90457321cc6f3668ac2fb89c9e24b36539e60f67925611078724093176bfbe06c8ab8d98eafd4902e4faa2e96a1378f96b14498c28ccdda
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:0.8.1":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -1601,6 +1608,14 @@ __metadata:
     astro: "npm:^7.1.6"
     posthog-js: "npm:^1.419.4"
     typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@rootsystem/retention@workspace:workers/retention":
+  version: 0.0.0-use.local
+  resolution: "@rootsystem/retention@workspace:workers/retention"
+  dependencies:
+    "@cloudflare/workers-types": "npm:^4.20250109.0"
   languageName: unknown
   linkType: soft
 

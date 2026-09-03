@@ -20,6 +20,11 @@ import copy from '../copy/landing'
       {copy.experts[0].name} — credentials and background
     </a>
   </p>
+  {/* The intake form takes a written description of a live matter, so the
+      policy governing what happens to it has to be reachable from the page
+      the form is on -- which, since this footer renders on every route, it
+      now is. */}
+  <p><a href="/privacy/">Privacy policy</a></p>
 </footer>
 
 <style>

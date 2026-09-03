@@ -36,8 +36,18 @@ import { landingSchema, type Landing } from './schema'
  */
 const copy: Landing = landingSchema.parse({
   meta: {
-    title:
-      'Software, Data and AI Expert Witness — Vet Us First | Root System Forensics',
+    // Retitled 2026-09-03, the day the property went public. The previous
+    // title put AI in the head position against "Expert Witness", which reads
+    // as the specialty -- the exact claim the Variant D reversal removed when
+    // the practice became four peer areas rather than an AI practice. It also
+    // ran to 79 characters, so search truncated the brand and kept the AI.
+    //
+    // "Systems" carries the software-failure and data-forensics areas without
+    // naming either, and "Software" stays in the head slot because "software
+    // expert witness" is the query with volume behind it. The vetting hook
+    // comes out of the title and stays where it does more work, in the hero
+    // headline and the description below.
+    title: 'Software, Data and Systems Expert Witness | Root System Forensics',
     description:
       'Technical expert analysis of software, source code, data and machine-learning systems. The things counsel screens an expert on — hands-on depth, evidence experience, independence, and whether we can explain it to a jury — are answered on the page, with published rates.',
   },

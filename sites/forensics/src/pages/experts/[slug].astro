@@ -13,7 +13,13 @@
  *
  * `knowsAbout` is derived from the practice areas rather than hand-written,
  * the same rule the Organization markup follows: one edit to the deck, and
- * both stay true to the visible page.
+ * both stay true to the visible page. The visible "Practice areas" row reads
+ * from the same array, so the markup and the page cannot disagree.
+ *
+ * The record -- degree, practice areas, affiliations, publications -- renders
+ * above the narrative rather than below it. The reader is a retaining
+ * attorney checking whether a credential clears a bar; the career prose is
+ * what they read second, if the first check passes.
  */
 import Layout from '../../layouts/Layout.astro'
 import copy from '../../copy/landing'
@@ -67,19 +73,8 @@ const person = {
     {expert.lede.map((para) => <p class="measure lede">{para}</p>)}
   </header>
 
-  {
-    expert.sections.map((section) => (
-      <section class="wrap">
-        <h2 class="measure">{section.heading}</h2>
-        {section.body.map((para) => (
-          <p class="measure">{para}</p>
-        ))}
-      </section>
-    ))
-  }
-
   <section class="wrap record">
-    <h2 class="measure">Education, affiliations and publications</h2>
+    <h2 class="measure">The record</h2>
     <dl class="measure">
       <div>
         <dt>Education</dt>
@@ -90,6 +85,14 @@ const person = {
                 {entry.institution} — {entry.detail}
               </li>
             ))}
+          </ul>
+        </dd>
+      </div>
+      <div>
+        <dt>Practice areas</dt>
+        <dd>
+          <ul>
+            {copy.practiceAreas.areas.map((area) => <li>{area.name}</li>)}
           </ul>
         </dd>
       </div>
@@ -127,6 +130,17 @@ const person = {
     </dl>
   </section>
 
+  {
+    expert.sections.map((section) => (
+      <section class="wrap">
+        <h2 class="measure">{section.heading}</h2>
+        {section.body.map((para) => (
+          <p class="measure">{para}</p>
+        ))}
+      </section>
+    ))
+  }
+
   <section class="wrap closing">
     <h2 class="measure">{copy.closing.headline}</h2>
     <a class="cta" href="/scope">{copy.closing.button} &rarr;</a>
@@ -148,6 +162,12 @@ const person = {
   .lede {
     font-size: 1.0625rem;
     color: var(--ink);
+  }
+
+  /* Sits directly under the lede, so it carries its own separation from the
+     header rather than inheriting the spacing of a mid-page section. */
+  .record {
+    padding-top: 1.5rem;
   }
 
   .record dl {

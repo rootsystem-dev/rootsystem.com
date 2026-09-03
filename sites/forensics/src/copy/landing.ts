@@ -510,23 +510,35 @@ const copy: Landing = landingSchema.parse({
     label: 'The bench',
     heading: 'Who does the work',
     intro:
-      'The bench is a dozen people across technology and product leadership. The profiles below are the ones a retaining attorney has asked to see; the disciplines the rest of the bench covers are on the method page.',
+      'The bench is a dozen people across technology and product leadership. Profiles are published for the people who lead the analysis in a matter; the disciplines the rest of the bench covers are on the method page.',
   },
 
   // Written 2026-08-26 from the LinkedIn record, which is authoritative -- an
   // older written profile in Rob's notes disagreed with it on two dates and
   // was set aside rather than reconciled. Nothing here is a claim the record
-  // does not carry, and where the record is imprecise the copy says so rather
-  // than rounding in the flattering direction.
+  // does not carry.
   //
-  // Two structural decisions. The semiconductor work leads, because the
-  // publication is the closest thing on the property to a peer-reviewed
-  // version of the method the practice sells: false counts separated from true
-  // detections in a measured distribution, correlated to an outcome. And AI
-  // and machine learning is stated as adjacent rather than central, because
-  // the documented record supports software, data and systems -- the research
-  // depth in that area belongs to other people on the bench, and a profile
-  // that claimed otherwise would not survive the first cross-examination.
+  // Restructured 2026-09-03. Three decisions, all of them about who is
+  // reading.
+  //
+  // The record renders above the narrative. The reader is a retaining
+  // attorney checking whether a credential clears a bar, not someone reading
+  // a career, and the degree, the publication and the disciplines are the
+  // check. The prose that survives is the prose that explains where the
+  // method comes from; the rest of the employment history was cut because it
+  // connects to nothing this practice sells.
+  //
+  // Third person, matching every other string on the property. A profile in
+  // first person reads as a personal site, and what is being sold is a
+  // practice.
+  //
+  // Deliberately absent: any claim about AI and machine learning, and any
+  // testimony history. The documented record supports software, data and
+  // systems, and the research depth in machine learning belongs to other
+  // people on the bench -- saying nothing is defensible where an overclaim
+  // would not survive the first cross-examination. Testimony is held open
+  // rather than overlooked: a section with one entry reads thinner than no
+  // section at all, and it goes in when there is a list.
   experts: [
     {
       slug: 'rob-jacques',
@@ -534,15 +546,15 @@ const copy: Landing = landingSchema.parse({
       credential: 'BSEE',
       role: 'Principal',
       summary:
-        'Twenty-five years building and running the kinds of systems these disputes are about — semiconductor process engineering, commercial software, and the companies that ship it.',
+        'Twenty-five years building and operating the kinds of systems these disputes are about — semiconductor process engineering, commercial software, and the companies that ship it.',
       lede: [
-        'I run the technical analysis in a matter and set the approach for the bench around it. What I bring to a dispute is not a reading of the literature; it is having built, shipped and operated the kind of system in question, and having spent five years before that in an environment where a measurement that could not be defended was worthless.',
+        'Rob Jacques runs the technical analysis in a matter and sets the approach the bench works to. What he brings to a dispute is not a reading of the literature: he has built, shipped and operated the kind of system in question, after five years in an environment where a measurement that could not be defended was worthless.',
       ],
       sections: [
         {
           heading: 'Where the method comes from',
           body: [
-            'I started at Intel in Albuquerque in 2001, in defect metrology, process integration and yield, in what was then the first 300mm wafer fab in the United States. The work was Pentium 4 process integration: finding out why a measured signal moved, whether the movement was real, and what it cost in yield. Five years of it.',
+            'He started at Intel in Albuquerque in 2001, in defect metrology, process integration and yield, in what was then the first 300mm wafer fab in the United States. The work was Pentium 4 process integration: finding out why a measured signal moved, whether the movement was real, and what it cost in yield. Five years of it.',
             'That is also where the publication comes from. “Evaluation of the ‘HiVol’ above-wafer in-situ particle monitoring sensor” was presented at the IEEE/SEMI Advanced Semiconductor Manufacturing Conference in 2000, jointly with Process Metrix/Insitec, SEMATECH and Sandia National Laboratories. The sensor used a scanned beam to widen the detection volume and an autocorrelation algorithm to cut false counts, and the paper demonstrated that what it measured correlated with wafer-level defects and with the yield impact that followed.',
             'That is the same argument this practice makes in a technical dispute twenty-six years later. Separate the true detections from the false ones, characterize what the measurement actually says, and show that the shape of the distribution corresponds to something real. The opposing expert in our representative matter read clustered timestamps as mass copying; the discriminator was the shape of the distribution, and knowing to look there is not a technique picked up for court.',
           ],
@@ -550,23 +562,8 @@ const copy: Landing = landingSchema.parse({
         {
           heading: 'Building and running commercial software',
           body: [
-            'After Intel: manufacturing engineering at ICM Controls in Syracuse, and concurrently co-founding Infrastructure Construction Corporation in Bahrain, sourcing and reconfiguring GE turbines for peaking-power and desalination projects across the Gulf. Those two overlap in the record because they genuinely overlapped — one was the day job and one was built alongside it.',
-            'Then consulting and product: Accenture from 2010, Salesforce as a senior consultant from 2012, and CodeScience from 2014 as a senior product manager leading conception, business case, design and implementation of commercial AppExchange products.',
-            'In 2017 I started theCodery, incorporated the following year, and ran it as CEO to thirty-five people and $5.5M in revenue before closing it in 2022. Building commercial software is one thing; carrying the payroll, the delivery risk and the technical decisions of a company that does it is a different kind of knowledge, and it is the kind that tells you what a system was actually built under.',
-          ],
-        },
-        {
-          heading: 'Now',
-          body: [
-            'I am managing partner at Root System, which builds product and technology for companies that have not yet found a business model — fractional CTO and CPO work, 0-to-1 development, and the experimentation that goes with both. Recent operating roles include fractional CTO at Tot Squad and CTO at Discourse Engine.',
-            'That consulting practice is why the reproducible experiment is the deliverable here rather than a technique adopted for litigation. A flattering result that does not replicate is worthless to a founder betting a company on it, and it is worthless to counsel for the same reason.',
-          ],
-        },
-        {
-          heading: 'AI and machine learning',
-          body: [
-            'Stated plainly, because it is the area a reader is most likely to over-read: I am not the research expert on this bench. I have built machine-learning systems in production — at Discourse Engine I built the comment classifier and the nearest-neighbour retrieval behind it — and I completed the Deep Atlas machine-learning programme in 2025. I have no graduate degree or research record in the field.',
-            'What that means for a matter is specific. I can characterize what a model was trained on, what its outputs vary with, and whether an experiment run against it holds up, because that is engineering. Where a matter turns on the research itself, the bench carries people whose working life that is, and the profile of whoever runs that analysis is the one you should be reading.',
+            'From 2014 he led product at CodeScience — conception, business case, design and implementation of commercial AppExchange products — and in 2017 started theCodery, incorporated the following year. He ran it as CEO to thirty-five people and $5.5M in revenue before closing it in 2022. Building commercial software is one thing; carrying the payroll, the delivery risk and the technical decisions of a company that does it is a different kind of knowledge, and it is the kind that tells you what a system was actually built under.',
+            'He is now managing partner at Root System, which builds product and technology for companies that have not yet found a business model, with recent operating roles as fractional CTO at Tot Squad and CTO at Discourse Engine. That consulting practice is why the reproducible experiment is the deliverable here rather than a technique adopted for litigation: a flattering result that does not replicate is worthless to a founder betting a company on it, and it is worthless to counsel for the same reason.',
           ],
         },
       ],

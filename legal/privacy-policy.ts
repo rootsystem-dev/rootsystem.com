@@ -28,6 +28,15 @@
  * the 90-day purge of the free-text matter description, and the deletion of
  * a contact enquiry at twelve months. Neither has a job behind it today.
  *
+ * The 90-day purge is deliberately unconditional -- no "unless it became an
+ * engagement" exception. This database is a lead inbox, not the record of an
+ * engagement, and it will not be the only system tracking one. A purge job
+ * living here cannot decide what became a matter without a truth it does not
+ * hold, so it is not asked to: it deletes on time, and anything that becomes
+ * an engagement is carried into the engagement record before then. That is a
+ * standing assumption about how intake is worked, and the commitment below
+ * depends on it.
+ *
  * The block model is deliberately small -- a paragraph, a list, a definition
  * list, a table. A rich-text pipeline for one document that changes twice a
  * year would cost more than it returns.
@@ -231,7 +240,7 @@ export const sections: Section[] = [
           {
             term: 'Case intake — the matter description',
             detail:
-              'Where an enquiry does not lead to an engagement, we delete the free-text description of the matter 90 days after it was submitted. It is the most sensitive thing on the form and the part with the shortest useful life.',
+              'We delete the free-text description of the matter 90 days after it is submitted. There is no exception to this: it is the most sensitive thing on the form and the part with the shortest useful life, and where a matter goes on to become an engagement, the engagement record is kept elsewhere rather than in the form the enquiry arrived on.',
           },
           {
             term: 'Case intake — the conflict record',
@@ -239,9 +248,9 @@ export const sections: Section[] = [
               'We keep your name, email address, firm, the engagement type and the date for as long as we operate the practice. This is the record a conflict check runs against: a practice has to be able to say who has approached it, about which side, and when. Keeping it is what allows us to decline a matter we should decline.',
           },
           {
-            term: 'Case intake — engaged matters',
+            term: 'Engaged matters',
             detail:
-              'Where an engagement follows, records are retained for as long as our legal, professional and insurance obligations require, which is longer than either period above.',
+              'Where an engagement follows, the records of that engagement are held separately from the intake form and retained for as long as our legal, professional and insurance obligations require, which is longer than any period above.',
           },
           {
             term: 'Contact enquiries',

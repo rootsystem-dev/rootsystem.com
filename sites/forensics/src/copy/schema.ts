@@ -308,6 +308,16 @@ export const landingSchema = z.object({
         publications: z.array(
           z.object({ title: z.string(), where: z.string(), note: z.string() }),
         ),
+        // Canonical profiles for this person elsewhere -- LinkedIn, ORCID,
+        // Google Scholar, a licensing board's public lookup. Feeds `sameAs` in
+        // the Person markup, which is how a search engine resolves a name to
+        // one person rather than to everyone who shares it. For an expert
+        // witness that disambiguation is also a vetting convenience: counsel
+        // searching the name should land on the record, not on a namesake.
+        //
+        // Empty by default and emitted only when populated. Nothing goes in
+        // here that the practice does not control and cannot verify.
+        sameAs: z.array(z.url()).default([]),
       }),
     )
     .min(1),
@@ -335,6 +345,24 @@ export const landingSchema = z.object({
     footer: z.string(),
     responseTime: z.string(),
   }),
+
+  // Entity identity, for structured data only -- nothing here renders as copy.
+  //
+  // `sameAs` is the Knowledge Graph disambiguation signal: the list of other
+  // canonical URLs that are demonstrably the same entity, which is what lets a
+  // search engine resolve this practice to one thing instead of guessing. A GEO
+  // audit on 2026-09-04 scored Social Trust 0/5 and Academic Trust 0/5 on the
+  // absence of it, and it is the cheapest E-E-A-T signal available.
+  //
+  // Defaults to empty and is emitted only when populated. Every URL here must
+  // be a profile that exists and is controlled by the practice -- a `sameAs`
+  // pointing at a page that is not the same entity is worse than none, because
+  // it merges two entities in the index.
+  organization: z
+    .object({
+      sameAs: z.array(z.url()).default([]),
+    })
+    .default({ sameAs: [] }),
 })
 
 export type Landing = z.infer<typeof landingSchema>

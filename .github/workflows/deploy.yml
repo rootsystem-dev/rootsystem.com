@@ -72,8 +72,16 @@ jobs:
             workspace: '@rootsystem/forensics'
             changed: ${{ needs.changes.outputs.forensics }}
     steps:
+      # Full history, not the default shallow clone. The forensics build derives
+      # `dateModified` for each route from the last commit that touched its
+      # sources (sites/forensics/scripts/content-modified.mjs). On a depth-1
+      # clone `git log` reports the shallow boundary instead, so every page
+      # would claim it was modified on the day of the most recent push --
+      # a freshness signal that is wrong rather than merely absent.
       - uses: actions/checkout@v5
         if: matrix.changed == 'true'
+        with:
+          fetch-depth: 0
 
       - uses: jdx/mise-action@v3
         if: matrix.changed == 'true'

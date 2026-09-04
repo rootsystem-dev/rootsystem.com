@@ -21,32 +21,26 @@ import Layout from '../layouts/Layout.astro'
 import {
   title,
   description,
-  effective,
   intro,
   sections,
 } from '../../../../legal/privacy-policy'
 
-const webPage = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: title,
-  description,
-  url: new URL('/privacy/', Astro.site).href,
-  dateModified: effective,
-  publisher: {
-    '@type': 'Organization',
-    name: 'Root System Forensics',
-    url: 'https://forensics.rootsystem.com',
-  },
-}
+/*
+ * The WebPage node for this route is emitted by the layout, which derives
+ * `dateModified` from git history -- specifically the last commit touching
+ * legal/privacy-policy.ts, so the date moves when the policy does. The exported
+ * `effective` constant is deliberately not used for it: the effective date is a
+ * legal statement about when the policy took force, which is a different claim
+ * from when the page was last modified, and the two drift apart the moment the
+ * rendering changes without the policy changing. It stays visible in the intro,
+ * where it belongs.
+ */
 ---
 
 <Layout
   title={`${title} | Root System Forensics`}
   description={description}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(webPage)} slot="head" />
-
   <header class="wrap page-head">
     <p class="eyebrow">Legal</p>
     <h1 class="measure-display">{title}</h1>

@@ -12,11 +12,40 @@
  */
 import Layout from '../../layouts/Layout.astro'
 import copy from '../../copy/landing'
+
+/*
+ * An ItemList of the published profiles.
+ *
+ * Each entry points at the profile URL rather than restating the person, so the
+ * Person node stays on the page that is entitled to make E-E-A-T claims about
+ * them. What this adds is the relationship: an index that names which people
+ * exist and where their records are, which is what a retrieval system needs to
+ * answer "who works there" without crawling every profile first.
+ *
+ * `numberOfItems` counts published profiles, not the bench. The bench is a
+ * dozen people and the property says so in prose; claiming twelve here while
+ * listing one would be the sort of overstatement the copy deck refuses.
+ */
+const roster = {
+  '@type': 'ItemList',
+  '@id': `${new URL('/experts/', Astro.site).href}#roster`,
+  name: copy.expertsPage.heading,
+  description: copy.expertsPage.intro,
+  numberOfItems: copy.experts.length,
+  itemListElement: copy.experts.map((expert, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: expert.name,
+    url: new URL(`/experts/${expert.slug}/`, Astro.site).href,
+  })),
+}
 ---
 
 <Layout
   title={`${copy.expertsPage.heading} | Root System Forensics`}
   description={copy.expertsPage.intro}
+  pageType="CollectionPage"
+  schemaNodes={[roster]}
 >
   <header class="wrap page-head">
     <p class="eyebrow">{copy.expertsPage.label}</p>

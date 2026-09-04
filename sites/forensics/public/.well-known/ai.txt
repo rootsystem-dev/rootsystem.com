@@ -1,0 +1,25 @@
+# forensics.rootsystem.com — AI crawler and usage policy
+#
+# Crawling is open, and deliberately so. This property exists to be found and
+# read by counsel evaluating an expert, and an answer engine summarising it
+# accurately is doing the same job the site does. The permissive posture here
+# matches robots.txt, which is Allow: / for every agent.
+#
+# ai.txt is a convention rather than a standard. It is stated here so the
+# position is explicit rather than inferred from the absence of a file.
+
+User-agent: *
+Allow: /
+
+# Training on the published pages is permitted. Everything served here is
+# marketing and credential material intended for publication.
+Allow-training: yes
+
+# Nothing under /api/ is public. Case intake carries live matter detail written
+# before a conflict check has run, and it is not crawlable, not indexable and
+# not available for training.
+Disallow: /api/
+
+Contact: partners@rootsystem.com
+Sitemap: https://forensics.rootsystem.com/sitemap-index.xml
+Summary: https://forensics.rootsystem.com/ai/summary.json

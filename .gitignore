@@ -4,6 +4,8 @@
 .claude/
 
 # Build Output
+# Route dates derived from git history; rewritten on every build.
+sites/forensics/src/generated/
 out/
 dist/
 .astro/

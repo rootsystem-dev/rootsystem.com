@@ -9,11 +9,24 @@ import Services from '../components/Services.astro'
 import Pricing from '../components/Pricing.astro'
 import Process from '../components/Process.astro'
 import Faq from '../components/Faq.astro'
+import { faqNode } from '../lib/schema'
+
+/*
+ * FAQPage markup, on the one route that renders the questions.
+ *
+ * Google's condition for FAQPage eligibility is that the marked-up Q&A is
+ * visible to the reader, and it is: the same `copy.faq` array feeds both the
+ * component below and the node here, so the markup cannot describe questions
+ * the page does not answer.
+ */
+const faq = faqNode({ copy, url: new URL('/engagements/', Astro.site) })
 ---
 
 <Layout
   title={copy.routes.engagements.title}
   description={copy.routes.engagements.description}
+  publishesRates
+  schemaNodes={[faq]}
 >
   <header class="wrap page-head">
     <h1 class="measure-display">{copy.routes.engagements.heading}</h1>

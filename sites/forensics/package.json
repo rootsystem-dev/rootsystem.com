@@ -4,11 +4,11 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "astro dev",
-        "build": "astro build",
+        "dev": "node scripts/content-modified.mjs && astro dev",
+        "build": "node scripts/content-modified.mjs && astro build",
         "preview": "astro preview",
-        "check": "astro check",
-        "deploy": "astro build && wrangler deploy"
+        "check": "node scripts/content-modified.mjs && astro check",
+        "deploy": "yarn build && wrangler deploy"
     },
     "dependencies": {
         "@astrojs/cloudflare": "^14.1.5",

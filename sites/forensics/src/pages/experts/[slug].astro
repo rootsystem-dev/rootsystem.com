@@ -8,8 +8,10 @@
  *
  * Person JSON-LD is emitted here and nowhere else. It is the only structured
  * data on the property that carries E-E-A-T signals -- `alumniOf`, `knowsAbout`
- * and a `worksFor` pointing at the Organization markup on the root page -- and
- * a profile is the only page entitled to make them.
+ * and a `worksFor` -- and a profile is the only page entitled to make them.
+ * The node joins this page's graph through `schemaNodes`, so `worksFor` can be
+ * an `@id` reference to the Organization the layout emits rather than a second
+ * copy of it.
  *
  * `knowsAbout` is derived from the practice areas rather than hand-written,
  * the same rule the Organization markup follows: one edit to the deck, and
@@ -23,6 +25,10 @@
  */
 import Layout from '../../layouts/Layout.astro'
 import copy from '../../copy/landing'
+import { ORGANIZATION_ID } from '../../lib/schema'
+
+/** A `@id` reference to a node the layout defines in this page's graph. */
+const ref = (id: string) => ({ '@id': id })
 
 export function getStaticPaths() {
   return copy.experts.map((expert) => ({
@@ -33,19 +39,25 @@ export function getStaticPaths() {
 
 const { expert } = Astro.props
 
+const profileUrl = new URL(`/experts/${expert.slug}/`, Astro.site)
+const personId = `${profileUrl.href}#person`
+
 const person = {
-  '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': personId,
   name: expert.name,
   honorificSuffix: expert.credential,
   jobTitle: expert.role,
   description: expert.summary,
-  url: new URL(`/experts/${expert.slug}/`, Astro.site).href,
-  worksFor: {
-    '@type': 'Organization',
-    name: 'Root System Forensics',
-    url: 'https://forensics.rootsystem.com',
-  },
+  url: profileUrl.href,
+  // A reference rather than a nested copy: the layout emits the full
+  // Organization node in this page's graph, and `@id` is what makes the two
+  // one entity instead of two similar ones.
+  worksFor: ref(ORGANIZATION_ID),
+  // Canonical profiles elsewhere -- how a search engine resolves this name to
+  // this person rather than to a namesake. Emitted only when the deck carries
+  // them; see the field comment in src/copy/schema.ts.
+  ...(expert.sameAs.length > 0 && { sameAs: expert.sameAs }),
   alumniOf: expert.education.map((entry) => ({
     '@type': 'EducationalOrganization',
     name: entry.institution,
@@ -64,8 +76,10 @@ const person = {
 <Layout
   title={`${expert.name}, ${expert.credential} — ${expert.role} | Root System Forensics`}
   description={expert.summary}
+  pageType="ProfilePage"
+  schemaNodes={[person]}
+  aboutId={personId}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(person)} slot="head" />
 
   <header class="wrap page-head">
     <p class="eyebrow">{expert.role}</p>

@@ -612,6 +612,21 @@ const copy: Landing = landingSchema.parse({
     // answer (NOTIFY_CC in wrangler.jsonc).
     responseTime: 'We reply within one business day.',
   },
+
+  // Structured-data identity. Nothing here renders as visible copy.
+  //
+  // EMPTY AND WAITING ON REAL URLS. `sameAs` should list canonical profiles
+  // that are demonstrably this practice -- a LinkedIn company page, a
+  // Crunchbase entry, a professional-society listing. It is the Knowledge Graph
+  // disambiguation signal and the cheapest trust signal available, but every
+  // entry has to be a page that exists and that the practice controls: a
+  // `sameAs` pointing at something that is not the same entity merges two
+  // entities in the index, which is worse than saying nothing.
+  //
+  // The same field exists per person on each expert profile below.
+  organization: {
+    sameAs: [],
+  },
 })
 
 export default copy

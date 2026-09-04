@@ -592,6 +592,22 @@ const copy: Landing = landingSchema.parse({
           note: 'With Process Metrix/Insitec Measurement Systems, SEMATECH and Sandia National Laboratories.',
         },
       ],
+      // Canonical profiles elsewhere, feeding `sameAs` in the Person markup.
+      // Both were verified before being published here: the ORCID record
+      // resolves to Rob Jacques through the public API, and the LinkedIn
+      // vanity URL is the one the profile copy was written from.
+      //
+      // ORCID is listed as the resolvable https:// form rather than the bare
+      // identifier, because `sameAs` takes URLs and a bare ORCID is not one.
+      //
+      // No Google Scholar entry: a Scholar profile is a researcher page a
+      // person claims at scholar.google.com, and there is no reason to create
+      // one around a single conference paper from 2000. If the practice starts
+      // publishing, that changes.
+      sameAs: [
+        'https://www.linkedin.com/in/robertjacques1/',
+        'https://orcid.org/0009-0005-3159-3392',
+      ],
     },
   ],
 

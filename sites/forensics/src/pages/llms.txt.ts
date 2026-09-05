@@ -40,7 +40,6 @@ export const GET: APIRoute = ({ site }) => {
         `- [${expert.name}, ${expert.credential}](${url(`/experts/${expert.slug}/`)}): ${expert.summary}`,
     ),
     `- [Scope a case](${url('/scope/')}): the intake form. Conflicts are screened before anything else.`,
-    `- [Privacy](${url('/privacy/')}): what is collected, how long it is kept, and how to have it deleted.`,
     '',
     '## Practice areas',
     '',
@@ -57,6 +56,19 @@ export const GET: APIRoute = ({ site }) => {
     '',
     `- ${copy.contact.email}`,
     `- ${copy.contact.responseTime}`,
+    '',
+    // `## Optional` is a defined section name in the llms.txt convention, not a
+    // label of our choosing: it means "skip these if the context window is
+    // short". Everything above is the practice; everything here is a companion
+    // representation of it or a page that answers a question nobody screening
+    // an expert asks first.
+    '## Optional',
+    '',
+    `- [llms-full.txt](${url('/llms-full.txt')}): every page above expanded into one plain-text document. Read this instead of fetching the site.`,
+    `- [AI summary](${url('/ai/summary.json')}): the same description, practice areas and rates as structured JSON.`,
+    `- [AI FAQ](${url('/ai/faq.json')}): the questions on the engagements page as structured JSON.`,
+    `- [AI usage policy](${url('/.well-known/ai.txt')}): what this property permits AI systems to do with it.`,
+    `- [Privacy](${url('/privacy/')}): what is collected, how long it is kept, and how to have it deleted.`,
     '',
   ].join('\n')
 

@@ -7,4 +7,75 @@
 User-agent: *
 Allow: /
 
+# The answer-engine crawlers are named individually below, and every block says
+# exactly what the wildcard above already said.
+#
+# WHY REPEAT YOURSELF. Under the robots.txt matching rules a crawler obeys the
+# most specific group that names it and ignores every other group, the wildcard
+# included. So a named block is not additive -- it REPLACES `User-agent: *` for
+# that crawler, which means each one has to be complete on its own. They are:
+# one `Allow: /` each, identical to the wildcard. Nothing here grants or
+# withdraws access that was not already granted.
+#
+# What it buys is legibility. An operator reading this file, or an audit
+# checking whether the property has thought about AI crawlers at all, gets an
+# explicit answer rather than an inference from a wildcard. A 2026-09-04 GEO
+# audit scored exactly that distinction: all 27 crawlers it checks were already
+# permitted, and it still marked the file down for never naming them.
+#
+# THE MAINTENANCE COST IS REAL, so it is worth stating. Every crawler named
+# here is one this file now has to keep current. A crawler that renames itself
+# silently falls back to the wildcard, which still allows it -- the failure mode
+# is a stale comment, not a blocked crawler. If that ever stops being true,
+# delete these blocks and keep the wildcard; the access posture is unchanged.
+
+# OpenAI. GPTBot trains, OAI-SearchBot indexes for ChatGPT search, and
+# ChatGPT-User fetches a page because a person asked for it in a conversation.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic. Same three-way split: training, search index, user-initiated fetch.
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity.
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google. Googlebot is ordinary search; Google-Extended is the separate opt-in
+# that governs Gemini and AI Overviews, and declining it would remove this
+# property from the AI surface it is being optimized for.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft/Bing, which is also the retrieval layer behind Copilot.
+User-agent: Bingbot
+Allow: /
+
+# Apple. Applebot serves Siri and Spotlight; Applebot-Extended is the separate
+# grant covering Apple Intelligence.
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://forensics.rootsystem.com/sitemap-index.xml

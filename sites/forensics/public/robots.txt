@@ -4,7 +4,24 @@
 # IA spec, and the launch gate is ship-now-learn-from-live, so there is no
 # reason to hold the property out of search. If that ever changes, the change
 # is `Disallow: /` here rather than per-page noindex tags.
+#
+# CONTENT SIGNALS. Every group below carries the same declaration:
+#
+#   search=yes     index this and link to it in ordinary search results
+#   ai-input=yes   retrieve this to ground an AI-generated answer, and cite it
+#   ai-train=yes   use this to train a model
+#
+# All three are yes, which is a decision and not a default. This property exists
+# to be found by counsel who are increasingly asking an assistant before they
+# ask a colleague, and every one of those three permissions is a way the words
+# on these pages reach that reader. Withholding training consent while asking
+# to be cited would be trying to take one side of the same bargain.
+#
+# The declaration is repeated in every group for the reason given below: a
+# named group replaces the wildcard rather than adding to it, so a signal
+# declared only here would be invisible to precisely the crawlers it addresses.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 # The answer-engine crawlers are named individually below, and every block says
@@ -32,50 +49,63 @@ Allow: /
 # OpenAI. GPTBot trains, OAI-SearchBot indexes for ChatGPT search, and
 # ChatGPT-User fetches a page because a person asked for it in a conversation.
 User-agent: GPTBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 User-agent: OAI-SearchBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 User-agent: ChatGPT-User
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 # Anthropic. Same three-way split: training, search index, user-initiated fetch.
 User-agent: ClaudeBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 User-agent: Claude-SearchBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 User-agent: Claude-User
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 # Perplexity.
 User-agent: PerplexityBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 User-agent: Perplexity-User
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 # Google. Googlebot is ordinary search; Google-Extended is the separate opt-in
 # that governs Gemini and AI Overviews, and declining it would remove this
 # property from the AI surface it is being optimized for.
 User-agent: Googlebot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 User-agent: Google-Extended
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 # Microsoft/Bing, which is also the retrieval layer behind Copilot.
 User-agent: Bingbot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 # Apple. Applebot serves Siri and Spotlight; Applebot-Extended is the separate
 # grant covering Apple Intelligence.
 User-agent: Applebot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 User-agent: Applebot-Extended
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 Sitemap: https://forensics.rootsystem.com/sitemap-index.xml

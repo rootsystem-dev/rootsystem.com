@@ -631,17 +631,27 @@ const copy: Landing = landingSchema.parse({
 
   // Structured-data identity. Nothing here renders as visible copy.
   //
-  // EMPTY AND WAITING ON REAL URLS. `sameAs` should list canonical profiles
-  // that are demonstrably this practice -- a LinkedIn company page, a
-  // Crunchbase entry, a professional-society listing. It is the Knowledge Graph
-  // disambiguation signal and the cheapest trust signal available, but every
-  // entry has to be a page that exists and that the practice controls: a
-  // `sameAs` pointing at something that is not the same entity merges two
-  // entities in the index, which is worse than saying nothing.
+  // `sameAs` lists canonical profiles that are demonstrably this practice. It
+  // is the Knowledge Graph disambiguation signal and the cheapest trust signal
+  // available, but every entry has to be a page that exists and that the
+  // practice controls: a `sameAs` pointing at something that is not the same
+  // entity merges two entities in the index, which is worse than saying
+  // nothing.
+  //
+  // ASSUMPTION, stated because the names do not match. The Organization node
+  // is named 'Root System Forensics'; the LinkedIn page is Root System's. They
+  // are treated as one entity because they are one -- the forensics practice is
+  // a service line of Root System, not a separate company, and the company page
+  // now lists forensic technical witness services among them. If the practice
+  // is ever incorporated separately, this entry moves to its own page and the
+  // relationship becomes `parentOrganization` instead.
+  //
+  // Still missing, and each is a separate entry when it exists: a Google
+  // Business Profile and a Crunchbase record (issue #80).
   //
   // The same field exists per person on each expert profile below.
   organization: {
-    sameAs: [],
+    sameAs: ['https://www.linkedin.com/company/root-system-com/'],
   },
 })
 

@@ -584,6 +584,10 @@ const copy: Landing = landingSchema.parse({
         },
       ],
       affiliations: ['IEEE, 2000–2009'],
+      // Both papers are from the same conference, ASMC 2000, and both are on
+      // the ORCID record below, which is where these entries were read from
+      // rather than from memory. Each renders on the profile and feeds a
+      // `ScholarlyArticle` in the Person markup.
       publications: [
         {
           title:
@@ -591,18 +595,26 @@ const copy: Landing = landingSchema.parse({
           where: 'IEEE/SEMI Advanced Semiconductor Manufacturing Conference, 2000',
           note: 'With Process Metrix/Insitec Measurement Systems, SEMATECH and Sandia National Laboratories.',
         },
+        {
+          title:
+            'Evaluation of the yield impact of epitaxial defects on advanced semiconductor technologies',
+          where: 'IEEE/SEMI Advanced Semiconductor Manufacturing Conference, 2000',
+          note: 'Co-authored with R. Williams, M. Akbulut and Wayne Chen.',
+        },
       ],
       // Canonical profiles elsewhere, feeding `sameAs` in the Person markup.
       // Both were verified before being published here: the ORCID record
       // resolves to Rob Jacques through the public API, and the LinkedIn
-      // vanity URL is the one the profile copy was written from.
+      // vanity URL is the one the profile copy was written from. The ORCID
+      // record now lists both ASMC 2000 papers, so it corroborates the
+      // publications above instead of resolving to an empty record.
       //
       // ORCID is listed as the resolvable https:// form rather than the bare
       // identifier, because `sameAs` takes URLs and a bare ORCID is not one.
       //
       // No Google Scholar entry: a Scholar profile is a researcher page a
       // person claims at scholar.google.com, and there is no reason to create
-      // one around a single conference paper from 2000. If the practice starts
+      // one around two conference papers from 2000. If the practice starts
       // publishing, that changes.
       sameAs: [
         'https://www.linkedin.com/in/robertjacques1/',

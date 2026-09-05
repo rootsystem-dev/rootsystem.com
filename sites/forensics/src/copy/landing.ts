@@ -584,25 +584,44 @@ const copy: Landing = landingSchema.parse({
         },
       ],
       affiliations: ['IEEE, 2000–2009'],
+      // Both papers are from the same conference, ASMC 2000, and both are on
+      // the ORCID record below, which is where these entries were read from
+      // rather than from memory. Each renders on the profile and feeds a
+      // `ScholarlyArticle` in the Person markup.
+      //
+      // The notes name co-authors in the same shape for both, because two
+      // adjacent entries in different framings -- one listing institutions, the
+      // other people -- reads as carelessness on a page whose whole job is
+      // withstanding a credentials check. The HiVol note keeps its institutions
+      // as well: SEMATECH and Sandia are worth naming, and the co-authors do
+      // not replace them.
       publications: [
         {
           title:
             'Evaluation of the ‘HiVol’ above-wafer in-situ particle monitoring sensor',
           where: 'IEEE/SEMI Advanced Semiconductor Manufacturing Conference, 2000',
-          note: 'With Process Metrix/Insitec Measurement Systems, SEMATECH and Sandia National Laboratories.',
+          note: 'With R. Williams, E. Wickesberg, M. Bonin and D. Holve, across Process Metrix/Insitec Measurement Systems, SEMATECH and Sandia National Laboratories.',
+        },
+        {
+          title:
+            'Evaluation of the yield impact of epitaxial defects on advanced semiconductor technologies',
+          where: 'IEEE/SEMI Advanced Semiconductor Manufacturing Conference, 2000',
+          note: 'With R. Williams, M. Akbulut and Wayne Chen.',
         },
       ],
       // Canonical profiles elsewhere, feeding `sameAs` in the Person markup.
       // Both were verified before being published here: the ORCID record
       // resolves to Rob Jacques through the public API, and the LinkedIn
-      // vanity URL is the one the profile copy was written from.
+      // vanity URL is the one the profile copy was written from. The ORCID
+      // record now lists both ASMC 2000 papers, so it corroborates the
+      // publications above instead of resolving to an empty record.
       //
       // ORCID is listed as the resolvable https:// form rather than the bare
       // identifier, because `sameAs` takes URLs and a bare ORCID is not one.
       //
       // No Google Scholar entry: a Scholar profile is a researcher page a
       // person claims at scholar.google.com, and there is no reason to create
-      // one around a single conference paper from 2000. If the practice starts
+      // one around two conference papers from 2000. If the practice starts
       // publishing, that changes.
       sameAs: [
         'https://www.linkedin.com/in/robertjacques1/',
@@ -631,17 +650,27 @@ const copy: Landing = landingSchema.parse({
 
   // Structured-data identity. Nothing here renders as visible copy.
   //
-  // EMPTY AND WAITING ON REAL URLS. `sameAs` should list canonical profiles
-  // that are demonstrably this practice -- a LinkedIn company page, a
-  // Crunchbase entry, a professional-society listing. It is the Knowledge Graph
-  // disambiguation signal and the cheapest trust signal available, but every
-  // entry has to be a page that exists and that the practice controls: a
-  // `sameAs` pointing at something that is not the same entity merges two
-  // entities in the index, which is worse than saying nothing.
+  // `sameAs` lists canonical profiles that are demonstrably this practice. It
+  // is the Knowledge Graph disambiguation signal and the cheapest trust signal
+  // available, but every entry has to be a page that exists and that the
+  // practice controls: a `sameAs` pointing at something that is not the same
+  // entity merges two entities in the index, which is worse than saying
+  // nothing.
+  //
+  // ASSUMPTION, stated because the names do not match. The Organization node
+  // is named 'Root System Forensics'; the LinkedIn page is Root System's. They
+  // are treated as one entity because they are one -- the forensics practice is
+  // a service line of Root System, not a separate company, and the company page
+  // now lists forensic technical witness services among them. If the practice
+  // is ever incorporated separately, this entry moves to its own page and the
+  // relationship becomes `parentOrganization` instead.
+  //
+  // Still missing, and each is a separate entry when it exists: a Google
+  // Business Profile and a Crunchbase record (issue #80).
   //
   // The same field exists per person on each expert profile below.
   organization: {
-    sameAs: [],
+    sameAs: ['https://www.linkedin.com/company/root-system-com/'],
   },
 })
 

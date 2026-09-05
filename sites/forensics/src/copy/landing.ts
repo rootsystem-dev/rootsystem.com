@@ -588,18 +588,25 @@ const copy: Landing = landingSchema.parse({
       // the ORCID record below, which is where these entries were read from
       // rather than from memory. Each renders on the profile and feeds a
       // `ScholarlyArticle` in the Person markup.
+      //
+      // The notes name co-authors in the same shape for both, because two
+      // adjacent entries in different framings -- one listing institutions, the
+      // other people -- reads as carelessness on a page whose whole job is
+      // withstanding a credentials check. The HiVol note keeps its institutions
+      // as well: SEMATECH and Sandia are worth naming, and the co-authors do
+      // not replace them.
       publications: [
         {
           title:
             'Evaluation of the ‘HiVol’ above-wafer in-situ particle monitoring sensor',
           where: 'IEEE/SEMI Advanced Semiconductor Manufacturing Conference, 2000',
-          note: 'With Process Metrix/Insitec Measurement Systems, SEMATECH and Sandia National Laboratories.',
+          note: 'With R. Williams, E. Wickesberg, M. Bonin and D. Holve, across Process Metrix/Insitec Measurement Systems, SEMATECH and Sandia National Laboratories.',
         },
         {
           title:
             'Evaluation of the yield impact of epitaxial defects on advanced semiconductor technologies',
           where: 'IEEE/SEMI Advanced Semiconductor Manufacturing Conference, 2000',
-          note: 'Co-authored with R. Williams, M. Akbulut and Wayne Chen.',
+          note: 'With R. Williams, M. Akbulut and Wayne Chen.',
         },
       ],
       // Canonical profiles elsewhere, feeding `sameAs` in the Person markup.

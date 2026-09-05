@@ -1,0 +1,17 @@
+# Response headers for forensics.rootsystem.com.
+#
+# The Cloudflare adapter prepends its own immutable-cache rule for /_astro/* to
+# this file at build time, so rules written here are additive rather than a
+# replacement, and both rules match an /_astro asset. Check dist/client/_headers
+# after a build if that ever changes.
+
+/*
+  # RFC 8288 discovery. `describedby` is the registered relation for "the target
+  # describes this resource", which is exactly what /llms.txt is: the property's
+  # own map of itself. An agent that reads response headers finds it without
+  # parsing HTML or guessing at a well-known path.
+  #
+  # Applied to every path rather than enumerated per route. Enumerating would
+  # mean a list that silently misses the next route added, and the cost of the
+  # broader match is one short header on asset responses that no one reads.
+  Link: </llms.txt>; rel="describedby"; type="text/plain"

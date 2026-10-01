@@ -169,6 +169,9 @@ export function webPageNode({
     inLanguage: 'en-US',
     isPartOf: ref(WEBSITE_ID),
     about: ref(aboutId),
+    // Google requires `mainEntity` on a ProfilePage; `about` alone fails the
+    // rich-result check. Assumes a ProfilePage is always about its one person.
+    ...(type === 'ProfilePage' && { mainEntity: ref(aboutId) }),
     ...(dateModified && { dateModified }),
   }
 }

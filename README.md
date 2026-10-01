@@ -8,10 +8,10 @@ A Yarn workspace holding two Astro sites, both deployed as Cloudflare Workers.
 | `www.rootsystem.com` | Cloudflare redirect ruleset | 301 to the apex |
 | `rootsystem.com/taproot` | same Worker | live |
 | `forensics.rootsystem.com` | Worker `rootsystem-forensics` | built, no DNS record yet |
-| `insights.rootsystem.com` | Vercel | legacy, still serving |
+| `insights.rootsystem.com` | none | retired, Vercel project deleted |
 
-Netlify holds the apex A record and serves no traffic; it is the rollback
-target. Decommission order for both legacy hosts is in
+Netlify and Vercel are both decommissioned. The legacy hosts are gone, so
+there is no rollback target. Decommission order is recorded in
 `docs/teardown-order.md`.
 
 ## Layout

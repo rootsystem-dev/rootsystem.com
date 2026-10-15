@@ -21,7 +21,7 @@ const { title, description, publishDate, updatedDate, tags, draft } = post.data
     {draft && <p class="draft-banner">Draft — not published.</p>}
 
     <header>
-      <p class="eyebrow"><a href="/taproot">Taproot</a></p>
+      <p class="eyebrow"><a href="/taproot/">Taproot</a></p>
       <h1>{title}</h1>
       <p class="meta">
         <time datetime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
@@ -40,7 +40,7 @@ const { title, description, publishDate, updatedDate, tags, draft } = post.data
         tags.length > 0 && (
           <p class="tags">
             {tags.map((tag) => (
-              <a href={`/taproot/tags/${tag}`}>{tag}</a>
+              <a href={`/taproot/tags/${tag}/`}>{tag}</a>
             ))}
           </p>
         )

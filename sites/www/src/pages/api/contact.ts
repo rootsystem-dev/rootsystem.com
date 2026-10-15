@@ -148,4 +148,4 @@ async function notify(submission: {
 }
 
 // A GET here is someone visiting the endpoint directly; send them to the form.
-export const GET: APIRoute = () => redirectTo('/contact')
+export const GET: APIRoute = () => redirectTo('/contact/')

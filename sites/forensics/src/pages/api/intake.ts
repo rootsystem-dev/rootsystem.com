@@ -192,4 +192,4 @@ async function notify(submission: {
   }
 }
 
-export const GET: APIRoute = () => redirectTo('/scope')
+export const GET: APIRoute = () => redirectTo('/scope/')

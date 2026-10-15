@@ -21,7 +21,7 @@ const { posts } = Astro.props
   description={`Taproot posts tagged ${tag}.`}
 >
   <header class="masthead">
-    <p class="eyebrow"><a href="/taproot">Taproot</a></p>
+    <p class="eyebrow"><a href="/taproot/">Taproot</a></p>
     <h1>{tag}</h1>
   </header>
 
@@ -29,7 +29,7 @@ const { posts } = Astro.props
     {
       posts.map((post) => (
         <li>
-          <h2><a href={`/taproot/${post.id}`}>{post.data.title}</a></h2>
+          <h2><a href={`/taproot/${post.id}/`}>{post.data.title}</a></h2>
           <p class="meta">
             <time datetime={post.data.publishDate.toISOString()}>
               {formatDate(post.data.publishDate)}

@@ -60,7 +60,14 @@ const {
   schemaNodes = [],
   aboutId,
 } = Astro.props
-const canonical = new URL(Astro.url.pathname, Astro.site)
+// Canonical always carries the trailing slash the sitemap lists; the on-demand
+// routes answer on both forms, so the request path alone cannot be trusted.
+// Assumption: a final segment containing a dot is a file, not a page.
+const { pathname } = Astro.url
+const canonical = new URL(
+  /\.[a-z0-9]+$/i.test(pathname) || pathname.endsWith('/') ? pathname : `${pathname}/`,
+  Astro.site,
+)
 const ogImage = new URL('/images/forensics-card.png', Astro.site)
 
 /*

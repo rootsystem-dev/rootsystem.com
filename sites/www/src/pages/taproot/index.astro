@@ -23,7 +23,7 @@ const tags = await getTags()
     tags.length > 0 && (
       <nav class="tag-bar" aria-label="Tags">
         {tags.map(({ tag, count }) => (
-          <a href={`/taproot/tags/${tag}`}>
+          <a href={`/taproot/tags/${tag}/`}>
             {tag} <span class="count">{count}</span>
           </a>
         ))}
@@ -39,7 +39,7 @@ const tags = await getTags()
         {posts.map((post) => (
           <li>
             <article>
-              <h2><a href={`/taproot/${post.id}`}>{post.data.title}</a></h2>
+              <h2><a href={`/taproot/${post.id}/`}>{post.data.title}</a></h2>
               <p class="meta">
                 <time datetime={post.data.publishDate.toISOString()}>
                   {formatDate(post.data.publishDate)}
